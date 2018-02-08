@@ -1,0 +1,7 @@
+dobj,OUT
+acl:relcl,IN
+cop,IN
+nmod,OUT
+xcomp,OUT
+ccomp,OUT
+advl,OUT

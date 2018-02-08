@@ -1,6 +1,7 @@
 package it.inf.unibz.stuffie;
 
 import edu.stanford.nlp.ling.IndexedWord;
+import edu.stanford.nlp.semgraph.SemanticGraph;
 
 public class RelationArgumentConnector extends RelationComponent {
 
@@ -8,12 +9,12 @@ public class RelationArgumentConnector extends RelationComponent {
 	private boolean expectingConnector;
 	private String synthConnector;
 	
-	public RelationArgumentConnector(IndexedWord headword, int sentID) {
-		super(headword, sentID);
+	public RelationArgumentConnector(IndexedWord headword, int sentID, SemanticGraph depAnno) {
+		super(headword, sentID, depAnno);
 	}
 	
-	public RelationArgumentConnector(IndexedWord headword, int sentID, TraversalPath chainToArgument) {
-		super(headword, sentID);
+	public RelationArgumentConnector(IndexedWord headword, int sentID, SemanticGraph depAnno, TraversalPath chainToArgument) {
+		super(headword, sentID, depAnno);
 		this.chainToArgument = chainToArgument;
 	}
 	

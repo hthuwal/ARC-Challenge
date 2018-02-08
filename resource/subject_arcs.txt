@@ -1,0 +1,7 @@
+nsubj,OUT
+nsubjpass,OUT
+csubj,OUT
+csubjpass,OUT
+acl,IN
+csubj,OUT
+csubjpass,OUT

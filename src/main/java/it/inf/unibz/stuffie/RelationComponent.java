@@ -4,6 +4,7 @@ import java.util.TreeSet;
 import java.util.regex.Pattern;
 
 import edu.stanford.nlp.ling.IndexedWord;
+import edu.stanford.nlp.semgraph.SemanticGraph;
 
 public class RelationComponent {
 
@@ -14,13 +15,15 @@ public class RelationComponent {
 	protected TreeSet<IndexedWord> words;
 	protected int sentenceID;
 	protected String id;
+	protected SemanticGraph depAnno;
 
-	public RelationComponent(IndexedWord headword, int sentenceID) {
+	public RelationComponent(IndexedWord headword, int sentenceID, SemanticGraph depAnno) {
 		this.headword = headword;
 		this.sentenceID = sentenceID;
 		id = sentenceID + "." + headword.index();
 		words = new TreeSet<IndexedWord>(new IndexedWordComparator());
 		words.add(headword);
+		this.depAnno = depAnno;
 	}
 	
 	public IndexedWord getHeadword() {

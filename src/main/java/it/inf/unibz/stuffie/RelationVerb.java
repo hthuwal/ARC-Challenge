@@ -1,13 +1,14 @@
 package it.inf.unibz.stuffie;
 
 import edu.stanford.nlp.ling.IndexedWord;
+import edu.stanford.nlp.semgraph.SemanticGraph;
 
 public class RelationVerb extends RelationComponent {
 
 	private String synthVerb;
 	
-	public RelationVerb(IndexedWord headword, int sentID) {
-		super(headword, sentID);
+	public RelationVerb(IndexedWord headword, int sentID, SemanticGraph depAnno) {
+		super(headword, sentID, depAnno);
 	}
 	
 	public boolean isSynthetic() {
@@ -21,6 +22,10 @@ public class RelationVerb extends RelationComponent {
 			return NULL_CMPNT;
 		
 		return super.toString();
+	}
+
+	public SemanticGraph getDepAnno() {
+		return depAnno;
 	}
 
 	

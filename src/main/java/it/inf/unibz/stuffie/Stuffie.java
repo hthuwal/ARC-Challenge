@@ -1,13 +1,11 @@
 package it.inf.unibz.stuffie;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.TreeSet;
 
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
-import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
@@ -18,13 +16,12 @@ public class Stuffie {
 	private Properties stProp;
 	private StanfordCoreNLP stPline;
 	
-	private VerbExtractor vExt;
-	
-	
-	@SuppressWarnings("rawtypes")
-	ArrayList<PipelineStep> steps;
+	private VerbExtractor vExtr;
+	private SubjectExtractor sExtr;
 	
 	@SuppressWarnings("rawtypes")
+	PipelineStep steps[];
+	
 	public Stuffie() {
 		stProp = new Properties();
 		stProp.setProperty("annotators",
@@ -34,9 +31,10 @@ public class Stuffie {
 		stPline = new StanfordCoreNLP(stProp);
 		stPline.annotate(stAnno);
 		
-		vExt = new VerbExtractor(stAnno, stProp, stPline);
-		steps = new ArrayList<PipelineStep>();
-		steps.add(vExt);
+		vExtr = new VerbExtractor(stAnno, stProp, stPline);
+		sExtr = new SubjectExtractor(stAnno, stProp, stPline);
+		
+		steps = new PipelineStep[] {vExtr, sExtr};
 	}
 	
 	public String run(String text) {
@@ -47,14 +45,17 @@ public class Stuffie {
 		
 		StringBuilder sb = new StringBuilder();
 		List<CoreMap> sentences = stAnno.get(SentencesAnnotation.class);
-		int sentId = 1;
+		int iter = 1;
 		TreeSet<RelationInstance> rels = new TreeSet<RelationInstance>();
 		for (CoreMap sentence : sentences) {
-			TreeSet<IndexedWord> verbs = vExt.run(sentence);
-			for(IndexedWord verb : verbs) {
-				rels.add(new RelationInstance(new RelationVerb(verb, sentId)));
-			}
-			sentId++;
+			rels.addAll(vExtr.run(sentence, iter));
+			iter++;
+		}
+		
+		iter = 1;
+		for(RelationInstance relIns : rels) {
+			sExtr.run(relIns, iter);
+			iter++;
 		}
 		
 		for(RelationInstance relIns : rels) {

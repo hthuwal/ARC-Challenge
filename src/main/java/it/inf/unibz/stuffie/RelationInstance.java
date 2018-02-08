@@ -77,4 +77,74 @@ public class RelationInstance implements Comparable<RelationInstance> {
 		}
 		return ret;
 	}
+
+	/**
+	 * @return the id
+	 */
+	public String getId() {
+		return id;
+	}
+
+	/**
+	 * @return the subject
+	 */
+	public RelationArgument getSubject() {
+		return subject;
+	}
+
+	/**
+	 * @return the verb
+	 */
+	public RelationVerb getVerb() {
+		return verb;
+	}
+
+	/**
+	 * @return the object
+	 */
+	public RelationArgument getObject() {
+		return object;
+	}
+
+	/**
+	 * @return the facets
+	 */
+	public TreeSet<RelationArgument> getFacets() {
+		return facets;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param subject the subject to set
+	 */
+	public void setSubject(RelationArgument subject) {
+		this.subject = subject;
+	}
+
+	/**
+	 * @param verb the verb to set
+	 */
+	public void setVerb(RelationVerb verb) {
+		this.verb = verb;
+	}
+
+	/**
+	 * @param object the object to set
+	 */
+	public void setObject(RelationArgument object) {
+		this.object = object;
+	}
+
+	/**
+	 * @param facets the facets to set
+	 */
+	public void setFacets(TreeSet<RelationArgument> facets) {
+		this.facets = facets;
+	}
 }

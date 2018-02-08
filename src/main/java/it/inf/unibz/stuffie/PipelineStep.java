@@ -22,5 +22,5 @@ public abstract class PipelineStep<R,P> {
 		this.stPipe = stPipe;
 	}
 	
-	protected abstract R run(P par);
+	protected abstract R run(P par, int iteration);
 }

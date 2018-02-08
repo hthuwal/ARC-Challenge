@@ -3,6 +3,7 @@ package it.inf.unibz.stuffie;
 import java.util.TreeSet;
 
 import edu.stanford.nlp.ling.IndexedWord;
+import edu.stanford.nlp.semgraph.SemanticGraph;
 
 public class RelationArgument extends RelationComponent {
 
@@ -11,10 +12,8 @@ public class RelationArgument extends RelationComponent {
 	private TreeSet<RelationVerb> contexts;
 	private boolean isSubject;
 
-	public RelationArgument(IndexedWord headword, int sentID, TraversalPath chainToVerb, RelationArgumentConnector connector, boolean isSubject) {
-		super(headword, sentID);
-		this.chainToVerb = chainToVerb;
-		this.connector = connector;
+	public RelationArgument(IndexedWord headword, int sentID, SemanticGraph depAnno, boolean isSubject) {
+		super(headword, sentID, depAnno);
 		this.isSubject = isSubject;
 		contexts = new TreeSet<RelationVerb>(new RelationComponentComparator(this));
 	}
@@ -29,7 +28,7 @@ public class RelationArgument extends RelationComponent {
 	
 	public String toString() {
 		if(isVerb())
-			return "#" + headword.index() +";";
+			return "#" + headword.index() +"; ";
 		
 		StringBuilder sbWords = new StringBuilder();
 		StringBuilder sbConn = new StringBuilder();
@@ -51,7 +50,8 @@ public class RelationArgument extends RelationComponent {
 			sbWords.append(">");
 		}
 		
-		sbConn.append(connector.toString());
+		if(connector != null)
+			sbConn.append(connector.toString());
 		
 		if(isSubject && sbConn.length() > 0) {
 			return sbWords.toString() + "; " + sbConn.toString();
@@ -60,10 +60,10 @@ public class RelationArgument extends RelationComponent {
 			return sbConn.toString() + "; " + sbWords.toString() + ";";
 		}
 		if(isSubject) {
-			return sbWords.toString() + ";";
+			return sbWords.toString() + "; ";
 		}
 		if(!isSubject) {
-			return ";" + sbWords.toString() + ";";
+			return "; " + sbWords.toString() + ";";
 		}
 			
 		
