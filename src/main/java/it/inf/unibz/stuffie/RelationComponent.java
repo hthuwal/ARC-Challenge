@@ -8,6 +8,7 @@ import edu.stanford.nlp.ling.IndexedWord;
 public class RelationComponent {
 
 	protected static final Pattern VERB_PATTERN = Pattern.compile("VB|VBD|VBG|VBN|VBP|VBZ");
+	protected static final String NULL_CMPNT = "<_>";
 
 	protected IndexedWord headword;
 	protected TreeSet<IndexedWord> words;
@@ -36,11 +37,13 @@ public class RelationComponent {
 		StringBuilder sb = new StringBuilder();
 		
 		for(IndexedWord word : words) {
-			sb.append(word.originalText()).append(" ");
+			sb.append(word).append(' ');
 		}
 		
 		if(sb.length() > 0)
 			sb.deleteCharAt(sb.length()-1);
+		else
+			return NULL_CMPNT;
 		
 		return sb.toString();
 	}

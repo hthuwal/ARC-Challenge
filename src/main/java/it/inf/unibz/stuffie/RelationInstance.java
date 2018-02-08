@@ -12,7 +12,7 @@ public class RelationInstance {
 	
 	public RelationInstance(RelationVerb verb) {
 		super();
-		facets = new TreeSet<RelationArgument>(new RelationArgumentComparator(verb));
+		facets = new TreeSet<RelationArgument>(new RelationComponentComparator(verb));
 	}
 	
 	public RelationInstance(String id, RelationArgument subject, RelationVerb verb, RelationArgument object) {

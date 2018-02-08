@@ -4,17 +4,17 @@ import java.util.Comparator;
 
 import edu.stanford.nlp.ling.IndexedWord;
 
-public class RelationArgumentComparator implements Comparator<RelationArgument> {
+public class RelationComponentComparator implements Comparator<RelationComponent> {
 
-	private RelationVerb verb;
+	private RelationComponent pointOfComparison;
 	
-	public RelationArgumentComparator(RelationVerb verb) {
-		this.verb = verb;
+	public RelationComponentComparator(RelationComponent pointOfComparison) {
+		this.pointOfComparison = pointOfComparison;
 	}
 
 	@Override
-	public int compare(RelationArgument ra1, RelationArgument ra2) {
-		IndexedWord head = verb.getHeadword();
+	public int compare(RelationComponent ra1, RelationComponent ra2) {
+		IndexedWord head = pointOfComparison.getHeadword();
 		IndexedWord o1 = ra1.getHeadword();
 		IndexedWord o2 = ra2.getHeadword();
 		
