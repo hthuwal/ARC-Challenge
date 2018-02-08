@@ -6,8 +6,8 @@ public class RelationVerb extends RelationComponent {
 
 	private String synthVerb;
 	
-	public RelationVerb(IndexedWord headword) {
-		super(headword);
+	public RelationVerb(IndexedWord headword, int sentID) {
+		super(headword, sentID);
 	}
 	
 	public boolean isSynthetic() {

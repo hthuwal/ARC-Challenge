@@ -11,8 +11,8 @@ public class RelationArgument extends RelationComponent {
 	private TreeSet<RelationVerb> contexts;
 	private boolean isSubject;
 
-	public RelationArgument(IndexedWord headword, TraversalPath chainToVerb, RelationArgumentConnector connector, boolean isSubject) {
-		super(headword);
+	public RelationArgument(IndexedWord headword, int sentID, TraversalPath chainToVerb, RelationArgumentConnector connector, boolean isSubject) {
+		super(headword, sentID);
 		this.chainToVerb = chainToVerb;
 		this.connector = connector;
 		this.isSubject = isSubject;

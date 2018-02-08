@@ -12,10 +12,15 @@ public class RelationComponent {
 
 	protected IndexedWord headword;
 	protected TreeSet<IndexedWord> words;
+	protected int sentenceID;
+	protected String id;
 
-	public RelationComponent(IndexedWord headword) {
+	public RelationComponent(IndexedWord headword, int sentenceID) {
 		this.headword = headword;
+		this.sentenceID = sentenceID;
+		id = sentenceID + "." + headword.index();
 		words = new TreeSet<IndexedWord>(new IndexedWordComparator());
+		words.add(headword);
 	}
 	
 	public IndexedWord getHeadword() {
@@ -24,6 +29,10 @@ public class RelationComponent {
 
 	public String getPOS() {
 		return headword.tag();
+	}
+	
+	public int getSentenceID() {
+		return sentenceID;
 	}
 
 	public Boolean isVerb() {
@@ -37,7 +46,7 @@ public class RelationComponent {
 		StringBuilder sb = new StringBuilder();
 		
 		for(IndexedWord word : words) {
-			sb.append(word).append(' ');
+			sb.append(word.originalText()).append(' ');
 		}
 		
 		if(sb.length() > 0)

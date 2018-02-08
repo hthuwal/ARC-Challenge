@@ -8,8 +8,12 @@ public class RelationArgumentConnector extends RelationComponent {
 	private boolean expectingConnector;
 	private String synthConnector;
 	
-	public RelationArgumentConnector(IndexedWord headword, TraversalPath chainToArgument) {
-		super(headword);
+	public RelationArgumentConnector(IndexedWord headword, int sentID) {
+		super(headword, sentID);
+	}
+	
+	public RelationArgumentConnector(IndexedWord headword, int sentID, TraversalPath chainToArgument) {
+		super(headword, sentID);
 		this.chainToArgument = chainToArgument;
 	}
 	
