@@ -44,7 +44,7 @@ public class RelationInstance implements Comparable<RelationInstance> {
 			sb.append("; ").append(NULL_CMPNT).append("; ");
 
 		for (RelationArgument facet : facets) {
-			sb.append("\n\t").append(facet);
+			sb.append("\n\t").append(facet.toString());
 		}
 
 		return sb.toString();
@@ -146,5 +146,9 @@ public class RelationInstance implements Comparable<RelationInstance> {
 	 */
 	public void setFacets(TreeSet<RelationArgument> facets) {
 		this.facets = facets;
+	}
+
+	public void addFacet(RelationArgument facet) {
+		facets.add(facet);
 	}
 }

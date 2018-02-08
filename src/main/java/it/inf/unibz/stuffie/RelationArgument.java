@@ -7,7 +7,7 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 
 public class RelationArgument extends RelationComponent {
 
-	private TraversalPath chainToVerb;
+	private TraversalPath chainFromVerb;
 	private RelationArgumentConnector connector;
 	private TreeSet<RelationVerb> contexts;
 	private boolean isSubject;
@@ -18,55 +18,60 @@ public class RelationArgument extends RelationComponent {
 		contexts = new TreeSet<RelationVerb>(new RelationComponentComparator(this));
 	}
 
-	public TraversalPath getChainToVerb() {
-		return chainToVerb;
+	public void setChainFromVerb(TraversalPath p) {
+		chainFromVerb = p;
 	}
-	
+
+	public TraversalPath getChainFromVerb() {
+		return chainFromVerb;
+	}
+
 	public RelationArgumentConnector getConnector() {
 		return connector;
 	}
-	
+
 	public String toString() {
-		if(isVerb())
-			return "#" + headword.index() +"; ";
-		
+
 		StringBuilder sbWords = new StringBuilder();
 		StringBuilder sbConn = new StringBuilder();
-		
-		for(IndexedWord word : words) {
-			sbWords.append(word.originalText()).append(' ');
-		}
-		if(sbWords.length() > 0)
-			sbWords.deleteCharAt(sbWords.length()-1);
-		else
-			sbWords.append(NULL_CMPNT);
-		
-		if(contexts.size() > 0) {
-			sbWords.append("<ctx");
-			for(RelationVerb ctx : contexts) {
-				sbWords.append("#"+ctx.getHeadword().index()+",");
+
+		if (isVerb())
+			sbWords.append("#" + headword.index());
+		else {
+			for (IndexedWord word : words) {
+				sbWords.append(word.originalText()).append(' ');
 			}
-			sbWords.deleteCharAt(sbWords.length()-1);
+			if (sbWords.length() > 0)
+				sbWords.deleteCharAt(sbWords.length() - 1);
+			else
+				sbWords.append(NULL_CMPNT);
+		}
+
+		if (contexts.size() > 0) {
+			sbWords.append("<ctx");
+			for (RelationVerb ctx : contexts) {
+				sbWords.append("#" + ctx.getHeadword().index() + ",");
+			}
+			sbWords.deleteCharAt(sbWords.length() - 1);
 			sbWords.append(">");
 		}
-		
-		if(connector != null)
+
+		if (connector != null)
 			sbConn.append(connector.toString());
-		
-		if(isSubject && sbConn.length() > 0) {
+
+		if (isSubject && sbConn.length() > 0) {
 			return sbWords.toString() + "; " + sbConn.toString();
 		}
-		if(!isSubject && sbConn.length() > 0) {
+		if (!isSubject && sbConn.length() > 0) {
 			return sbConn.toString() + "; " + sbWords.toString() + ";";
 		}
-		if(isSubject) {
+		if (isSubject) {
 			return sbWords.toString() + "; ";
 		}
-		if(!isSubject) {
+		if (!isSubject) {
 			return "; " + sbWords.toString() + ";";
 		}
-			
-		
+
 		return sbWords.toString();
 	}
 

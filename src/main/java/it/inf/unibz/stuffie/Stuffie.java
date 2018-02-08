@@ -18,6 +18,7 @@ public class Stuffie {
 	
 	private VerbExtractor vExtr;
 	private SubjectExtractor sExtr;
+	private ObjectExtractor oExtr;
 	
 	@SuppressWarnings("rawtypes")
 	PipelineStep steps[];
@@ -33,8 +34,9 @@ public class Stuffie {
 		
 		vExtr = new VerbExtractor(stAnno, stProp, stPline);
 		sExtr = new SubjectExtractor(stAnno, stProp, stPline);
+		oExtr = new ObjectExtractor(stAnno, stProp, stPline);
 		
-		steps = new PipelineStep[] {vExtr, sExtr};
+		steps = new PipelineStep[] {vExtr, sExtr, oExtr};
 	}
 	
 	public String run(String text) {
@@ -55,6 +57,7 @@ public class Stuffie {
 		iter = 1;
 		for(RelationInstance relIns : rels) {
 			sExtr.run(relIns, iter);
+			oExtr.run(relIns, iter);
 			iter++;
 		}
 		

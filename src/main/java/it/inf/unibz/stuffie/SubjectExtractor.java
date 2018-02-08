@@ -15,7 +15,7 @@ import edu.stanford.nlp.trees.UniversalEnglishGrammaticalRelations;
 
 public class SubjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 
-	LinkedHashSet<DependencyArc> subjArcs;
+	private LinkedHashSet<DependencyArc> subjArcs;
 
 	public SubjectExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
 		super(stAnno, stProp, stPipe);
@@ -38,7 +38,22 @@ public class SubjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 		IndexedWord verbSrc = rel.getVerb().headword;
 		SemanticGraph depAnno = rel.getVerb().getDepAnno();
 
-		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(new IndexedWordComparator());
+		if(traverseOneStep(rel, iteration, verbSrc, depAnno)) {
+			return true;
+		} else {
+			TreeSet<IndexedWord> cops = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc));
+			cops.addAll(depAnno.getParentsWithReln(verbSrc, UniversalEnglishGrammaticalRelations.shortNameToGRel.get("cop")));
+			
+			if(cops.isEmpty())
+				return false;
+			else
+				return traverseOneStep(rel, iteration, cops.first(), depAnno);
+		}
+
+	}
+	
+	protected Boolean traverseOneStep(RelationInstance rel, int iteration, IndexedWord verbSrc, SemanticGraph depAnno) {
+		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc));
 		for (DependencyArc arc : subjArcs) {
 			if (arc.getDir() == DependencyArc.Direction.OUT)
 				candidates.addAll(depAnno.getChildrenWithReln(verbSrc, arc.getRel()));
@@ -48,9 +63,15 @@ public class SubjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 			if (candidates.isEmpty())
 				continue;
 
+			RelationArgument subj = new RelationArgument(candidates.first(), rel.getVerb().getSentenceID(), depAnno,
+					true);
+			subj.setChainFromVerb(
+					new TraversalPath(new TraversalArc(verbSrc, arc.getRel(), subj.headword, arc.getDir())));
 			rel.setSubject(new RelationArgument(candidates.first(), rel.getVerb().getSentenceID(), depAnno, true));
+			
+			return true;
 		}
-
+		
 		return false;
 	}
 

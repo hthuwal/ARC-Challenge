@@ -21,6 +21,7 @@ public class VerbExtractor extends PipelineStep<TreeSet<RelationInstance>, CoreM
 		TreeSet<RelationInstance> res = new TreeSet<RelationInstance>();
 		
 		SemanticGraph depAnno = sentence.get(BasicDependenciesAnnotation.class);
+		depAnno.prettyPrint();
 		for(IndexedWord verb : depAnno.getAllNodesByPartOfSpeechPattern("VB|VBD|VBG|VBN|VBP|VBZ")) {
 			res.add(new RelationInstance(new RelationVerb(verb, sentenceNum, depAnno)));
 		}
