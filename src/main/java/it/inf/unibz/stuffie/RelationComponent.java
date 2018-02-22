@@ -13,7 +13,7 @@ public class RelationComponent {
 
 	protected IndexedWord headword;
 	protected TreeSet<IndexedWord> words;
-	protected int sentenceID;
+	protected Integer sentenceID;
 	protected String id;
 	protected SemanticGraph depAnno;
 
@@ -58,6 +58,10 @@ public class RelationComponent {
 			return NULL_CMPNT;
 		
 		return sb.toString();
+	}
+	
+	public void addWords(IndexedWord iw) {
+		words.add(iw);
 	}
 
 }

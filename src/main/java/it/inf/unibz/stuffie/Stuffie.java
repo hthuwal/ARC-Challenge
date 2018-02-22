@@ -20,6 +20,10 @@ public class Stuffie {
 	private SubjectExtractor sExtr;
 	private ObjectExtractor oExtr;
 	
+	private NounExpander nExp;
+	private ConnectorExpander cExp;
+	private VerbExpander vExp;
+	
 	@SuppressWarnings("rawtypes")
 	PipelineStep steps[];
 	
@@ -36,7 +40,11 @@ public class Stuffie {
 		sExtr = new SubjectExtractor(stAnno, stProp, stPline);
 		oExtr = new ObjectExtractor(stAnno, stProp, stPline);
 		
-		steps = new PipelineStep[] {vExtr, sExtr, oExtr};
+		nExp = new NounExpander(stAnno, stProp, stPline);
+		cExp = new ConnectorExpander(stAnno, stProp, stPline);
+		vExp = new VerbExpander(stAnno, stProp, stPline);
+		
+		steps = new PipelineStep[] {vExtr, sExtr, oExtr, nExp, cExp, vExp};
 	}
 	
 	public String run(String text) {
@@ -58,6 +66,9 @@ public class Stuffie {
 		for(RelationInstance relIns : rels) {
 			sExtr.run(relIns, iter);
 			oExtr.run(relIns, iter);
+			nExp.run(relIns, iter);
+			cExp.run(relIns, iter);
+			vExp.run(relIns, iter);
 			iter++;
 		}
 		

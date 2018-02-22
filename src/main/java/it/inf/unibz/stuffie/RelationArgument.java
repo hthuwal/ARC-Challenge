@@ -9,13 +9,13 @@ public class RelationArgument extends RelationComponent {
 
 	private TraversalPath chainFromVerb;
 	private RelationArgumentConnector connector;
-	private TreeSet<RelationVerb> contexts;
+	private TreeSet<String> contexts;
 	private boolean isSubject;
 
 	public RelationArgument(IndexedWord headword, int sentID, SemanticGraph depAnno, boolean isSubject) {
 		super(headword, sentID, depAnno);
 		this.isSubject = isSubject;
-		contexts = new TreeSet<RelationVerb>(new RelationComponentComparator(this));
+		contexts = new TreeSet<String>(new StringIDComparator());
 	}
 
 	public void setChainFromVerb(TraversalPath p) {
@@ -36,7 +36,7 @@ public class RelationArgument extends RelationComponent {
 		StringBuilder sbConn = new StringBuilder();
 
 		if (isVerb())
-			sbWords.append("#" + headword.index());
+			sbWords.append("#" + sentenceID + "." + headword.index());
 		else {
 			for (IndexedWord word : words) {
 				sbWords.append(word.originalText()).append(' ');
@@ -49,15 +49,17 @@ public class RelationArgument extends RelationComponent {
 
 		if (contexts.size() > 0) {
 			sbWords.append("<ctx");
-			for (RelationVerb ctx : contexts) {
-				sbWords.append("#" + ctx.getHeadword().index() + ",");
+			for (String ctx : contexts) {
+				sbWords.append("#" + ctx + ",");
 			}
 			sbWords.deleteCharAt(sbWords.length() - 1);
 			sbWords.append(">");
 		}
 
 		if (connector != null)
-			sbConn.append(connector.toString());
+			sbConn.append(" " + connector.toString());
+		else 
+			sbConn.append(" <_>");
 
 		if (isSubject && sbConn.length() > 0) {
 			return sbWords.toString() + "; " + sbConn.toString();
@@ -73,6 +75,14 @@ public class RelationArgument extends RelationComponent {
 		}
 
 		return sbWords.toString();
+	}
+
+	public void addContext(String string) {
+		contexts.add(string);
+	}
+
+	public void setConnector(RelationArgumentConnector conn) {
+		this.connector = conn;
 	}
 
 }

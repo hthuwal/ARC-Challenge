@@ -18,10 +18,10 @@ import edu.stanford.nlp.trees.UniversalEnglishGrammaticalRelations;
 public class ObjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 
 	private LinkedHashSet<DependencyArc> objArcs;
-	
+
 	public ObjectExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
 		super(stAnno, stProp, stPipe);
-		
+
 		objArcs = new LinkedHashSet<DependencyArc>();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("resource/object_arcs.txt"));
@@ -32,7 +32,7 @@ public class ObjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 			}
 			br.close();
 		} catch (Exception e) {
-			
+
 		}
 	}
 
@@ -45,29 +45,44 @@ public class ObjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 		HashMap<Integer, DependencyArc> arcTempStorage = new HashMap<Integer, DependencyArc>();
 		for (DependencyArc arc : objArcs) {
 			Set<IndexedWord> temp;
-			if (arc.getDir() == DependencyArc.Direction.OUT) 
+			if (arc.getDir() == DependencyArc.Direction.OUT) {
 				temp = depAnno.getChildrenWithReln(verbSrc, arc.getRel());
-			else
+				
+				if (!temp.isEmpty() && arc.getRel().getShortName().equals("ccomp")) {
+					Set<IndexedWord> shiftingSet = depAnno.getChildrenWithReln(verbSrc, arc.getRel());
+					for (IndexedWord iw : shiftingSet) {
+						if (iw.tag().equals("JJ")) {
+							TreeSet<IndexedWord> realVBs = new TreeSet<IndexedWord>(new IndexedWordComparator(iw));
+							realVBs.addAll(depAnno.getChildrenWithReln(iw,
+									UniversalEnglishGrammaticalRelations.shortNameToGRel.get("cop")));
+							if (!realVBs.isEmpty()) {
+								temp.remove(iw);
+								temp.add(realVBs.first());
+							}
+						}
+					}
+				}
+			} else
 				temp = depAnno.getParentsWithReln(verbSrc, arc.getRel());
-			
-			for(IndexedWord iw : temp) {
+
+			for (IndexedWord iw : temp) {
 				arcTempStorage.put(iw.index(), arc);
 			}
 			candidates.addAll(temp);
 		}
-		
-		if(candidates.isEmpty())
+
+		if (candidates.isEmpty())
 			return false;
-		
+
 		boolean first = true;
-		for(IndexedWord candidate : candidates) {
+		for (IndexedWord candidate : candidates) {
 			DependencyArc arc = arcTempStorage.get(candidate.index());
 			RelationArgument obj = new RelationArgument(candidates.first(), rel.getVerb().getSentenceID(), depAnno,
 					true);
 			obj.setChainFromVerb(
 					new TraversalPath(new TraversalArc(verbSrc, arc.getRel(), obj.headword, arc.getDir())));
-			
-			if(first) {
+
+			if (first) {
 				rel.setObject(new RelationArgument(candidate, rel.getVerb().getSentenceID(), depAnno, false));
 				first = false;
 			} else {

@@ -1,0 +1,15 @@
+compound,C
+nummod,C
+det,C
+advmod,C
+amod,C
+nmod,C
+nmod:poss,C
+nmod:tmod,C
+nmod:agent,C
+nmod:word,C
+nmod:npmod,C
+case,C
+mark,C
+acl,R
+acl:relcl,R

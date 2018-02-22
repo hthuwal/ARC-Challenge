@@ -52,7 +52,12 @@ public class RelationInstance implements Comparable<RelationInstance> {
 
 	@Override
 	public int compareTo(RelationInstance o) {
-		int ret = id.compareTo(o.id);
+		int ret = verb.sentenceID.compareTo(o.verb.sentenceID);
+		if (ret == 0) {
+			ret = Integer.compare(verb.headword.index(), o.verb.headword.index());
+			if (ret != 0)
+				return ret;
+		}
 		if (ret == 0) {
 			if (subject != null && o.subject == null)
 				return -1;
@@ -114,35 +119,40 @@ public class RelationInstance implements Comparable<RelationInstance> {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
 	/**
-	 * @param subject the subject to set
+	 * @param subject
+	 *            the subject to set
 	 */
 	public void setSubject(RelationArgument subject) {
 		this.subject = subject;
 	}
 
 	/**
-	 * @param verb the verb to set
+	 * @param verb
+	 *            the verb to set
 	 */
 	public void setVerb(RelationVerb verb) {
 		this.verb = verb;
 	}
 
 	/**
-	 * @param object the object to set
+	 * @param object
+	 *            the object to set
 	 */
 	public void setObject(RelationArgument object) {
 		this.object = object;
 	}
 
 	/**
-	 * @param facets the facets to set
+	 * @param facets
+	 *            the facets to set
 	 */
 	public void setFacets(TreeSet<RelationArgument> facets) {
 		this.facets = facets;

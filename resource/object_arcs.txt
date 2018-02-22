@@ -4,3 +4,4 @@ nmod,OUT
 xcomp,OUT
 ccomp,OUT
 advcl,OUT
+advmod, OUT
