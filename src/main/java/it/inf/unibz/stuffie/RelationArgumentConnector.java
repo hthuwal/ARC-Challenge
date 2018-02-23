@@ -11,11 +11,13 @@ public class RelationArgumentConnector extends RelationComponent {
 	
 	public RelationArgumentConnector(IndexedWord headword, int sentID, SemanticGraph depAnno) {
 		super(headword, sentID, depAnno);
+		expectingConnector = true;
 	}
 	
 	public RelationArgumentConnector(IndexedWord headword, int sentID, SemanticGraph depAnno, TraversalPath chainToArgument) {
 		super(headword, sentID, depAnno);
 		this.chainToArgument = chainToArgument;
+		expectingConnector = true;
 	}
 	
 	public TraversalPath getChainToArgument() {

@@ -20,12 +20,16 @@ public class RelationComponent {
 	public RelationComponent(IndexedWord headword, int sentenceID, SemanticGraph depAnno) {
 		this.headword = headword;
 		this.sentenceID = sentenceID;
-		id = sentenceID + "." + headword.index();
+		if (headword != null)
+			id = sentenceID + "." + headword.index();
+		else
+			id = sentenceID + "." + 0;
 		words = new TreeSet<IndexedWord>(new IndexedWordComparator());
-		words.add(headword);
+		if (headword != null)
+			words.add(headword);
 		this.depAnno = depAnno;
 	}
-	
+
 	public IndexedWord getHeadword() {
 		return headword;
 	}
@@ -33,7 +37,7 @@ public class RelationComponent {
 	public String getPOS() {
 		return headword.tag();
 	}
-	
+
 	public int getSentenceID() {
 		return sentenceID;
 	}
@@ -44,22 +48,22 @@ public class RelationComponent {
 		else
 			return (VERB_PATTERN.matcher(headword.tag()).matches());
 	}
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		
-		for(IndexedWord word : words) {
+
+		for (IndexedWord word : words) {
 			sb.append(word.originalText()).append(' ');
 		}
-		
-		if(sb.length() > 0)
-			sb.deleteCharAt(sb.length()-1);
+
+		if (sb.length() > 0)
+			sb.deleteCharAt(sb.length() - 1);
 		else
 			return NULL_CMPNT;
-		
+
 		return sb.toString();
 	}
-	
+
 	public void addWords(IndexedWord iw) {
 		words.add(iw);
 	}

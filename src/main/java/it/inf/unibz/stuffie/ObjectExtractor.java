@@ -47,7 +47,7 @@ public class ObjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 			Set<IndexedWord> temp;
 			if (arc.getDir() == DependencyArc.Direction.OUT) {
 				temp = depAnno.getChildrenWithReln(verbSrc, arc.getRel());
-				
+
 				if (!temp.isEmpty() && arc.getRel().getShortName().equals("ccomp")) {
 					Set<IndexedWord> shiftingSet = depAnno.getChildrenWithReln(verbSrc, arc.getRel());
 					for (IndexedWord iw : shiftingSet) {
@@ -77,16 +77,14 @@ public class ObjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 		boolean first = true;
 		for (IndexedWord candidate : candidates) {
 			DependencyArc arc = arcTempStorage.get(candidate.index());
-			RelationArgument obj = new RelationArgument(candidates.first(), rel.getVerb().getSentenceID(), depAnno,
-					true);
-			obj.setChainFromVerb(
-					new TraversalPath(new TraversalArc(verbSrc, arc.getRel(), obj.headword, arc.getDir())));
+			RelationArgument obj = new RelationArgument(candidate, rel.getVerb().getSentenceID(), depAnno, false);
+			obj.addChainFromVerb(new TraversalArc(verbSrc, arc.getRel(), obj.headword, arc.getDir()));
 
 			if (first) {
-				rel.setObject(new RelationArgument(candidate, rel.getVerb().getSentenceID(), depAnno, false));
+				rel.setObject(obj);
 				first = false;
 			} else {
-				rel.addFacet(new RelationArgument(candidate, rel.getVerb().getSentenceID(), depAnno, false));
+				rel.addFacet(obj);
 			}
 		}
 

@@ -18,14 +18,22 @@ public class NounExpander extends Expander {
 		RelationArgument subj = par.getSubject();
 		RelationArgument obj = par.getObject();
 
+		boolean ret = true;
 		if (subj == null && obj != null)
-			return expandObject(par, obj, obj.getHeadword());
+			ret = ret && expandObject(par, obj, obj.getHeadword());
 		else if (subj != null && obj == null) {
-			return expandObject(par, subj, subj.getHeadword());
+			ret = ret && expandObject(par, subj, subj.getHeadword());
 		} else if (subj == null && obj == null) {
-			return false; 
+			ret = true;
+		} else {
+			ret = ret && expandObject(par, obj, obj.getHeadword()) && expandObject(par, subj, subj.getHeadword());
 		}
-		return expandObject(par, subj, subj.getHeadword()) && expandObject(par, obj, obj.getHeadword());
+
+		for (RelationArgument arg : par.getFacets()) {
+			ret = ret && expandObject(par, arg, arg.getHeadword());
+		}
+
+		return ret;
 	}
 
 	private Boolean expandObject(RelationInstance par, RelationArgument arg, IndexedWord current) {
@@ -40,7 +48,7 @@ public class NounExpander extends Expander {
 					arg.addWords(iw);
 					ret = ret && expandObject(par, arg, iw);
 				} else {
-					if(par.getVerb().getHeadword().index() != iw.index())
+					if (par.getVerb().getHeadword().index() != iw.index())
 						arg.addContext(arg.getSentenceID() + "." + iw.index());
 				}
 			}

@@ -16,10 +16,15 @@ public class RelationArgument extends RelationComponent {
 		super(headword, sentID, depAnno);
 		this.isSubject = isSubject;
 		contexts = new TreeSet<String>(new StringIDComparator());
+		chainFromVerb = new TraversalPath();
 	}
 
 	public void setChainFromVerb(TraversalPath p) {
 		chainFromVerb = p;
+	}
+	
+	public void addChainFromVerb(TraversalArc arc) {
+		chainFromVerb.add(arc);
 	}
 
 	public TraversalPath getChainFromVerb() {
@@ -58,8 +63,6 @@ public class RelationArgument extends RelationComponent {
 
 		if (connector != null)
 			sbConn.append(" " + connector.toString());
-		else 
-			sbConn.append(" <_>");
 
 		if (isSubject && sbConn.length() > 0) {
 			return sbWords.toString() + "; " + sbConn.toString();

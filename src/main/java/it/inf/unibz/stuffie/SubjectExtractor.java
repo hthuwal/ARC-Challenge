@@ -65,9 +65,8 @@ public class SubjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 
 			RelationArgument subj = new RelationArgument(candidates.first(), rel.getVerb().getSentenceID(), depAnno,
 					true);
-			subj.setChainFromVerb(
-					new TraversalPath(new TraversalArc(verbSrc, arc.getRel(), subj.headword, arc.getDir())));
-			rel.setSubject(new RelationArgument(candidates.first(), rel.getVerb().getSentenceID(), depAnno, true));
+			subj.addChainFromVerb(new TraversalArc(verbSrc, arc.getRel(), subj.headword, arc.getDir()));
+			rel.setSubject(subj);
 			
 			return true;
 		}
