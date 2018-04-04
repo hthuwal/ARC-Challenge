@@ -52,7 +52,7 @@ public class SubjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 
 	}
 	
-	protected Boolean traverseOneStep(RelationInstance rel, int iteration, IndexedWord verbSrc, SemanticGraph depAnno) {
+	private Boolean traverseOneStep(RelationInstance rel, int iteration, IndexedWord verbSrc, SemanticGraph depAnno) {
 		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc));
 		for (DependencyArc arc : subjArcs) {
 			if (arc.getDir() == DependencyArc.Direction.OUT)
