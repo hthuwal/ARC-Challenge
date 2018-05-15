@@ -24,14 +24,40 @@ public class Stuffie {
 	private ConnectorExpander cExp;
 	private VerbExpander vExp;
 	
-	@SuppressWarnings("rawtypes")
-	PipelineStep steps[];
+	enum DepdendentMode {
+		COMBINED, SEPARATED_SUBJ_TRANSFERED, SEPARATED_SUBJ_HIDDEN
+	}
 	
+	enum ClausalConnectorMode {
+		AS_FACET, AS_RELATION
+	}
+	
+	enum SyntheticRelationMode {
+		ENABLED, DISABLED
+	}
+	
+	enum VerbGrammarFix {
+		ENABLED, DISABLED
+	}
+	
+	enum DanglingRelMode {
+		HIDDEN, SHOWN
+	}
+	
+	enum ReferenceAnnotation {
+		ENABLED, DISABLED
+	}
+	
+	enum ConjunctionDistribution {
+		AS_FACET, PARENTAL_DISTRIBUTION
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private PipelineStep steps[];
 	public Stuffie() {
 		stProp = new Properties();
 		stProp.setProperty("annotators",
-				"tokenize,ssplit,pos,lemma,depparse");
-		//,ner,mention,coref,entitymentions,natlog,openie
+				"tokenize,ssplit,pos,lemma,depparse,ner,mention,coref,entitymentions");
 		stAnno = new Annotation("This is a testing sentence.");
 		stPline = new StanfordCoreNLP(stProp);
 		stPline.annotate(stAnno);
