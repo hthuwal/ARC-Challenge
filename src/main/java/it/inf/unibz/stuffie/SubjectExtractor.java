@@ -15,10 +15,10 @@ import edu.stanford.nlp.trees.UniversalEnglishGrammaticalRelations;
 
 public class SubjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 
-	private LinkedHashSet<DependencyArc> subjArcs;
+	protected LinkedHashSet<DependencyArc> subjArcs;
 
-	public SubjectExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
-		super(stAnno, stProp, stPipe);
+	public SubjectExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
+		super(stAnno, stProp, stPipe, relevantModes);
 		subjArcs = new LinkedHashSet<DependencyArc>();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader("resource/subject_arcs.txt"));
@@ -52,7 +52,7 @@ public class SubjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 
 	}
 	
-	private Boolean traverseOneStep(RelationInstance rel, int iteration, IndexedWord verbSrc, SemanticGraph depAnno) {
+	protected Boolean traverseOneStep(RelationInstance rel, int iteration, IndexedWord verbSrc, SemanticGraph depAnno) {
 		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc));
 		for (DependencyArc arc : subjArcs) {
 			if (arc.getDir() == DependencyArc.Direction.OUT)

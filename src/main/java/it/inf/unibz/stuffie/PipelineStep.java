@@ -1,5 +1,6 @@
 package it.inf.unibz.stuffie;
 
+import java.util.HashMap;
 import java.util.Properties;
 
 import edu.stanford.nlp.pipeline.Annotation;
@@ -10,10 +11,15 @@ public abstract class PipelineStep<R,P> {
 	protected Annotation stAnno;
 	protected Properties stProp;
 	protected StanfordCoreNLP stPipe;
+	protected HashMap<Class<? extends Mode>, Mode> modes = new HashMap<>();
 	
-	public PipelineStep(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
+	public PipelineStep(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
 		super();
 		refresh(stAnno, stProp, stPipe);
+		
+		for(Mode mode : relevantModes) {
+			modes.put(mode.getClass(), mode);
+		}
 	}
 	
 	protected void refresh(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
