@@ -30,11 +30,11 @@ public class LongSubjectExtractor extends SubjectExtractor {
 			} else if(modes.get(Mode.DependentSubject.class) == Mode.DependentSubject.TRANSFER_XCOMP) {
 				advcls.addAll(depAnno.getParentsWithReln(verbSrc, UniversalEnglishGrammaticalRelations.shortNameToGRel.get("xcomp")));
 			}
-			verbSrc = advcls.first();
 			
 			if(advcls.isEmpty())
 				return false;
 			else {
+				verbSrc = advcls.first();
 				boolean res = traverseOneStep(rel, iteration, verbSrc, depAnno);
 				if(res)
 					return true;

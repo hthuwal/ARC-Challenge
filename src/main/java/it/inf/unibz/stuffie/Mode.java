@@ -1,15 +1,16 @@
 package it.inf.unibz.stuffie;
 
 public interface Mode {
+	
+	// DONE
+	enum DependentSubject implements Mode {
+		TRANSFER_ALL, HIDE_ALL, TRANSFER_ADVCL, TRANSFER_XCOMP
+	}
 
 	enum Dependent implements Mode {
 		COMBINE_CONNECTOR, COMBINE_ALL, SEPARATED
 	}
 	
-	enum DependentSubject implements Mode {
-		TRANSFER_ALL, HIDE_ALL, TRANSFER_ADVCL, TRANSFER_XCOMP
-	}
-
 	enum ClausalConnection implements Mode {
 		AS_FACET, AS_RELATION
 	}
@@ -43,7 +44,15 @@ public interface Mode {
 	}	
 	
 	enum MainObject implements Mode {
-		
+		STRICT_DOBJ, PROMOTE_FACET_VERB_CONN, PROMOTE_FACET_OBJ_CONN
+	}
+	
+	enum PrintDependenyTree implements Mode {
+		DISABLED, BEFORE_REL, AFTER_REL
+	}
+	
+	enum RelOrdering implements Mode {
+		INDEX_BASED, DEPENDENCY_BASED
 	}
 	
 }

@@ -19,8 +19,8 @@ public class ObjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 
 	private LinkedHashSet<DependencyArc> objArcs;
 
-	public ObjectExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
-		super(stAnno, stProp, stPipe);
+	public ObjectExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
+		super(stAnno, stProp, stPipe, relevantModes);
 
 		objArcs = new LinkedHashSet<DependencyArc>();
 		try {

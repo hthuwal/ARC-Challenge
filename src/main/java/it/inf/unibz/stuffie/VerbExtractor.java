@@ -13,8 +13,8 @@ import edu.stanford.nlp.util.CoreMap;
 
 public class VerbExtractor extends PipelineStep<TreeSet<RelationInstance>, CoreMap> {
 
-	public VerbExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
-		super(stAnno, stProp, stPipe);
+	public VerbExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
+		super(stAnno, stProp, stPipe, relevantModes);
 	}
 
 	@Override

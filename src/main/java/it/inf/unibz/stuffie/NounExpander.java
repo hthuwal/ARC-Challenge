@@ -9,8 +9,8 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 
 public class NounExpander extends Expander {
 
-	public NounExpander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
-		super(stAnno, stProp, stPipe, "resource/noun_expand.txt");
+	public NounExpander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
+		super(stAnno, stProp, stPipe, "resource/noun_expand.txt", relevantModes);
 	}
 
 	@Override

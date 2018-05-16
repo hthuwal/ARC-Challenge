@@ -14,12 +14,12 @@ public abstract class Expander extends PipelineStep<Boolean, RelationInstance> {
 
 	protected LinkedHashSet<ExpansionArc> expansionArcs;
 
-	public Expander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
-		super(stAnno, stProp, stPipe);
+	public Expander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
+		super(stAnno, stProp, stPipe, relevantModes);
 	}
 
-	public Expander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, String ruleSrc) {
-		super(stAnno, stProp, stPipe);
+	public Expander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, String ruleSrc, Mode... relevantModes) {
+		super(stAnno, stProp, stPipe, relevantModes);
 		expansionArcs = new LinkedHashSet<ExpansionArc>();
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(ruleSrc));

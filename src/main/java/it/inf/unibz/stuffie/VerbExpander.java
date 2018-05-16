@@ -9,8 +9,8 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 
 public class VerbExpander extends Expander {
 
-	public VerbExpander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
-		super(stAnno, stProp, stPipe, "resource/verb_expand.txt");
+	public VerbExpander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
+		super(stAnno, stProp, stPipe, "resource/verb_expand.txt", relevantModes);
 	}
 
 	@Override

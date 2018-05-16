@@ -9,8 +9,8 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 
 public class ConnectorExpander extends Expander {
 
-	public ConnectorExpander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe) {
-		super(stAnno, stProp, stPipe, "resource/connector_expand.txt");
+	public ConnectorExpander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
+		super(stAnno, stProp, stPipe, "resource/connector_expand.txt", relevantModes);
 	}
 
 	@Override
