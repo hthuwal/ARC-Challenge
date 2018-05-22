@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -26,13 +26,16 @@ public class Stuffie {
 	private ConnectorExpander cExp = new ConnectorExpander(null, null, null);
 	private VerbExpander vExp = new VerbExpander(null, null, null);
 
-	private PipelineStep<?, ?> steps[] = new PipelineStep[] { vExtr, sExtr, oExtr, lsExtr, nExp, cExp, vExp };
+	private SynthRelExtractor srExtr = new SynthRelExtractor(null, null, null);
+
+	private PipelineStep<?, ?> steps[] = new PipelineStep[] { vExtr, sExtr, oExtr, lsExtr, nExp, cExp, vExp, srExtr };
 
 	private Mode[] defaultModes = { Mode.Dependent.SEPARATED, Mode.DependentSubject.TRANSFER_ALL,
-			Mode.ClausalConnection.AS_FACET, Mode.FacetConnector.AS_VERB_COMPOUND, Mode.SyntheticRelation.ENABLED,
-			Mode.VerbGrammarFix.DISABLED, Mode.DanglingRel.HIDDEN, Mode.ReferenceAnnotation.ENABLED,
-			Mode.ConjunctionDistribution.PARENTAL_DISTRIBUTION, Mode.IndirectObject.AS_VERB_COMPOUND,
-			Mode.MainObject.PROMOTE_FACET_VERB_CONN, Mode.PrintDependenyTree.BEFORE_REL, Mode.RelOrdering.INDEX_BASED };
+			Mode.ClausalConnection.AS_FACET, Mode.FacetConnector.AS_VERB_COMPOUND,
+			Mode.SyntheticRelation.ENABLED_NON_REDUNDANT, Mode.VerbGrammarFix.DISABLED, Mode.DanglingRel.HIDDEN,
+			Mode.ReferenceAnnotation.ENABLED, Mode.ConjunctionDistribution.PARENTAL_DISTRIBUTION,
+			Mode.IndirectObject.AS_VERB_COMPOUND, Mode.MainObject.PROMOTE_FACET_VERB_CONN,
+			Mode.PrintDependenyTree.DISABLED, Mode.RelOrdering.INDEX_BASED };
 
 	private HashMap<Class<? extends Mode>, Mode> modes = new HashMap<>();
 	private HashMap<Class<? extends PipelineStep<?, ?>>, Class<? extends Mode>[]> relevantPlineModes = new HashMap<>();
@@ -66,6 +69,10 @@ public class Stuffie {
 
 		relevantPlineModes.put(LongSubjectExtractor.class,
 				(Class<? extends Mode>[]) new Class<?>[] { Mode.DependentSubject.class });
+		relevantPlineModes.put(VerbExtractor.class,
+				(Class<? extends Mode>[]) new Class<?>[] { Mode.PrintDependenyTree.class });
+		relevantPlineModes.put(SynthRelExtractor.class,
+				(Class<? extends Mode>[]) new Class<?>[] { Mode.VerbGrammarFix.class });
 
 		stProp = new Properties();
 		stProp.setProperty("annotators", "tokenize,ssplit,pos,lemma,ner,parse,dcoref");
@@ -96,14 +103,14 @@ public class Stuffie {
 		}
 		return relevantModes;
 	}
-
-	public String run(String text) {
+	
+	private TreeSet<RelationInstance> run(String text) {
 		stAnno = new Annotation(text);
 		stPline = new StanfordCoreNLP(stProp);
 		stPline.annotate(stAnno);
 		refreshPlines();
 
-		StringBuilder sb = new StringBuilder();
+		
 		List<CoreMap> sentences = stAnno.get(SentencesAnnotation.class);
 		int iter = 1;
 		TreeSet<RelationInstance> rels = new TreeSet<RelationInstance>();
@@ -128,7 +135,14 @@ public class Stuffie {
 				iter++;
 			}
 		}
-
+		
+		iter = 1;
+		for (CoreMap sentence : sentences) {
+			if (modes.get(Mode.SyntheticRelation.class) != Mode.SyntheticRelation.DISABLED)
+				rels.addAll(srExtr.run(sentence, iter));
+			iter++;
+		}
+		
 		iter = 1;
 		for (RelationInstance relIns : rels) {
 			nExp.run(relIns, iter);
@@ -136,12 +150,30 @@ public class Stuffie {
 			vExp.run(relIns, iter);
 			iter++;
 		}
-
-		for (RelationInstance relIns : rels) {
+		
+		return rels;
+	}
+	
+	public String parseRelation(String text) {
+		StringBuilder sb = new StringBuilder();
+		
+		for (RelationInstance relIns : run(text)) {
 			sb.append(relIns.toString() + "\n");
 		}
 
 		return sb.toString();
+	}
+	
+	public int[] countRels(String text) {
+		int res[] = new int[] {0,0};
+		
+		for(RelationInstance relIns : run(text)) {
+			res[0] = res[0]+1;
+			res[1] = res[1]+1;
+			res[1] = res[1] + relIns.getFacets().size();
+		}
+		
+		return res;
 	}
 
 	private void refreshPlines() {

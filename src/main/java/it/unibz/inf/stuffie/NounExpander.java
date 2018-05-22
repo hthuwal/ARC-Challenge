@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.util.Properties;
 
@@ -37,7 +37,7 @@ public class NounExpander extends Expander {
 	}
 
 	private Boolean expandObject(RelationInstance par, RelationArgument arg, IndexedWord current) {
-		if (arg.isVerb())
+		if (arg.isVerb() || arg.isStatic())
 			return true;
 
 		boolean ret = true;
@@ -48,7 +48,7 @@ public class NounExpander extends Expander {
 					arg.addWords(iw);
 					ret = ret && expandObject(par, arg, iw);
 				} else {
-					if (par.getVerb().getHeadword().index() != iw.index())
+					if (!par.getVerb().isSynthetic() && par.getVerb().getHeadword().index() != iw.index())
 						arg.addContext(arg.getSentenceID() + "." + iw.index());
 				}
 			}

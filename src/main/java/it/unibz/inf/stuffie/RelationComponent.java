@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.util.TreeSet;
 import java.util.regex.Pattern;
@@ -16,6 +16,15 @@ public class RelationComponent {
 	protected Integer sentenceID;
 	protected String id;
 	protected SemanticGraph depAnno;
+	protected boolean isStatic;
+
+	public boolean isStatic() {
+		return isStatic;
+	}
+
+	public void setStatic(boolean isStatic) {
+		this.isStatic = isStatic;
+	}
 
 	public RelationComponent(IndexedWord headword, int sentenceID, SemanticGraph depAnno) {
 		this.headword = headword;
@@ -28,6 +37,18 @@ public class RelationComponent {
 		if (headword != null)
 			words.add(headword);
 		this.depAnno = depAnno;
+		isStatic = false;
+	}
+
+	public RelationComponent(IndexedWord headword, TreeSet<IndexedWord> words, int sentenceID, SemanticGraph depAnno) {
+		this.headword = headword;
+		this.sentenceID = sentenceID;
+		if (headword != null)
+			id = sentenceID + "." + headword.index();
+		else
+			id = sentenceID + "." + 0;
+		this.words = words;
+		isStatic = true;
 	}
 
 	public IndexedWord getHeadword() {

@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.util.HashSet;
 

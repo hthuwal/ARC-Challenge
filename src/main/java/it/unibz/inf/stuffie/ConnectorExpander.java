@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.util.Properties;
 
@@ -20,11 +20,15 @@ public class ConnectorExpander extends Expander {
 
 		boolean ret = true;
 
-		if (subj != null) {
-			ret = ret && expandConnector(subj, subj.getHeadword(),
-					subj.getChainFromVerb().get(0).rel.getShortName().equals("acl"), false);
+		if (subj != null && !subj.isStatic()) {
+			if (!subj.getChainFromVerb().isEmpty())
+				ret = ret && expandConnector(subj, subj.getHeadword(),
+						subj.getChainFromVerb().get(0).rel.getShortName().equals("acl"), false);
+			else {
+				ret = ret && expandConnector(subj, subj.getHeadword(), false, false);
+			}
 		}
-		if (obj != null)
+		if (obj != null && !obj.isStatic())
 			ret = ret && expandConnector(obj, obj.getHeadword(), false, false);
 
 		for (RelationArgument arg : par.getFacets()) {
@@ -40,7 +44,7 @@ public class ConnectorExpander extends Expander {
 		boolean found = false;
 		for (ExpansionArc arc : expansionArcs) {
 			for (IndexedWord iw : depAnno.getChildrenWithReln(arg.headword, arc.getRel())) {
-				if(!isACL)
+				if (!isACL)
 					arg.setConnector(new RelationArgumentConnector(iw, arg.sentenceID, depAnno));
 				arg.words.remove(iw);
 				found = true;
@@ -49,8 +53,8 @@ public class ConnectorExpander extends Expander {
 			if (found)
 				break;
 		}
-		
-		if(!found && isFacet) {
+
+		if (!found && isFacet) {
 			arg.setConnector(new RelationArgumentConnector(null, arg.sentenceID, depAnno));
 		}
 

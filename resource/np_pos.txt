@@ -6,3 +6,5 @@ JJ
 JJR
 CD
 PRP
+DT
+IN

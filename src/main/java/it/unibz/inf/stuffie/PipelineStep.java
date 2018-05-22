@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.util.HashMap;
 import java.util.Properties;
@@ -33,4 +33,5 @@ public abstract class PipelineStep<R,P> {
 	}
 	
 	protected abstract R run(P par, int iteration);
+	
 }

@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 public interface Mode {
 	
@@ -20,7 +20,7 @@ public interface Mode {
 	}
 
 	enum SyntheticRelation implements Mode {
-		ENABLED, DISABLED
+		ENABLED_NON_REDUNDANT, ENABLED_REDUNDANT, DISABLED
 	}
 
 	enum VerbGrammarFix implements Mode {
@@ -47,8 +47,9 @@ public interface Mode {
 		STRICT_DOBJ, PROMOTE_FACET_VERB_CONN, PROMOTE_FACET_OBJ_CONN
 	}
 	
+	// DONE
 	enum PrintDependenyTree implements Mode {
-		DISABLED, BEFORE_REL, AFTER_REL
+		DISABLED, ENABLED
 	}
 	
 	enum RelOrdering implements Mode {

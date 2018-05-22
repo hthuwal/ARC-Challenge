@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.util.Properties;
 
@@ -19,6 +19,9 @@ public class VerbExpander extends Expander {
 	}
 	
 	private Boolean expandVerb(RelationVerb arg, IndexedWord current) {
+		if(arg.isSynthetic())
+			return true;
+		
 		boolean ret = true;
 		SemanticGraph depAnno = arg.depAnno;
 		for (ExpansionArc arc : expansionArcs) {

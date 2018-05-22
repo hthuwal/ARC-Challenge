@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.util.Properties;
 import java.util.TreeSet;
@@ -22,7 +22,9 @@ public class VerbExtractor extends PipelineStep<TreeSet<RelationInstance>, CoreM
 		TreeSet<RelationInstance> res = new TreeSet<RelationInstance>();
 
 		SemanticGraph depAnno = sentence.get(BasicDependenciesAnnotation.class);
-		depAnno.prettyPrint();
+		
+		if(modes.get(Mode.PrintDependenyTree.class) == Mode.PrintDependenyTree.ENABLED)
+			depAnno.prettyPrint();
 		for (IndexedWord verb : depAnno.getAllNodesByPartOfSpeechPattern("VB|VBD|VBG|VBN|VBP|VBZ")) {
 			if (depAnno.getParentsWithReln(verb, UniversalEnglishGrammaticalRelations.shortNameToGRel.get("aux"))
 					.isEmpty()

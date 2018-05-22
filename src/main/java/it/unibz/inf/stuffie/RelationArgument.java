@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.util.TreeSet;
 
@@ -19,10 +19,18 @@ public class RelationArgument extends RelationComponent {
 		chainFromVerb = new TraversalPath();
 	}
 
+	public RelationArgument(IndexedWord headword, TreeSet<IndexedWord> words, int sentenceID, SemanticGraph depAnno,
+			boolean isSubject) {
+		super(headword, words, sentenceID, depAnno);
+		this.isSubject = isSubject;
+		contexts = new TreeSet<String>(new StringIDComparator());
+		chainFromVerb = new TraversalPath();
+	}
+
 	public void setChainFromVerb(TraversalPath p) {
 		chainFromVerb = p;
 	}
-	
+
 	public void addChainFromVerb(TraversalArc arc) {
 		chainFromVerb.add(arc);
 	}

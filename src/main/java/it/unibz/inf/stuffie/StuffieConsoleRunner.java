@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -121,7 +121,7 @@ public class StuffieConsoleRunner {
 					}
 				}
 			} else {
-				System.out.println(stuffie.run(text));
+				System.out.println(stuffie.parseRelation(text));
 			}
 		}
 		System.out.print("Bye bye.");

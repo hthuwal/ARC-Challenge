@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import java.util.TreeSet;
 
@@ -53,7 +53,7 @@ public class RelationInstance implements Comparable<RelationInstance> {
 	@Override
 	public int compareTo(RelationInstance o) {
 		int ret = verb.sentenceID.compareTo(o.verb.sentenceID);
-		if (ret == 0) {
+		if (ret == 0 && !verb.isSynthetic()) {
 			ret = Integer.compare(verb.headword.index(), o.verb.headword.index());
 			if (ret != 0)
 				return ret;
@@ -79,6 +79,9 @@ public class RelationInstance implements Comparable<RelationInstance> {
 			} else {
 				ret = object.id.compareTo(o.object.id);
 			}
+		}
+		if (ret == 0) {
+			ret = id.compareTo(o.getId());
 		}
 		return ret;
 	}

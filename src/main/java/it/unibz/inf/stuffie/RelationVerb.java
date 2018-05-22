@@ -1,4 +1,4 @@
-package it.inf.unibz.stuffie;
+package it.unibz.inf.stuffie;
 
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.semgraph.SemanticGraph;
@@ -11,8 +11,18 @@ public class RelationVerb extends RelationComponent {
 		super(headword, sentID, depAnno);
 	}
 	
+	public RelationVerb(String synthVerb, int sentID, SemanticGraph depAnno, int synthID) {
+		super(null, sentID, depAnno);
+		this.synthVerb = synthVerb;
+		this.id = sentenceID + "." + synthID;
+	}
+	
 	public boolean isSynthetic() {
 		return headword==null;
+	}
+	
+	public void grammaticalFix() {
+		
 	}
 	
 	public String toString() {
