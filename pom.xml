@@ -4,6 +4,15 @@
 	<groupId>it.inf.unibz</groupId>
 	<artifactId>stuffie</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<repositories>
+		<repository>
+			<id>CogcompSoftware</id>
+			<name>CogcompSoftware</name>
+			<url>http://cogcomp.org/m2repo/</url>
+		</repository>
+	</repositories>
+	
 	<dependencies>
 		<dependency>
 			<groupId>edu.stanford.nlp</groupId>
@@ -15,6 +24,11 @@
 			<artifactId>stanford-corenlp</artifactId>
 			<version>3.9.1</version>
 			<classifier>models</classifier>
+		</dependency>
+		<dependency>
+			<groupId>edu.illinois.cs.cogcomp</groupId>
+			<artifactId>illinois-prep-srl</artifactId>
+			<version>4.0.5</version>
 		</dependency>
 	</dependencies>
 </project>

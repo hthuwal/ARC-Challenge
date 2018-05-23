@@ -3,7 +3,9 @@ package it.unibz.inf.stuffie;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Properties;
+import java.util.Set;
 import java.util.TreeSet;
 
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
@@ -103,14 +105,13 @@ public class Stuffie {
 		}
 		return relevantModes;
 	}
-	
+
 	private TreeSet<RelationInstance> run(String text) {
 		stAnno = new Annotation(text);
 		stPline = new StanfordCoreNLP(stProp);
 		stPline.annotate(stAnno);
 		refreshPlines();
 
-		
 		List<CoreMap> sentences = stAnno.get(SentencesAnnotation.class);
 		int iter = 1;
 		TreeSet<RelationInstance> rels = new TreeSet<RelationInstance>();
@@ -135,14 +136,14 @@ public class Stuffie {
 				iter++;
 			}
 		}
-		
+
 		iter = 1;
 		for (CoreMap sentence : sentences) {
 			if (modes.get(Mode.SyntheticRelation.class) != Mode.SyntheticRelation.DISABLED)
 				rels.addAll(srExtr.run(sentence, iter));
 			iter++;
 		}
-		
+
 		iter = 1;
 		for (RelationInstance relIns : rels) {
 			nExp.run(relIns, iter);
@@ -150,29 +151,43 @@ public class Stuffie {
 			vExp.run(relIns, iter);
 			iter++;
 		}
-		
+
 		return rels;
 	}
-	
+
 	public String parseRelation(String text) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (RelationInstance relIns : run(text)) {
 			sb.append(relIns.toString() + "\n");
 		}
 
 		return sb.toString();
 	}
-	
+
+	public int[] countReds(String text) {
+		int res[] = new int[] { 0, 0 };
+
+		HashMap<String, Set<String>> refMap = new HashMap<>();
+		for (RelationInstance relIns : run(text)) {
+			Set<String> refs = relIns.getAllRefs();
+			res[0] = res[0] + refs.size();
+
+			refMap.put(relIns.getId(), refs);
+		}
+
+		return res;
+	}
+
 	public int[] countRels(String text) {
-		int res[] = new int[] {0,0};
-		
-		for(RelationInstance relIns : run(text)) {
-			res[0] = res[0]+1;
-			res[1] = res[1]+1;
+		int res[] = new int[] { 0, 0 };
+
+		for (RelationInstance relIns : run(text)) {
+			res[0] = res[0] + 1;
+			res[1] = res[1] + 1;
 			res[1] = res[1] + relIns.getFacets().size();
 		}
-		
+
 		return res;
 	}
 

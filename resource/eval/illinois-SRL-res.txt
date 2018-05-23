@@ -1,0 +1,529 @@
+Through the efforts of Kenneth Starr, the independent counsel  under the law enacted in the wake of Watergate, the investigation  spread to examine Clinton's affair with a White House intern.
+Through -> Cause
+of -> Possessor
+in -> Location
+of -> StartState
+with -> Topic
+
+In December 1988 a Pan Am jet was blown up over Lockerbie, Scotland, killing 270.
+In -> Possessor
+over -> Source
+
+After this killing, the FBI resumed a search for an anti-abortion conspiracy.
+After -> Topic
+for -> Cause
+
+``Even if they want to go to shopping, one of us will accompany them,''  Bandaratillaka said.
+to -> PartWhole
+of -> PartWhole
+
+It is not one that moves voters, but it is vital to both parties because  it helps determine their relative strength in Congress.
+to -> ObjectOfVerb
+in -> Location
+
+Though many economic issues need to be resolved, the main point of  contention since the labor agreement expired and the owners declared  a lockout on July 1 has been a clause which allows teams to pay their  own free agents whatever they want, regardless of salary-cap rules  governing the NBA's 29 teams.
+of -> PartWhole
+on -> Possessor
+of -> ObjectOfVerb
+
+He said Stepinac's figure summed up ``the whole tragedy which befell the Croatian people and Europe in the course of this century marked by the three great evils of fascism, national socialism and communism.''
+in -> Location
+of -> Species
+by -> Location
+of -> PartWhole
+
+The radical group  Islamic Jihad claimed responsibility Saturday for the market bombing  and vowed more attacks to try to block the new peace accord.
+for -> Cause
+
+Many of the horses are suffering stress  from the journey here, but those from Asian countries are adjusting  faster than those from cold countries, Siraya said.
+of -> ObjectOfVerb
+from -> Source
+from -> Source
+from -> Source
+
+IOC rules forbid bidding cities from giving members or their relatives anything valued greater than $150; however, IOC member Marc Hodler alleges widespread corruption.
+from -> Source
+
+``I said, `You don't have to do this,' ''  recalled Schwarz, who was with him at the time.
+with -> Location
+at -> Location
+
+Bacteria can release products that cause white blood cells to release  enormous amounts of nitric oxide.
+of -> PartWhole
+
+And although Democrats are hoping that the efforts of congressional Republicans to impeach President Clinton may spur Democrats to the polls in a kind of backlash, so far the president's problems have not helped matters and could lower turnout among Democratic voters.
+of -> PartWhole
+to -> Source
+in -> Location
+of -> PartWhole
+among -> PartWhole
+
+Stormy Philippines 	Supertyphoon Babs, armed with winds over 150 mph, slammed into the Philippine island of Luzon on Wednesday.
+
+``It may be that we are looking at  a consolidation on the world level that looked like the consolidation  on the national level 100 years ago.''
+at -> Location
+on -> Location
+like -> Location
+on -> Location
+
+And at least three of the bills yet to be voted into law have been threatened with a presidential veto because of the anti-environmental riders attached to them.
+at -> Temporal
+of -> ObjectOfVerb
+into -> Topic
+with -> Topic
+of -> ObjectOfVerb
+to -> Topic
+
+Concrete decisions on solving their longterm plight have taken a back seat to the immediate need to restore water and electricity and provide temporary shelter.
+on -> Topic
+to -> Topic
+
+We do things by the book, and we're not  going to cut any corners even if it means just shaving a second or  two.''
+by -> Source
+
+U.S. officials conveyed  their concerns to the Chinese Ministry of Foreign Affairs and urged  that Xu and Qin be released immediately.
+to -> Possessor
+of -> PartWhole
+
+Gov. Pedro Rosello instead wants federal block grants that, combined with money from Puerto Rico's local budget, would subsidize more expensive cement homes located out of harm's way.
+with -> Topic
+from -> Source
+of -> PartWhole
+
+P.W. BOTHA  During the period that he presided as head of state (1978-1989) according  to submissions made to and findings made by the Commission, gross  violations of human rights and other unlawful acts were perpetrated  on a wide scale by members of the South African Defense Force, including:  The deliberate unlawful killing and attempted killing of persons opposed  to the policies of the Government, within and outside South Africa.
+During -> Topic
+as -> Location
+of -> PartWhole
+to -> Cause
+to -> MediumOfCommunication
+by -> Location
+of -> PartWhole
+on -> Topic
+by -> PartWhole
+of -> Possessor
+of -> ObjectOfVerb
+to -> Source
+of -> Possessor
+
+Hun  Sen announced a government guarantee Wednesday of all politicians'  safety and their right to conduct political activities ``in accordance  with the laws in force.''
+of -> PartWhole
+with -> Temporal
+in -> Location
+
+Tutu said that more than 400 people had been notified that they would be implicated to give them a chance to respond.
+to -> Topic
+
+``There is so much rumor and counter-rumor coming from out there that we don't know what to think.
+from -> Source
+to -> Topic
+
+Even U.N. Secretary General Kofi Annan has joined the argument,  warning in a speech at Harvard recently that ``if globalization is  to succeed, it must succeed for poor and rich alike.
+in -> Location
+at -> Topic
+to -> Topic
+for -> Cause
+
+The process of helping the victims with scholarships and other necessary aid goes on, although it will not be enough.
+of -> ObjectOfVerb
+with -> Source
+
+``To the extent  that this potential merger is the result of Microsoft's actions with  these exclusive contracts and other actions,'' he said, ``it is unfortunate  to see the disappearance of a firm like Netscape, the brightest, newest  star.''
+of -> ObjectOfVerb
+with -> Topic
+of -> ObjectOfVerb
+like -> Attribute
+
+I have never met Mr. bin Laden, I have never spoken with  him, I have never had any financial or business relationship with  him, nor knowingly with anyone acting as his agent.''
+with -> Topic
+with -> PartWhole
+with -> Cause
+as -> Location
+
+Michaels played Don McLean's eight-and-a-half-minute-long ``American Pie,'' giving him time to suck up water with a shop vacuum.
+to -> Other
+with -> Topic
+
+``If the opposition wins in these states Cardoso will face a formidable wall of resistance against the unpopular measures that are certain to come,'' Dias said.
+in -> Location
+of -> PartWhole
+against -> Numeric/Level
+to -> Topic
+
+``Arik Sharon is the most  fitting person in the state of Israel for the position of foreign  minister,'' Netanyahu said, using his nickname.
+in -> Location
+of -> Possessor
+for -> Cause
+of -> ObjectOfVerb
+
+On Oct. 29, an assailant tried to ram an explosives-rigged car into a bus carrying Jewish schoolchildren in the Gaza Strip.
+On -> Source
+to -> Manner
+into -> Source
+in -> Location
+
+Foster said Cathay is ``taking a very close look'' at PAL but declined to comment what they have found or what stake they are considering.
+at -> Location
+
+As his uncle, R.W.  Eaton, told The Denver Post, the 21-year-old Matt, who aspired to  a career in diplomacy and human rights, was ``a small person with  a big heart, mind and soul that someone tried to beat out of him.''
+As -> Topic
+to -> Manner
+in -> Location
+with -> Topic
+of -> PartWhole
+
+But confidence has taken quite a hit across Europe recently, and I  think further action from the ECB will be needed next year, maybe  down to 2.5 percent,'' James Mitchell, senior London-based strategist  with Nomura.
+across -> Topic
+from -> Source
+down -> Topic
+to -> Topic
+with -> Possessor
+
+Visas that were denied earlier by Yugoslav authorities have now been issued, Deputy Prosecutor Graham Blewitt told a press briefing.
+by -> Temporal
+
+Mufti Akhmad Khadzhi Kadirov was approaching his home in the Chechen capital of Grozny when the bomb went off under his Mercedes 600, wounding his driver, ITAR-Tass and Interfax reported.
+in -> Location
+of -> PartWhole
+
+Lorenzo doesn't expect the effect of the typhoons on consumer prices will be dramatic since the government has said it is prepared to import basic commodities such as rice, sugar and corn to make up for any supply shortfall.
+of -> ObjectOfVerb
+on -> Other
+as -> Topic
+for -> Cause
+
+You know, every time I see forecasts that go out that far I want to  go out and buy stock in oil companies.
+to -> Manner
+in -> Location
+
+Netanyahu's  Cabinet delayed action on the new peace accord following Friday's  suicide bombing at a Jerusalem market, and his remarks about building  on Har Homa may be seen as a provocation by the Palestinians at a  politically sensitive moment.
+on -> ObjectOfVerb
+at -> Topic
+about -> Topic
+on -> Location
+as -> Topic
+by -> ObjectOfVerb
+at -> Source
+
+In a welcoming speech, Thai  Deputy Prime Minister Bhichai Rattakul, also chairman of the Thai  organizing committee, told delegation members to cast aside any doubts  over whether the Dec. 6-20 games will be a success.
+In -> Topic
+of -> ObjectOfVerb
+over -> Topic
+
+Race organizers never considered canceling the race, claiming that the skippers controlled whether to stay in the race or drop out.
+in -> Location
+
+On Monday alone,  about 70 people were refused entry at the Brenner Pass crossing point.
+On -> Temporal
+about -> Topic
+at -> Topic
+
+They wept, they embraced, and some looked around nervously, apparently not knowing how to behave in a church.
+around -> Location
+in -> Location
+
+Yeltsin has  flatly said he will not seek another term, and the opposition has  concentrated its efforts on demanding an early resignation, riding  a wave of popular discontent over the economic crisis.
+on -> Topic
+of -> PartWhole
+over -> Topic
+
+N. Korea is sending many athletes to the Asian Games despite famine.
+to -> Source
+
+Although the force of the storm diminished, at least 8,000 people died from wind, waves and flood damage.
+of -> PartWhole
+at -> Topic
+from -> Source
+
+Despite such temporary shortcomings, Gaza International  Airport is set to open Tuesday, aided by a little improvisation and  a lot of patriotic pride.
+by -> Topic
+of -> PartWhole
+
+The government's case  focuses on an earlier deal in March 1996, when America Online chose  Internet Explorer as its preferred browser; in that bargain Microsoft  agreed to place a startup icon for the online service on the main  the prime real estate in computing.
+on -> Topic
+in -> Location
+as -> Cause
+in -> Location
+for -> Cause
+on -> Source
+in -> Location
+
+Turkish President Demirel will meet Deputy Premier Ecevit, fueling speculation  that Ecevit will lead the government following Prime Minister Yilmazi's ouster  over corruption charges.
+over -> Topic
+
+This evidence was uncovered after the United States destroyed Idris' factory in a missile attack following the bombing of the U.S. embassies, the officials said.
+after -> Topic
+in -> Location
+of -> ObjectOfVerb
+
+The outcome will likely determine how successful  Cardoso is in getting Congress to approve his economic program, which  is aimed at trimming the budget deficit.
+in -> Location
+at -> Topic
+
+Exxon, which has a market value of $176.7 billion, and Mobil, which  has a market value of $61.1 billion, both have histories of being  fiercely independent, and both have already cut back on staff and  made themselves lean to survive even during a prolonged period of  low oil prices.
+of -> PartWhole
+of -> PartWhole
+of -> PartWhole
+on -> Agent
+during -> Topic
+of -> PartWhole
+
+``Whatever the  efforts to besmirch our struggle by denouncing it as a gross violation  of human rights,'' the congress said in a statement.
+by -> Topic
+as -> Source
+of -> PartWhole
+in -> Location
+
+Ariel Sharon's appointment as the Israeli foreign minister serves  as ``the bullet of mercy'' for the Middle East peace process, an official  Syrian newspaper said Saturday.
+as -> Topic
+as -> PartWhole
+of -> PartWhole
+for -> Cause
+
+Pinochet, 82, was placed under arrest in London Friday by British police acting on a warrant issued by a Spanish judge.
+in -> Location
+by -> PartWhole
+on -> Source
+by -> Source
+
+But many whites say the commission is on a witch hunt aiming to humiliate former government officials and Afrikaners in general.
+on -> Topic
+in -> Location
+
+While the players  did not discuss the elimination of the Larry Bird exception _ a clause  that allows a player to secure any amount of money he wants in re-signing  with his current team _ they did address the exception in their taxation  proposal.
+of -> ObjectOfVerb
+of -> PartWhole
+in -> Location
+with -> Cause
+in -> Location
+
+``I imagine  people will try to explain Netanyahu's intentions as trying to get  the support of the right.
+as -> Topic
+of -> PartWhole
+
+Zha, who helped Xu organize would-be party members in Beijing and the nearby port of Tianjin, said police officers told him Xu's arrest was ordered by the central government, not Beijing police.
+in -> Location
+of -> PartWhole
+by -> Source
+
+For those living in the small, overcrowded Gaza Strip, which is ringed  by the Mediterranean on one side and by barbed wire on the other three,  it may help ease the feeling of being trapped.
+For -> Topic
+in -> Location
+by -> Possessor
+on -> Source
+by -> Topic
+on -> Topic
+of -> ObjectOfVerb
+
+The majority of Cambodian  farmers are not producing enough to keep their families fed and are  being increasingly saddled with debts incurred when they run out of  reserves before harvest, Davies said.
+of -> ObjectOfVerb
+with -> Topic
+of -> PartWhole
+before -> PartWhole
+
+The rebels  say they now control one-third of Kindu, which the government has  used as a staging area for a counteroffensive against rebel positions  in the east.
+of -> PartWhole
+as -> Topic
+for -> Cause
+against -> Topic
+in -> Location
+
+But the Republicans  were surging to the fore on the strength of Livingston's announcement,  fighting tears as they rose to salute him as the ultimate political  role model in the grueling impeachment process as it roared into the  final minutes of debate.
+to -> Source
+on -> Temporal
+of -> PartWhole
+as -> Other
+as -> Topic
+in -> Location
+as -> Topic
+into -> Location
+of -> PartWhole
+
+This weekend, foreign  diplomatic observers in Kosovo reported that a ``military stand-down''  had taken place in the province, where Milosevic's forces have waged  a fierce offensive against Albanian rebels.
+in -> Location
+in -> Location
+against -> Topic
+
+Its decision to keep Netscape as  a separate unit and offer electronic commerce services in partnership  with Sun will not enhance its credibility, Chatham said.
+as -> Topic
+in -> Location
+with -> Possessor
+
+Police in Laramie, Wyo.,  where the beating took place, have said they believed robbery was  the primary motive for the attack against Shepard, which occurred  outside a bar in the town of 27,000.
+in -> Location
+for -> ObjectOfVerb
+against -> Possessor
+in -> Location
+of -> Species
+
+``It may look like a little airport to you, but to us, it's bigger than John F. Kennedy,'' said Nabil Shurafa, a travel agent in Gaza City.
+like -> Location
+to -> PartWhole
+to -> Purpose
+in -> Location
+
+But Mann and others said that anger has  been building at Gingrich for several reasons, including his signing  on to a budget deal last month that seemed to capitulate to President  Clinton, not offering a clear legislative agenda for Republicans and  not communicating a clear political message.
+at -> Location
+for -> Cause
+on -> Topic
+to -> ObjectOfVerb
+to -> Topic
+for -> Beneficiary
+
+As the two sides broke Tuesday night, White House chief  of staff Erskine Bowles, the president's top negotiator, emerged from  the session saying: ``We don't have a deal.
+As -> Source
+of -> PartWhole
+from -> Source
+
+The airfield will also make it easier for Palestinians to travel abroad, although a majority of Gazans are probably too poor to be able to afford an air ticket.
+for -> ObjectOfVerb
+of -> ObjectOfVerb
+
+The rebels targeted Kindu  since late August, when they were forced to retreat their march from  extreme western Congo to the outskirts of Kinshasa after Angola and  Zimbabwe sent troops to bail out Kabila.
+from -> Source
+to -> Cause
+of -> Possessor
+after -> Location
+
+U.S. authorities charge Salim helped finance, train and arm members of a terrorist organization, including the alleged bombers of the U.S. embassies in Kenya and Tanzania.
+of -> PartWhole
+of -> PartWhole
+in -> Location
+
+Gingrich is the figure in the House who would have the stature to broker a deal, and just like Clinton, the speaker has an intense interest in how he is perceived in history.
+in -> Location
+to -> PartWhole
+like -> Topic
+in -> Attribute
+in -> Location
+
+The new Congress, which will take office in February, is likely to be less cooperative than the current one.
+in -> Location
+
+Hyde, the chairman, told lawmakers  he hoped to have the committee vote on possible articles of impeachment  by Thanksgiving, an act that would take the issue out of his hands  and put it into Gingrich's.
+on -> Topic
+of -> PartWhole
+by -> Topic
+of -> Possessor
+into -> Source
+
+An international incident resulted after the arrest in Rome of Abdullah Ocalan, the leader of the Kurdistan Workers Party (PKK).
+after -> Separation
+in -> Location
+of -> Possessor
+of -> ObjectOfVerb
+
+``We should not prevent people from criticizing the components of the system, the institutions, the president, the Council of Guardians, the Islamic Consultative Assembly, the judiciary,'' Khatami said.
+from -> Source
+of -> Source
+of -> Possessor
+
+His frequent visits to Iraq to meet with President Saddam Hussein  have in turn raised suspicion in Washington.
+to -> Source
+with -> Topic
+in -> Location
+in -> Location
+
+In September of last year, he was pointedly questioned by federal agents investigating bin Laden's group.
+In -> Temporal
+of -> PartWhole
+by -> Topic
+
+The book  quotes a former Netscape executive, Ram Shriram, as saying the company  bungled a chance to win a sizable share of the browser business from  America Online Inc.
+as -> Cause
+of -> PartWhole
+from -> Source
+
+The 1978 committee wanted to give the Peace Prize to Jimmy Carter but missed its own deadline.
+to -> Possessor
+
+Holbrooke's mission to Milosevic was described  by the American diplomats as ``not a do or die trip,'' but they added,  ``We're at a very serious juncture.''
+to -> Topic
+by -> Topic
+as -> Topic
+at -> Topic
+
+These monitors,  many of whom are former military officers, have reported that the  Yugoslav army has ``stood down'' and that they have seen virtually  no military action since late last week.
+of -> Numeric/Level
+
+The plane bound from New York to Geneva crashed Sept. 2 off the coast of Nova Scotia, killing all 229 people on board.
+from -> Source
+to -> Topic
+off -> Location
+of -> PartWhole
+on -> PartWhole
+
+MISCALCULATIONS, POLITICS AND SAFETY NETS  On a steaming January day, Michel Camdessus, the IMF's top official,  slipped into Jakarta to the private residence of President Suharto  and sat down for a four-hour meeting to tick off, line by line, the  huge reforms Indonesia would have to implement in return for tens  of billions of dollars in emergency aid.
+On -> Topic
+into -> Source
+to -> Cause
+of -> ObjectOfVerb
+for -> Cause
+by -> Topic
+in -> Species
+for -> Cause
+of -> PartWhole
+of -> PartWhole
+in -> Location
+
+And in the last few years, the Post Office has become a vehicle for  a growing mail-order trade in books, clothes and other catalog items  not readily available outside big cities.
+in -> Location
+for -> Purpose
+in -> Location
+
+It exploded, killing the bombers and injuring 24, before explosives-filled suitcases could be carried into the crowd.
+before -> Source
+into -> Source
+
+The Clinton administration has repeatedly warned that it will  veto a big spending bill if it contains an array of anti-environmental  provisions that are under consideration.
+of -> PartWhole
+
+I bet the American people don't know  that he spent 152 days out of the 283 days this year fund raising,  traveling and on vacation.''
+of -> PartWhole
+on -> Source
+
+Thursday's vote to put the motion on the agenda will be an  indication of the government's chances of survival, which are said  to be extremely slim.
+on -> Source
+of -> ObjectOfVerb
+of -> PartWhole
+
+Anna-Lisa Saar, a social worker at Oestra Hospital, where  many of the victims were taken, said identifying many of them was  difficult.
+at -> Source
+of -> ObjectOfVerb
+of -> ObjectOfVerb
+
+It has fulfilled its mandate of telling the fullest truth possible, which is one reason that every political party in South Africa has denounced it.
+of -> ObjectOfVerb
+in -> Location
+
+Blair and Chirac said they liked the U.S. approach, and other countries as well have had favorable reactions in discussions with administration economic officials, presidential spokesman Joe Lockhart said.
+in -> Location
+with -> Topic
+
+The rationale for the half-year  financing is that by next March the Supreme Court is expected to rule  on whether using sampling is legal or constitutional.
+for -> Purpose
+by -> Other
+on -> Topic
+
+Lahoud, a Maronite Catholic, will keep  alive a 55-year-old tradition under which the president is a Maronite,  the prime minister a Sunni Muslim and the Parliament speaker a Shiite  Muslim.
+
+They stood for the pass, for team play,  but now their decade of selflessness has given way to one of selfishness.
+for -> Cause
+for -> Purpose
+of -> PartWhole
+to -> Other
+of -> PartWhole
+
+Nearly 60 years behind the times, the House voted Friday to condemn  the Nazi-Soviet nonaggression pact of 1939.
+behind -> Source
+of -> Species
+
+King Carl XVI Gustaf, on a trip out of the country, sent a statement  reassuring victims' relatives that ``all of us in Sweden feel great  sympathy.''
+on -> Cause
+of -> Possessor
+of -> ObjectOfVerb
+in -> Location
+
+``He was humble,  a man who was doing this for a higher purpose, trying to save people  through sacrifice and prayer.''
+for -> Cause
+through -> Species
+

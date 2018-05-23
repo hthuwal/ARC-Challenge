@@ -1,0 +1,58 @@
+After this killing, the FBI resumed a search for an anti-abortion conspiracy.
+After -> Topic
+for -> Cause
+
+``Even if they want to go to shopping, one of us will accompany them,''  Bandaratillaka said.
+to -> PartWhole
+of -> PartWhole
+
+It is not one that moves voters, but it is vital to both parties because  it helps determine their relative strength in Congress.
+to -> ObjectOfVerb
+in -> Location
+
+He said Stepinac's figure summed up ``the whole tragedy which befell the Croatian people and Europe in the course of this century marked by the three great evils of fascism, national socialism and communism.''
+in -> Location
+of -> Species
+by -> Location
+of -> PartWhole
+
+The radical group  Islamic Jihad claimed responsibility Saturday for the market bombing  and vowed more attacks to try to block the new peace accord.
+for -> Cause
+
+Many of the horses are suffering stress  from the journey here, but those from Asian countries are adjusting  faster than those from cold countries, Siraya said.
+of -> ObjectOfVerb
+from -> Source
+from -> Source
+from -> Source
+
+IOC rules forbid bidding cities from giving members or their relatives anything valued greater than $150; however, IOC member Marc Hodler alleges widespread corruption.
+from -> Source
+
+``I said, `You don't have to do this,' ''  recalled Schwarz, who was with him at the time.
+with -> Location
+at -> Location
+
+Bacteria can release products that cause white blood cells to release  enormous amounts of nitric oxide.
+of -> PartWhole
+
+And although Democrats are hoping that the efforts of congressional Republicans to impeach President Clinton may spur Democrats to the polls in a kind of backlash, so far the president's problems have not helped matters and could lower turnout among Democratic voters.
+of -> PartWhole
+to -> Source
+in -> Location
+of -> PartWhole
+among -> PartWhole
+
+Stormy Philippines 	Supertyphoon Babs, armed with winds over 150 mph, slammed into the Philippine island of Luzon on Wednesday.
+
+``It may be that we are looking at  a consolidation on the world level that looked like the consolidation  on the national level 100 years ago.''
+at -> Location
+on -> Location
+like -> Location
+on -> Location
+
+Concrete decisions on solving their longterm plight have taken a back seat to the immediate need to restore water and electricity and provide temporary shelter.
+on -> Topic
+to -> Topic
+
+We do things by the book, and we're not  going to cut any corners even if it means just shaving a second or  two.''
+by -> Source

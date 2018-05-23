@@ -1,5 +1,7 @@
 package it.unibz.inf.stuffie;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class RelationInstance implements Comparable<RelationInstance> {
@@ -11,6 +13,26 @@ public class RelationInstance implements Comparable<RelationInstance> {
 	private RelationVerb verb;
 	private RelationArgument object;
 	private TreeSet<RelationArgument> facets;
+
+	public Set<String> getAllRefs() {
+		HashSet<String> ret = new HashSet<>();
+
+		if (subject != null && !subject.isStatic() && subject.isVerb()) {
+			ret.add(subject.sentenceID + "." + subject.headword.index());
+		}
+
+		if (object != null && !object.isStatic() && object.isVerb()) {
+			ret.add(object.sentenceID + "." + object.headword.index());
+		}
+
+		for (RelationArgument facet : facets) {
+			if (facet != null && !facet.isStatic() && facet.isVerb()) {
+				ret.add(facet.sentenceID + "." + facet.headword.index());
+			}
+		}
+
+		return ret;
+	}
 
 	public RelationInstance(RelationVerb verb) {
 		super();

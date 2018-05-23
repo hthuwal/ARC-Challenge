@@ -41,16 +41,16 @@ public class SentenceCounter implements Comparable<SentenceCounter> {
 			InvocationTargetException, NoSuchMethodException, SecurityException, IOException {
 
 		Stuffie stuffie = new Stuffie();
-		TreeSet<SentenceCounter> sentences = new TreeSet<>();
+//		TreeSet<SentenceCounter> sentences = new TreeSet<>();
 		int[] totalRes = new int[] { 0, 0 };
 		int[] counter = { 0 };
 		try {
 			Stream<String> lines = Files.lines(Paths.get("resource/eval/sentences.txt"));
 			lines.forEach(line -> {
-				int[] res = stuffie.countRels(line);
+				int[] res = stuffie.countReds(line);
 				totalRes[0] = totalRes[0] + res[0];
 				totalRes[1] = totalRes[1] + res[1];
-				sentences.add(new SentenceCounter(res[0], res[1], line));
+//				sentences.add(new SentenceCounter(res[0], res[1], line));
 				counter[0]++;
 				if (counter[0] % 100 == 0) {
 					System.out.println(counter[0]);
@@ -62,13 +62,13 @@ public class SentenceCounter implements Comparable<SentenceCounter> {
 		}
 
 		System.out.println(totalRes[0] + " " + totalRes[1]);
-		BufferedWriter bw = new BufferedWriter(new FileWriter("resource/eval/sentences-ordered.txt"));
-
-		for (SentenceCounter sentence : sentences) {
-			bw.write(sentence.sent + "\n");
-		}
-		bw.flush();
-		bw.close();
+//		BufferedWriter bw = new BufferedWriter(new FileWriter("resource/eval/sentences-ordered.txt"));
+//
+//		for (SentenceCounter sentence : sentences) {
+//			bw.write(sentence.sent + "\n");
+//		}
+//		bw.flush();
+//		bw.close();
 
 	}
 }

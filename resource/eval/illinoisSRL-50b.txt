@@ -1,0 +1,70 @@
+U.S. officials conveyed  their concerns to the Chinese Ministry of Foreign Affairs and urged  that Xu and Qin be released immediately.
+to -> Possessor
+of -> PartWhole
+
+Gov. Pedro Rosello instead wants federal block grants that, combined with money from Puerto Rico's local budget, would subsidize more expensive cement homes located out of harm's way.
+with -> Topic
+from -> Source
+of -> PartWhole
+
+P.W. BOTHA  During the period that he presided as head of state (1978-1989) according  to submissions made to and findings made by the Commission, gross  violations of human rights and other unlawful acts were perpetrated  on a wide scale by members of the South African Defense Force, including:  The deliberate unlawful killing and attempted killing of persons opposed  to the policies of the Government, within and outside South Africa.
+During -> Topic
+as -> Location
+of -> PartWhole
+to -> Cause
+to -> MediumOfCommunication
+by -> Location
+of -> PartWhole
+on -> Topic
+by -> PartWhole
+of -> Possessor
+of -> ObjectOfVerb
+to -> Source
+of -> Possessor
+
+Hun  Sen announced a government guarantee Wednesday of all politicians'  safety and their right to conduct political activities ``in accordance  with the laws in force.''
+of -> PartWhole
+with -> Temporal
+in -> Location
+
+Tutu said that more than 400 people had been notified that they would be implicated to give them a chance to respond.
+to -> Topic
+
+``There is so much rumor and counter-rumor coming from out there that we don't know what to think.
+from -> Source
+to -> Topic
+
+Even U.N. Secretary General Kofi Annan has joined the argument,  warning in a speech at Harvard recently that ``if globalization is  to succeed, it must succeed for poor and rich alike.
+in -> Location
+at -> Topic
+to -> Topic
+for -> Cause
+
+The process of helping the victims with scholarships and other necessary aid goes on, although it will not be enough.
+of -> ObjectOfVerb
+with -> Source
+
+``To the extent  that this potential merger is the result of Microsoft's actions with  these exclusive contracts and other actions,'' he said, ``it is unfortunate  to see the disappearance of a firm like Netscape, the brightest, newest  star.''
+of -> ObjectOfVerb
+with -> Topic
+of -> ObjectOfVerb
+like -> Attribute
+
+I have never met Mr. bin Laden, I have never spoken with  him, I have never had any financial or business relationship with  him, nor knowingly with anyone acting as his agent.''
+with -> Topic
+with -> PartWhole
+with -> Cause
+as -> Location
+
+Michaels played Don McLean's eight-and-a-half-minute-long ``American Pie,'' giving him time to suck up water with a shop vacuum.
+to -> Other
+with -> Topic
+
+On Oct. 29, an assailant tried to ram an explosives-rigged car into a bus carrying Jewish schoolchildren in the Gaza Strip.
+On -> Source
+to -> Manner
+into -> Source
+in -> Location
+
+Foster said Cathay is ``taking a very close look'' at PAL but declined to comment what they have found or what stake they are considering.
+at -> Location

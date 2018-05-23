@@ -1,0 +1,794 @@
+After this killing, the FBI resumed a search for an anti-abortion conspiracy. (2)
+1.7:	the FBI; resumed; a search;
+	 After; this killing; (Temporal)
+	 for; an anti-abortion conspiracy; (Purpose)
+
+``Even if they want to go to shopping, one of us will accompany them,''  Bandaratillaka said. (4)
+1.5:	they; want; <_>
+	 to; #1.7; (Purpose)
+1.7:	they; go; <_>
+	 to; shopping; (Purpose)
+1.15:	one of us; will accompany; them;
+	 Even if; #1.5; (Condition)
+1.20:	Bandaratillaka; said; <_>;
+	 <_>; #1.15; (Other/Details)
+
+It is not one that moves voters, but it is vital to both parties because  it helps determine their relative strength in Congress. (4)
+1.2:	It; is not; one;
+	 that moves; voters; (Other/Details)
+	 but; #1.11; (Opponent/Contrast) 
+1.11:	it; is; vital to both parties;
+	 because; #1.18; (Cause)
+1.18:	it; helps; #1.19;
+1.19:	it; determine; their relative strength;
+	 in; Congress; (PartWhole)
+
+He said Stepinac's figure summed up ``the whole tragedy which befell the Croatian people and Europe in the course of this century marked by the three great evils of fascism, national socialism and communism.'' (5)
+1.2:	He; said; <_>;
+	 <_>; #1.6; (Details)
+1.35a:	the whole tragedy; <be>; national socialism;
+1.35b:	the whole tragedy; <be>; communism;
+1.6:	Stepinac's figure; summed up; the whole tragedy;
+	 which befell; the Croatian people; (Other/Details)
+	 which befell; Europe; (Other/Details)
+	 in; the course of this century; (Temporal)
+	 marked by; the three great evils of fascism; 
+
+The radical group  Islamic Jihad claimed responsibility Saturday for the market bombing  and vowed more attacks to try to block the new peace accord. (3)
+1.3:	Islamic Jihad; <be>; The radical group;
+1.6:	Islamic Jihad; claimed; responsibility;
+	 <_>; Saturday; (Temporal)
+	 for; the market bombing; (Purpose)
+1.14:	Islamic Jihad; vowed; more attacks;
+	 to try to block; the new peace accord; (Purpose)
+
+Many of the horses are suffering stress from the journey here, but those from Asian countries are adjusting  faster than those from cold countries, Siraya said. (5)
+1.6:	Many of the horses; are suffering; stress;
+	 <_>; here;
+	 from; the journey; (Cause)
+	 but; #1.19; (Opponent/Contrast)
+1.19:	those from Asian countries; are adjusting; faster;
+	 than; those from cold countries; (Comparison)
+1.28:	Siraya; said; <_>;
+	 <_>; #1.6; (Other/Details)
+
+IOC rules forbid bidding cities from giving members or their relatives anything valued greater than $150; however, IOC member Marc Hodler alleges widespread corruption. (3)
+1.3:	IOC rules; forbid; bidding cities;
+	 from; #1.7;
+	 however; #1.25; (Opponent/Contrast)
+1.7:	bidding cities; giving; anything;
+	 valued greater than; $150;
+1.22:	Marc Hodler; <be>; IOC member;
+1.25:	Marc Hodler; alleges; widespread corruption;
+
+``I said, `You don't have to do this,' ''  recalled Schwarz, who was with him at the time. (4)
+1.3:	I; said; <_>;
+	 <_>; #1.9; (Other/Details)
+1.9:	You; don't have; <_>;
+	 to; #1.11; (Purpose)
+1.11:	You; do; this;
+1.16:	Schwarz; recalled; #1.3;
+	 who was with; him; (Participant/Accompanier)
+	 at; the time; (Temporal)
+
+Bacteria can release products that cause white blood cells to release  enormous amounts of nitric oxide. (2)
+1.3:	Bacteria; can release; products;
+	 that cause; white blood cells; (Cause)
+	 to; #1.11; (Purpose)
+1.11:	white blood cells; release; enormous amounts of nitric oxide;
+
+And although Democrats are hoping that the efforts of congressional Republicans to impeach President Clinton may spur Democrats to the polls in a kind of backlash, so far the president's problems have not helped matters and could lower turnout among Democratic voters. (5)
+1.14:	Clinton; <be>; President;
+1.5:	Democrats; are hoping; <_>;
+	 that; #1.13; (Other/Details)
+1.13:	the efforts of congressional Republicans; to impeach; Clinton;
+1.17:	#1.13; may spur; Democrats;
+	 to; the polls in a kind of backlash; (Direction)
+1.36:	the president's problems; so far have not helped; matters;
+	 And although; #1.5; (Opponent/Contrast)
+	 and; #1.40; (Conjunction)
+1.40:	the president's problems; could lower; turnout;
+	 among; Democratic voters; (PartWhole)
+
+Stormy Philippines 	Supertyphoon Babs, armed with winds over 150 mph, slammed into the Philippine island of Luzon on Wednesday. (3)
+1.6:	Stormy Philippines Supertyphoon Babs; armed; <_>;
+	 with; winds over 150 mph; (Instrument)
+1.13:	Stormy Philippines Supertyphoon Babs; slammed <_>;
+	 into; the Philippine island of Luzon; (Destination)
+	 on; Wednesday; (Temporal)
+
+``It may be that we are looking at  a consolidation on the world level that looked like the consolidation  on the national level 100 years ago.'' (4)
+1.4:	It; may be; <_>;
+	 that; #1.8; (Other/Details)
+1.8:	we; are looking; <_>;
+	 at; a consolidation on the world level; (Direction)
+1.17:	that; looked; <_>;
+	 like; the consolidation; (Comparison)
+	 on; the national level 100 years ago; (Temporal)
+
+Concrete decisions on solving their longterm plight have taken a back seat to the immediate need to restore water and electricity and provide temporary shelter. (3)
+1.4:	Concrete decisions; on solving; their longterm plight;
+1.9:	Concrete decisions; have taken; a back seat;
+	 to; the immediate need; (Direction)
+	 to restore; water; (Purpose)
+	 to provide; temporary shelter; (Purpose);
+
+We do things by the book, and we're not  going to cut any corners even if it means just shaving a second or  two.'' (5)
+1.2:	We; do; things;
+	 by; the book; (Manner)
+	 and; #1.12; (Conjunction)
+1.12:	we; 're not going; <_>;
+	 to; #1.14; (Purpose)
+1.14:	we; cut; any corners;
+	 even if; #1.20; (Condition)
+1.20:	it; even means just; <_>;
+	 <_>; #1.22; (Other/Details)
+1.22:	<_>; just shaving; a second two;
+
+U.S. officials conveyed  their concerns to the Chinese Ministry of Foreign Affairs and urged  that Xu and Qin be released immediately.
+1.1:	officials; <be>; U.S.;
+1.3:	U.S. officials; conveyed; their concerns;
+	 to; the Chinese Ministry of Foreign Affairs;
+1.14:	<_>; urged that; #1.20;
+1.20:	Xu; be released immediately; <_>; 
+
+Gov. Pedro Rosello instead wants federal block grants that, combined with money from Puerto Rico's local budget, would subsidize more expensive cement homes located out of harm's way.
+1.1:	Pedro Rosello; <be>; Gov.;
+1.5:	Gov. Pedro Rosello; instead wants; federal block grants<ctx#1.22>;
+1.11:	<_>; combined; <_>; 
+1.22:	that; would subsidize; more expensive cement homes<ctx#1.27>;
+	 combined; with money from Puerto Rico 's local budget;
+1.27:	more expensive cement homes; located of; harm 's way;
+
+P.W. BOTHA  During the period that he presided as head of state (1978-1989) according  to submissions made to and findings made by the Commission, gross  violations of human rights and other unlawful acts were perpetrated  on a wide scale by members of the South African Defense Force, including:  The deliberate unlawful killing and attempted killing of persons opposed  to the policies of the Government, within and outside South Africa.
+1.14:	state;  of<be>; 1978-1989;
+1.8:	he; presided as; head of state;
+	 according; submissions<ctx#1.19>;
+1.16:	<_>; according; <_>; 
+1.19:	submissions; made; to;
+1.23:	findings; made by; the Commission;
+1.38:	gross violations of human rights; were perpetrated on; a wide scale;
+	 by; members of the South African Defense Force;
+	 including; The deliberate unlawful killing;
+	 <_>; P.W. BOTHA;
+1.52:	<_>; including; <_>; 
+1.59:	<_>; attempted; killing of persons<ctx#1.63>;
+	 within; South Africa;
+1.63:	persons; opposed to; the policies of the Government;
+
+Hun  Sen announced a government guarantee Wednesday of all politicians'  safety and their right to conduct political activities ``in accordance  with the laws in force.''
+1.3:	Hun Sen; announced; a government guarantee;
+	 of; all politicians ' safety;
+	 to; #1.17;
+1.17:	Hun Sen; conduct; political activities;
+	 in; accordance;
+	 with; the laws in force;
+
+Tutu said that more than 400 people had been notified that they would be implicated to give them a chance to respond.
+1.2:	Tutu; said that; #1.10;
+1.10:	more 400 people; had been notified that; #1.15;
+1.15:	they; would be implicated to; #1.17;
+1.17:	they; give; a chance<ctx#1.22>;
+1.22:	a chance; respond; <_>; 
+1.6:	people; <be>; more than 400;
+
+``There is so much rumor and counter-rumor coming from out there that we don't know what to think.
+1.3:	rumor<ctx#1.9>; is; <_>; 
+1.9:	rumor; coming from; out there;
+	 that; #1.17;
+1.17:	we; do n't know to; #1.20;
+1.20:	what; think; <_>; 
+
+Even U.N. Secretary General Kofi Annan has joined the argument,  warning in a speech at Harvard recently that ``if globalization is  to succeed, it must succeed for poor and rich alike.
+1.8:	U.N. Secretary General Kofi Annan; Even has joined; the argument;
+	 recently; #1.12;
+1.12:	U.N. Secretary General Kofi Annan; warning recently in; a speech at Harvard;
+1.23:	globalization; is to; #1.25;
+1.25:	globalization; succeed; <_>; 
+1.29:	it; must succeed alike for; poor;
+	 if; #1.23;
+1.4:	Kofi Annan; <be>; U.N. Secretary General;
+
+The process of helping the victims with scholarships and other necessary aid goes on, although it will not be enough.
+1.4:	The process; helping; the victims;
+	 with; scholarships;
+1.13:	The process<ctx#1.4>; goes; on;
+	 although; enough;
+1.20:	it; be although; enough;
+
+``To the extent  that this potential merger is the result of Microsoft's actions with  these exclusive contracts and other actions,'' he said, ``it is unfortunate  to see the disappearance of a firm like Netscape, the brightest, newest  star.''
+1.9:	this potential merger; is that; the result of Microsoft 's actions with these exclusive contracts;
+1.26:	he; said; <_>; 
+1.30:	it; is; To the extent unfortunate;
+1.33:	it; see; the disappearance of a firm;
+	 like; Netscape;
+1.43:	Netscape;  like<be>; the brightest;
+1.46:	the brightest; <be>; newest star;
+
+I have never met Mr. bin Laden, I have never spoken with  him, I have never had any financial or business relationship with  him, nor knowingly with anyone acting as his agent.''
+1.4:	I; have never met; #1.19;
+1.5:	bin Laden; <be>; Mr.;
+1.12:	I; have never spoken with; him;
+1.19:	I; have never had; any financial relationship with him;
+1.32:	knowingly anyone; acting as; his agent;
+
+Michaels played Don McLean's eight-and-a-half-minute-long ``American Pie,'' giving him time to suck up water with a shop vacuum.
+1.2:	Michaels; played 's; Don McLean eight-and-a-half-minute-long;
+	 <_>; #1.12;
+1.12:	Michaels; giving; time<ctx#1.16>;
+1.16:	time; suck; water;
+	 with; a shop vacuum;
+
+``If the opposition wins in these states Cardoso will face a formidable wall of resistance against the unpopular measures that are certain to come,'' Dias said.
+1.5:	the opposition; wins in; these states;
+1.11:	Cardoso; will face; a formidable wall of resistance;
+	 If; #1.5;
+	 against; the unpopular measures<ctx#1.23>;
+1.22:	that; are; certain;
+1.25:	that; come; <_>; 
+1.29:	Dias; said; #1.11;
+
+``Arik Sharon is the most  fitting person in the state of Israel for the position of foreign  minister,'' Netanyahu said, using his nickname.
+1.4:	Arik Sharon; is; the most fitting person in the state of Israel for the position of foreign minister;
+1.23:	Netanyahu; said; #1.25;
+	 <_>; the most fitting person in the state of Israel for the position of foreign minister;
+1.25:	Netanyahu; using; his nickname;
+
+On Oct. 29, an assailant tried to ram an explosives-rigged car into a bus carrying Jewish schoolchildren in the Gaza Strip.
+1.17:	schoolchildren; <be>; Jewish;
+1.7:	an assailant; tried to; #1.9;
+	 On; Oct. 29;
+1.9:	an assailant; ram; an explosives-rigged car;
+	 into; a bus<ctx#1.16>;
+1.16:	a bus; carrying; Jewish schoolchildren;
+	 in; the Gaza Strip;
+
+Foster said Cathay is ``taking a very close look'' at PAL but declined to comment what they have found or what stake they are considering.
+1.2:	Foster; said; #1.6;
+1.6:	Cathay; is taking; a very close look;
+	 at; PAL;
+1.15:	<_>; declined to; #1.17;
+1.17:	<_>; comment; <_>; 
+1.21:	they; have found; what;
+1.27:	they; are considering; what stake;
+
+As his uncle, R.W.  Eaton, told The Denver Post, the 21-year-old Matt, who aspired to  a career in diplomacy and human rights, was ``a small person with  a big heart, mind and soul that someone tried to beat out of him.''
+1.9:	Denver Post; <be>; The;
+1.8:	his uncle; told; The Denver Post;
+1.18:	who; aspired to; a career;
+	 in; diplomacy rights;
+1.28:	the 21-year-old Matt<ctx#1.18>; was; a small person with a big heart<ctx#1.43>;
+1.6:	his uncle; <be>; R.W. Eaton;
+1.43:	someone; tried to; #1.45;
+	 <_>; that;
+1.45:	someone; beat of; him;
+
+But confidence has taken quite a hit across Europe recently, and I  think further action from the ECB will be needed next year, maybe  down to 2.5 percent,'' James Mitchell, senior London-based strategist  with Nomura.
+1.4:	confidence; has taken quite; <_>; 
+1.14:	I; think; #1.22;
+1.22:	further action from the ECB; will be needed; <_>; 
+1.18:	ECB; <be>; further action from the;
+1.38:	James Mitchell; <be>; senior London-based strategist with Nomura;
+
+Visas that were denied earlier by Yugoslav authorities have now been issued, Deputy Prosecutor Graham Blewitt told a press briefing.
+1.4:	that; were denied earlier; <_>; 
+1.12:	Visas<ctx#1.4>; have now been issued; <_>; 
+1.15:	Graham Blewitt; <be>; Deputy Prosecutor;
+1.18:	Deputy Prosecutor Graham Blewitt; told; a press briefing;
+	 now; #1.12;
+
+Mufti Akhmad Khadzhi Kadirov was approaching his home in the Chechen capital of Grozny when the bomb went off under his Mercedes 600, wounding his driver, ITAR-Tass and Interfax reported.
+1.6:	Mufti Akhmad Khadzhi Kadirov; was approaching; his home;
+	 in; the Chechen capital of Grozny;
+	 off; #1.18;
+1.18:	the bomb; went off; #1.25;
+1.25:	the bomb; wounding; his driver;
+1.32:	ITAR-Tass; reported; #1.6;
+1.1:	Akhmad Khadzhi Kadirov; <be>; Mufti;
+
+Lorenzo doesn't expect the effect of the typhoons on consumer prices will be dramatic since the government has said it is prepared to import basic commodities such as rice, sugar and corn to make up for any supply shortfall.
+1.4:	Lorenzo; does n't expect; #1.14;
+1.14:	the effect of the typhoons on consumer prices; be; dramatic;
+1.20:	the government; has said; #1.23;
+1.23:	it; is prepared to; #1.25;
+1.25:	it; import; basic commodities such rice;
+	 to; #1.36;
+1.36:	it; make for; any supply shortfall;
+
+You know, every time I see forecasts that go out that far I want to  go out and buy stock in oil companies.
+1.2:	You; know; every time<ctx#1.7>;
+1.7:	I; see; forecasts<ctx#1.10>;
+1.10:	that; go that; #1.15;
+1.15:	I; far want to; #1.17;
+1.17:	I; go; <_>; 
+1.20:	<_>; buy; stock;
+	 in; oil companies;
+
+Netanyahu's  Cabinet delayed action on the new peace accord following Friday's  suicide bombing at a Jerusalem market, and his remarks about building  on Har Homa may be seen as a provocation by the Palestinians at a  politically sensitive moment.
+1.4:	Netanyahu 's Cabinet; delayed; action;
+	 on; the new peace accord following Friday 's suicide bombing at a Jerusalem market;
+1.11:	<_>; following; <_>; 
+1.31:	his remarks about building on Har Homa; may be seen as; a provocation;
+	 by; the Palestinians;
+	 at; a politically sensitive moment;
+
+In a welcoming speech, Thai  Deputy Prime Minister Bhichai Rattakul, also chairman of the Thai  organizing committee, told delegation members to cast aside any doubts  over whether the Dec. 6-20 games will be a success.
+1.14:	Thai Deputy Prime Minister Bhichai Rattakul; <be> also; chairman of the Thai organizing committee;
+1.3:	<_>; welcoming; <_>; 
+1.18:	<_>; organizing; <_>; 
+1.21:	Thai Deputy Prime Minister Bhichai Rattakul; told; delegation members;
+	 to; #1.25;
+	 In; a welcoming speech;
+1.25:	Thai Deputy Prime Minister Bhichai Rattakul; cast aside; any doubts<ctx#1.38>;
+1.36:	the Dec. 6-20 games; be over; whether a success;
+
+Race organizers never considered canceling the race, claiming that the skippers controlled whether to stay in the race or drop out.
+1.4:	Race organizers; never considered; #1.5;
+	 <_>; #1.9;
+1.5:	Race organizers; canceling; the race;
+1.9:	Race organizers; claiming that; #1.13;
+1.13:	the skippers; controlled whether; #1.16;
+1.16:	<_>; stay in; the race;
+1.21:	<_>; drop; <_>; 
+
+On Monday alone,  about 70 people were refused entry at the Brenner Pass crossing point.
+1.9:	70 people;  aboutwere refused; entry;
+	 at; the Brenner Pass;
+	 <_>; #1.15;
+	 On; Monday alone;
+1.15:	70 people;  aboutcrossing; point;
+
+They wept, they embraced, and some looked around nervously, apparently not knowing how to behave in a church.
+1.2:	They; wept; <_>; 
+1.5:	they; embraced; <_>; 
+1.9:	some; looked nervously apparently; #1.15;
+1.15:	<_>; apparently not knowing to; #1.18;
+1.18:	<_>; behave in; a church;
+
+Yeltsin has  flatly said he will not seek another term, and the opposition has  concentrated its efforts on demanding an early resignation, riding  a wave of popular discontent over the economic crisis.
+1.4:	Yeltsin; has flatly said; #1.8;
+1.8:	he; will not seek; another term;
+1.16:	the opposition; has concentrated; its efforts;
+	 on; #1.20;
+1.20:	the opposition; demanding; an early resignation;
+1.25:	<_>; riding; a wave of popular discontent over the economic crisis;
+
+N. Korea is sending many athletes to the Asian Games despite famine.
+1.1:	Korea; <be>; N.;
+1.4:	N. Korea; is sending; many athletes;
+	 to; the Asian Games;
+	 despite; famine;
+
+Although the force of the storm diminished, at least 8,000 people died from wind, waves and flood damage.
+1.7:	the force of the storm; diminished; <_>; 
+1.13:	at least 8,000 people; died from; wind waves;
+	 Although; #1.7;
+1.5:	storm; <be>; the force of the;
+
+Despite such temporary shortcomings, Gaza International  Airport is set to open Tuesday, aided by a little improvisation and  a lot of patriotic pride.
+1.10:	Gaza International Airport; is set to; #1.12;
+	 Despite; such temporary shortcomings;
+1.12:	Gaza International Airport; open; Tuesday<ctx#1.15>;
+1.15:	Tuesday; aided by; a little improvisation;
+
+The government's case  focuses on an earlier deal in March 1996, when America Online chose  Internet Explorer as its preferred browser; in that bargain Microsoft  agreed to place a startup icon for the online service on the main  the prime real estate in computing.
+1.5:	The government 's case; focuses on; an earlier deal in March 1996<ctx#1.17>;
+1.17:	America Online; chose; Internet Explorer as its preferred browser;
+1.29:	Microsoft; agreed to; #1.31;
+	 in; that bargain;
+1.31:	Microsoft; place; a startup icon;
+	 for; the online service on the main the prime real estate in computing;
+
+Turkish President Demirel will meet Deputy Premier Ecevit, fueling speculation  that Ecevit will lead the government following Prime Minister Yilmazi's ouster  over corruption charges.
+1.2:	Demirel; <be>; Turkish President;
+1.5:	Turkish President Demirel; will meet; Deputy Premier Ecevit<ctx#1.10>;
+1.10:	Deputy Premier Ecevit; fueling; speculation;
+	 that; #1.15;
+1.15:	Ecevit; will lead; the government following Prime Minister Yilmazi 's ouster over corruption charges;
+1.18:	<_>; following; <_>; 
+
+This evidence was uncovered after the United States destroyed Idris' factory in a missile attack following the bombing of the U.S. embassies, the officials said.
+1.4:	This evidence; was uncovered after; #1.9;
+1.9:	the United States; destroyed; Idris ' factory;
+	 in; a missile attack following the bombing of the U.S. embassies;
+1.6:	United States; <be>; the;
+1.17:	<_>; following; <_>; 
+1.27:	the officials; said; #1.4;
+
+The outcome will likely determine how successful  Cardoso is in getting Congress to approve his economic program, which  is aimed at trimming the budget deficit.
+1.5:	The outcome; will likely determine in; #1.11;
+1.9:	Cardoso; is in; #1.11;
+1.11:	Cardoso; getting; Congress;
+	 to; #1.14;
+1.14:	Cardoso; approve; his economic program<ctx#1.21>;
+1.21:	which; is aimed at; #1.23;
+1.23:	which; trimming; the budget deficit;
+
+Exxon, which has a market value of $176.7 billion, and Mobil, which  has a market value of $61.1 billion, both have histories of being  fiercely independent, and both have already cut back on staff and  made themselves lean to survive even during a prolonged period of  low oil prices.
+1.4:	which; has; a market value of $ 176.7 billion;
+1.17:	which; has; a market value of $ 61.1 billion;
+1.27:	Exxon<ctx#1.4>; have; histories<ctx#1.32>;
+1.30:	histories<ctx#1.32>; being of; fiercely independent;
+1.38:	both; have already cut back on; staff;
+1.43:	<_>; made; lean;
+1.47:	themselves; survive even during; a prolonged period of low oil prices;
+
+``Whatever the  efforts to besmirch our struggle by denouncing it as a gross violation  of human rights,'' the congress said in a statement.
+1.6:	the efforts; besmirch; our struggle;
+	 by; #1.10;
+	 <_>; Whatever;
+1.10:	the efforts; denouncing; it;
+	 as; a gross violation of human rights;
+1.23:	the congress; said in; a statement;
+	 to; #1.6;
+
+Ariel Sharon's appointment as the Israeli foreign minister serves  as ``the bullet of mercy'' for the Middle East peace process, an official  Syrian newspaper said Saturday.
+1.27:	newspaper; <be>; an official Syrian;
+1.10:	Ariel Sharon 's appointment as the Israeli foreign minister; serves as; the bullet of mercy;
+	 for; the Middle East peace process;
+1.29:	an official Syrian newspaper; said; #1.10;
+
+Pinochet, 82, was placed under arrest in London Friday by British police acting on a warrant issued by a Spanish judge.
+1.6:	Pinochet 82; was placed under; arrest in London Friday;
+	 by; British police<ctx#1.15>;
+1.15:	British police; acting on; a warrant<ctx#1.19>;
+1.19:	a warrant; issued by; a Spanish judge;
+
+But many whites say the commission is on a witch hunt aiming to humiliate former government officials and Afrikaners in general.
+1.4:	many whites; say on; a witch hunt<ctx#1.12>;
+1.7:	the commission; is on; a witch hunt<ctx#1.12>;
+1.12:	a witch hunt; aiming to; #1.14;
+1.14:	a witch hunt<ctx#1.12>; humiliate; former government officials;
+	 in; general;
+
+While the players  did not discuss the elimination of the Larry Bird exception _ a clause  that allows a player to secure any amount of money he wants in re-signing  with his current team _ they did address the exception in their taxation  proposal.
+1.12:	exception; <be>; the elimination of the Larry Bird;
+1.6:	the players; did not discuss; #1.14;
+1.14:	the elimination of the Larry Bird exception; _; a clause<ctx#1.18>;
+1.18:	that; allows; a player<ctx#1.22>;
+1.22:	a player; secure; any amount of money;
+1.28:	he; wants in; #1.30;
+	 While; #1.6;
+1.30:	he; re-signing with; his current team _;
+1.38:	they; did address; the exception in their taxation proposal;
+
+``I imagine  people will try to explain Netanyahu's intentions as trying to get  the support of the right.
+1.3:	I; imagine; #1.6;
+1.6:	people; will try to; #1.8;
+1.8:	people; explain; Netanyahu 's intentions;
+	 as; #1.13;
+1.13:	people; trying to; #1.15;
+1.15:	people; get; the support of the right;
+
+Zha, who helped Xu organize would-be party members in Beijing and the nearby port of Tianjin, said police officers told him Xu's arrest was ordered by the central government, not Beijing police.
+1.4:	who; helped; #1.6;
+1.6:	Xu; organize; would-be party members in Beijing;
+1.19:	Zha<ctx#1.4>; said; #1.22;
+1.22:	police officers; told; him;
+	 <_>; #1.28;
+1.28:	Xu 's arrest; was ordered by; the central government;
+1.36:	the central government;  by<be>; Beijing police;
+
+For those living in the small, overcrowded Gaza Strip, which is ringed  by the Mediterranean on one side and by barbed wire on the other three,  it may help ease the feeling of being trapped.
+1.3:	those; living in; the small overcrowded Gaza Strip<ctx#1.14>;
+1.13:	which; is; ringed by the Mediterranean on one side;
+1.27:	three; <be>; wire on the other;
+1.23:	<_>; barbed; wire on the other three;
+1.32:	it; may help; #1.33;
+	 For; #1.3;
+1.33:	it; ease; the feeling<ctx#1.38>;
+1.38:	the feeling; being trapped; <_>; 
+
+The majority of Cambodian  farmers are not producing enough to keep their families fed and are  being increasingly saddled with debts incurred when they run out of  reserves before harvest, Davies said.
+1.6:	The majority of Cambodian farmers; are enough; #1.8;
+1.8:	The majority of Cambodian farmers; not producing enough to; #1.11;
+1.11:	The majority of Cambodian farmers; keep; their families<ctx#1.14>;
+1.14:	their families; fed; <_>; 
+1.19:	<_>; are being increasingly saddled with; debts<ctx#1.22>;
+1.22:	debts; incurred when; #1.25;
+1.25:	they; run before; harvest;
+1.33:	Davies; said enough; #1.8;
+1.4:	farmers; <be>; The majority of Cambodian;
+
+The rebels  say they now control one-third of Kindu, which the government has  used as a staging area for a counteroffensive against rebel positions  in the east.
+1.3:	The rebels; say now; #1.6;
+1.6:	they; now control; one-third of Kindu<ctx#1.15>;
+1.15:	the government; has used as; a staging area for a counteroffensive against rebel positions in the east;
+	 <_>; which;
+
+But the Republicans  were surging to the fore on the strength of Livingston's announcement,  fighting tears as they rose to salute him as the ultimate political  role model in the grueling impeachment process as it roared into the  final minutes of debate.
+1.5:	the Republicans; were surging to; the fore on the strength of Livingston 's announcement;
+	 <_>; #1.17;
+1.17:	the Republicans; fighting; tears;
+	 as; #1.21;
+1.21:	they; rose to; #1.23;
+1.23:	they; salute; him;
+	 as; the ultimate political role model in the grueling impeachment process;
+	 as; #1.38;
+1.2:	Republicans; <be>; the;
+1.38:	it; roared into; the final minutes of debate;
+
+This weekend, foreign  diplomatic observers in Kosovo reported that a ``military stand-down''  had taken place in the province, where Milosevic's forces have waged  a fierce offensive against Albanian rebels.
+1.9:	foreign diplomatic observers in Kosovo; reported that; #1.17;
+1.17:	a military stand-down; had taken; place;
+	 in; the province<ctx#1.28>;
+1.28:	Milosevic 's forces; have waged; a fierce offensive against Albanian rebels;
+1.33:	rebels; <be>; fierce offensive against Albanian;
+
+Its decision to keep Netscape as  a separate unit and offer electronic commerce services in partnership  with Sun will not enhance its credibility, Chatham said.
+1.4:	Its decision; keep; Netscape as a separate unit in partnership;
+	 with; Sun;
+1.21:	Its decision<ctx#1.4>; will not enhance; its credibility;
+1.26:	Chatham; said; #1.21;
+
+Police in Laramie, Wyo.,  where the beating took place, have said they believed robbery was  the primary motive for the attack against Shepard, which occurred  outside a bar in the town of 27,000.
+1.10:	the beating; took; place;
+1.14:	Police in Laramie Wyo.<ctx#1.10>; have said; #1.16;
+1.16:	they; believed; the primary motive for the attack against Shepard<ctx#1.29>;
+1.18:	robbery; was; the primary motive for the attack against Shepard<ctx#1.29>;
+1.29:	which; occurred outside; a bar;
+	 in; the town of 27,000;
+
+``It may look like a little airport to you, but to us, it's bigger than John F. Kennedy,'' said Nabil Shurafa, a travel agent in Gaza City.
+1.4:	It; may look like; a little airport;
+	 to; you;
+1.17:	it; 's; to us bigger than John F. Kennedy;
+1.31:	Nabil Shurafa; <be>; a travel agent in Gaza City;
+1.25:	Nabil Shurafa; said; #1.4;
+
+But Mann and others said that anger has  been building at Gingrich for several reasons, including his signing  on to a budget deal last month that seemed to capitulate to President  Clinton, not offering a clear legislative agenda for Republicans and  not communicating a clear political message.
+1.5:	Mann; said that; #1.10;
+	 including; his signing last month<ctx#1.24,#1.28>;
+	 <_>; #1.36;
+1.10:	anger; has been building at; Gingrich for several reasons;
+1.17:	<_>; including; <_>; 
+1.28:	that; seemed to; #1.30;
+1.30:	that; capitulate to; President Clinton;
+1.36:	<_>; not offering; a clear legislative agenda for Republicans;
+1.45:	<_>; not communicating; a clear political message;
+
+As the two sides broke Tuesday night, White House chief  of staff Erskine Bowles, the president's top negotiator, emerged from  the session saying: ``We don't have a deal.
+1.21:	White House chief of staff Erskine Bowles; <be>; the president 's top negotiator;
+1.5:	the two sides; broke; <_>; 
+1.23:	White House chief of staff Erskine Bowles; emerged from; the session;
+	 <_>; #1.27;
+	 As; #1.5;
+1.27:	White House chief of staff Erskine Bowles; saying; #1.33;
+1.33:	We; do n't have; a deal;
+1.3:	sides; <be>; the two;
+
+The airfield will also make it easier for Palestinians to travel abroad, although a majority of Gazans are probably too poor to be able to afford an air ticket.
+1.5:	The airfield; will also make to; #1.11;
+1.11:	it; travel abroad although; probably too poor;
+1.19:	a majority of Gazans; are although; probably too poor;
+1.24:	<_>; be to; able;
+1.27:	a majority of Gazans; afford; an air ticket;
+
+The rebels targeted Kindu  since late August, when they were forced to retreat their march from  extreme western Congo to the outskirts of Kinshasa after Angola and  Zimbabwe sent troops to bail out Kabila.
+1.3:	The rebels; targeted; Kindu since late August;
+	 when; #1.12;
+1.12:	they; were forced to; #1.14;
+	 after; #1.30;
+1.14:	they; retreat from; extreme western Congo;
+	 to; the outskirts of Kinshasa;
+1.30:	Angola; sent; troops;
+	 to; #1.33;
+1.33:	Angola; bail; Kabila;
+
+U.S. authorities charge Salim helped finance, train and arm members of a terrorist organization, including the alleged bombers of the U.S. embassies in Kenya and Tanzania.
+1.1:	authorities; <be>; U.S.;
+1.3:	U.S. authorities; charge; #1.5;
+1.5:	Salim; helped; finance members of a terrorist organization;
+	 including; the alleged bombers of the U.S. embassies in Kenya;
+1.17:	<_>; including; <_>; 
+
+Gingrich is the figure in the House who would have the stature to broker a deal, and just like Clinton, the speaker has an intense interest in how he is perceived in history.
+1.2:	Gingrich; is; the figure in the House<ctx#1.10>;
+1.10:	who; would have; the stature;
+	 to; broker like Clinton;
+1.25:	the speaker; has; an intense interest<ctx#1.33>;
+	 <_>; the figure in the House<ctx#1.10>;
+1.33:	he; is perceived in; history;
+
+The new Congress, which will take office in February, is likely to be less cooperative than the current one.
+1.7:	which; will take; office;
+	 in; February;
+1.12:	The new Congress<ctx#1.7>; is; likely;
+1.15:	<_>; be to; less cooperative than the current one;
+
+Hyde, the chairman, told lawmakers  he hoped to have the committee vote on possible articles of impeachment  by Thanksgiving, an act that would take the issue out of his hands  and put it into Gingrich's.
+1.4:	Hyde; <be>; the chairman;
+1.6:	Hyde; told; lawmakers<ctx#1.9>;
+	 by; Thanksgiving;
+1.24:	Thanksgiving;  by<be>; an act;
+1.9:	he; hoped to; #1.11;
+1.11:	he; have; the committee vote on possible articles of impeachment;
+1.27:	that; would take of; the issue out his hands;
+1.35:	<_>; put; it;
+	 into; Gingrich 's;
+
+An international incident resulted after the arrest in Rome of Abdullah Ocalan, the leader of the Kurdistan Workers Party (PKK).
+1.15:	Abdullah Ocalan;  of<be>; the leader of the Kurdistan Workers Party;
+1.22:	the Kurdistan Workers Party;  of<be>; PKK;
+1.4:	An international incident; resulted after; the arrest;
+	 in; Rome of Abdullah Ocalan;
+
+``We should not prevent people from criticizing the components of the system, the institutions, the president, the Council of Guardians, the Islamic Consultative Assembly, the judiciary,'' Khatami said.
+1.16:	the system;  of<be>; the institutions;
+1.19:	the system;  of<be>; the president;
+1.22:	the system;  of<be>; the Council of Guardians;
+1.29:	the system;  of<be>; the Islamic Consultative Assembly;
+1.5:	We; should not prevent; people;
+	 from; #1.8;
+1.8:	We; criticizing; the components of the system;
+1.32:	the Islamic Consultative Assembly; <be>; the judiciary;
+1.36:	Khatami; said; #1.5;
+
+His frequent visits to Iraq to meet with President Saddam Hussein  have in turn raised suspicion in Washington.
+1.7:	His frequent visits to Iraq; meet with; President Saddam Hussein;
+1.15:	His frequent visits to Iraq<ctx#1.7>; have raised; suspicion;
+	 in; turn;
+	 in; Washington;
+
+In September of last year, he was pointedly questioned by federal agents investigating bin Laden's group.
+1.10:	he; was pointedly questioned by; federal agents;
+	 <_>; #1.14;
+	 In; September of last year;
+1.14:	he; investigating; bin Laden 's group;
+
+The book  quotes a former Netscape executive, Ram Shriram, as saying the company  bungled a chance to win a sizable share of the browser business from  America Online Inc.
+1.3:	The book; quotes; a former Netscape executive;
+	 as; #1.13;
+1.13:	The book; saying; #1.16;
+1.16:	the company; bungled; a chance<ctx#1.20>;
+1.20:	a chance; win; a sizable share of the browser business;
+	 from; America Online Inc;
+1.10:	a former Netscape executive; <be>; Ram Shriram;
+
+The 1978 committee wanted to give the Peace Prize to Jimmy Carter but missed its own deadline.
+1.2:	committee; <be>; The 1978;
+1.4:	The 1978 committee; wanted to; #1.6;
+1.6:	The 1978 committee; give; the Peace Prize;
+	 to; Jimmy Carter;
+1.7:	Peace Prize; <be>; the;
+1.14:	<_>; missed; its own deadline;
+
+Holbrooke's mission to Milosevic was described  by the American diplomats as ``not a do or die trip,'' but they added,  ``We're at a very serious juncture.''
+1.7:	Holbrooke 's mission to Milosevic; was described by; the American diplomats;
+	 as; #1.16;
+1.16:	a; do; trip;
+1.18:	<_>; die; <_>; 
+1.24:	they; added at; a very serious juncture;
+1.28:	We; 're at; a very serious juncture;
+
+These monitors,  many of whom are former military officers, have reported that the  Yugoslav army has ``stood down'' and that they have seen virtually  no military action since late last week.
+1.7:	many of whom; are; former military officers;
+1.13:	These monitors<ctx#1.10>; have reported that; #1.20;
+1.18:	<_>; has; <_>; 
+1.20:	the Yugoslav army; stood; <_>; 
+1.27:	they; have seen virtually; military action;
+	 since; late last week;
+
+The plane bound from New York to Geneva crashed Sept. 2 off the coast of Nova Scotia, killing all 229 people on board.
+1.3:	The plane; bound from; New York;
+	 to; Geneva;
+1.9:	The plane<ctx#1.3>; crashed off; the coast of Nova Scotia;
+	 <_>; #1.19;
+1.19:	The plane<ctx#1.3>; killing; all 229 people;
+	 on; board;
+1.21:	people; <be>; all 229;
+
+MISCALCULATIONS, POLITICS AND SAFETY NETS  On a steaming January day, Michel Camdessus, the IMF's top official,  slipped into Jakarta to the private residence of President Suharto  and sat down for a four-hour meeting to tick off, line by line, the  huge reforms Indonesia would have to implement in return for tens  of billions of dollars in emergency aid.
+1.3:	MISCALCULATIONS; <be>; POLITICS;
+1.20:	Michel Camdessus; <be>; the IMF 's top official;
+1.9:	<_>; steaming; <_>; 
+1.22:	Michel Camdessus; slipped into; Jakarta;
+	 to; the private residence of President Suharto;
+1.33:	<_>; sat for; a four-hour meeting;
+	 to; #1.40;
+1.40:	<_>; tick; line by line;
+1.52:	Indonesia; would have to; #1.54;
+	 On; a steaming January day;
+1.54:	Indonesia; implement in; return for of billions of dollars in emergency aid;
+
+And in the last few years, the Post Office has become a vehicle for  a growing mail-order trade in books, clothes and other catalog items  not readily available outside big cities.
+1.12:	the Post Office; has become readily; available outside big cities;
+	 in; the last few years;
+1.8:	Post Office; <be>; the;
+1.17:	<_>; growing; <_>; 
+
+It exploded, killing the bombers and injuring 24, before explosives-filled suitcases could be carried into the crowd.
+1.2:	It; exploded; #1.4;
+1.4:	<_>; killing; the bombers;
+1.8:	<_>; injuring; 24;
+	 before; #1.16;
+1.16:	explosives-filled suitcases; could be carried into; the crowd;
+
+The Clinton administration has repeatedly warned that it will  veto a big spending bill if it contains an array of anti-environmental  provisions that are under consideration.
+1.6:	The Clinton administration; has repeatedly warned that; #1.10;
+1.2:	administration; <be>; The Clinton;
+1.10:	it; will veto; a big spending bill;
+	 if; #1.17;
+1.17:	it; contains; an array of anti-environmental provisions<ctx#1.26>;
+1.24:	that; are under; consideration;
+
+I bet the American people don't know  that he spent 152 days out of the 283 days this year fund raising,  traveling and on vacation.''
+1.2:	I; bet; #1.8;
+1.8:	the American people; do n't know that; #1.11;
+1.11:	he; spent; <_>; 
+1.4:	people; <be>; the American;
+1.24:	<_>; traveling; <_>; 
+
+Thursday's vote to put the motion on the agenda will be an  indication of the government's chances of survival, which are said  to be extremely slim.
+1.5:	Thursday 's vote; put; the motion;
+	 on; the agenda;
+1.12:	Thursday 's vote<ctx#1.5>; be; an indication of the government 's chances of survival<ctx#1.25>;
+1.25:	which; are said to; extremely slim;
+1.27:	<_>; be to; extremely slim;
+
+Anna-Lisa Saar, a social worker at Oestra Hospital, where  many of the victims were taken, said identifying many of them was  difficult.
+1.17:	many of the victims; were taken; <_>; 
+1.19:	Anna-Lisa Saar; said; #1.24;
+1.6:	Anna-Lisa Saar; <be>; a social worker at Oestra Hospital;
+1.20:	<_>; identifying; many of them;
+1.24:	#1.20; was; difficult;
+
+It has fulfilled its mandate of telling the fullest truth possible, which is one reason that every political party in South Africa has denounced it.
+1.3:	It; has fulfilled; its mandate<ctx#1.16,#1.7>;
+1.7:	its mandate<ctx#1.16>; telling; possible;
+1.14:	which; is; one reason<ctx#1.25>;
+1.25:	every political party in South Africa; has denounced; it;
+	 <_>; that;
+
+Blair and Chirac said they liked the U.S. approach, and other countries as well have had favorable reactions in discussions with administration economic officials, presidential spokesman Joe Lockhart said.
+1.4:	Blair; said; #1.6;
+1.28:	Joe Lockhart; <be>; presidential spokesman;
+1.6:	they; liked; the U.S. approach;
+1.17:	other countries; as have had; favorable reactions;
+	 in; discussions;
+	 with; administration economic officials;
+1.31:	presidential spokesman Joe Lockhart; said; #1.4;
+1.8:	approach; <be>; the U.S.;
+
+The rationale for the half-year  financing is that by next March the Supreme Court is expected to rule  on whether using sampling is legal or constitutional.
+1.12:	Supreme Court; <be>; the;
+1.7:	The rationale for the half-year financing; is that; #1.16;
+1.16:	the Supreme Court; is expected to; #1.18;
+	 by; next March;
+1.18:	the Supreme Court; rule on; whether legal;
+1.21:	<_>; using; sampling;
+1.23:	#1.21; is on; whether legal;
+
+Lahoud, a Maronite Catholic, will keep  alive a 55-year-old tradition under which the president is a Maronite,  the prime minister a Sunni Muslim and the Parliament speaker a Shiite  Muslim.
+1.5:	Lahoud; <be>; a Maronite Catholic;
+1.8:	Lahoud; will keep; alive;
+1.17:	the president; is; under which a Maronite;
+1.23:	Sunni; <be>; the prime minister;
+1.30:	Shiite; <be>; the Parliament speaker;
+
+They stood for the pass, for team play,  but now their decade of selflessness has given way to one of selfishness.
+1.2:	They; stood for; the pass;
+	 for; team play;
+1.18:	their decade of selflessness; now has given; way;
+	 to; one of selfishness;
+
+Nearly 60 years behind the times, the House voted Friday to condemn  the Nazi-Soviet nonaggression pact of 1939.
+1.10:	the House; voted to; #1.13;
+	 behind; Nearly 60 years;
+1.13:	the House; condemn; the Nazi-Soviet nonaggression pact of 1939;
+1.8:	House; <be>; the;
+
+King Carl XVI Gustaf, on a trip out of the country, sent a statement  reassuring victims' relatives that ``all of us in Sweden feel great  sympathy.''
+1.14:	King Carl XVI Gustaf on a trip out of the country; sent; a statement;
+	 <_>; #1.17;
+1.17:	King Carl XVI Gustaf on a trip out of the country; reassuring; victims ' relatives;
+	 that; #1.28;
+1.28:	all of us in Sweden; feel; great sympathy;
+
+``He was humble,  a man who was doing this for a higher purpose, trying to save people  through sacrifice and prayer.''
+1.3:	He; was; humble;
+1.10:	who; was doing; this for a higher purpose<ctx#1.17>;
+1.17:	this for a higher purpose; trying to; #1.19;
+1.19:	this for a higher purpose<ctx#1.17>; save; people;
+	 through; sacrifice;
+
