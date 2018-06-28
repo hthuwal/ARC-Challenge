@@ -3,7 +3,6 @@ package it.unibz.inf.stuffie;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
@@ -37,7 +36,7 @@ public class Stuffie {
 			Mode.SyntheticRelation.ENABLED_NON_REDUNDANT, Mode.VerbGrammarFix.DISABLED, Mode.DanglingRel.HIDDEN,
 			Mode.ReferenceAnnotation.ENABLED, Mode.ConjunctionDistribution.PARENTAL_DISTRIBUTION,
 			Mode.IndirectObject.AS_VERB_COMPOUND, Mode.MainObject.PROMOTE_FACET_VERB_CONN,
-			Mode.PrintDependenyTree.DISABLED, Mode.RelOrdering.INDEX_BASED };
+			Mode.PrintDependenyTree.ENABLED, Mode.RelOrdering.INDEX_BASED };
 
 	private HashMap<Class<? extends Mode>, Mode> modes = new HashMap<>();
 	private HashMap<Class<? extends PipelineStep<?, ?>>, Class<? extends Mode>[]> relevantPlineModes = new HashMap<>();
