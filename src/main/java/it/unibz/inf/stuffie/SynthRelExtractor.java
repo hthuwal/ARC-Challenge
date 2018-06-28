@@ -55,16 +55,17 @@ public class SynthRelExtractor extends PipelineStep<TreeSet<RelationInstance>, C
 			res.add(ri);
 		}
 
-		OUTER:
-		for (IndexedWord noun : headNouns) {
+		OUTER: for (IndexedWord noun : headNouns) {
 			TreeSet<IndexedWord> subtrees = new TreeSet<IndexedWord>(new IndexedWordComparator());
-			for(IndexedWord iw : depAnno.descendants(noun)) {
-				if(!NPSequencePOS.contains(iw.tag()))
+			for (IndexedWord iw : depAnno.descendants(noun)) {
+				if (!NPSequencePOS.contains(iw.tag()))
 					continue OUTER;
 				subtrees.add(iw);
 			}
 			TreeSet<IndexedWord> subjects = new TreeSet<IndexedWord>(new IndexedWordComparator());
 			TreeSet<IndexedWord> objects = new TreeSet<IndexedWord>(new IndexedWordComparator());
+
+			boolean objectsContainNN = false;
 
 			IndexedWord last = subtrees.pollLast();
 			String lastNER = last.ner();
@@ -73,25 +74,28 @@ public class SynthRelExtractor extends PipelineStep<TreeSet<RelationInstance>, C
 			subjects.add(last);
 			while (!subtrees.isEmpty()) {
 				IndexedWord cur = subtrees.pollLast();
-				if (cur.ner().equals(lastNER))
+				if (cur.ner().equals(lastNER) || (cur.ner().equals("DATE") && lastNER.equals("TIME"))
+						|| (cur.ner().equals("TIME") && lastNER.equals("DATE")))
 					subjects.add(cur);
 				else {
 					lastNER = "";
-					if(cur.tag().equals("DT") && cur.originalText().equals("a"))
+					if (cur.tag().equals("DT") && cur.originalText().equals("a"))
 						continue;
 					objects.add(cur);
+					if (cur.tag().startsWith("NN"))
+						objectsContainNN = true;
 				}
 			}
-			
-			
-			
+
 			if (!subjects.isEmpty() && !objects.isEmpty()) {
-	
-				if(subjects.first().tag().startsWith("IN") || subjects.last().tag().startsWith("IN"))
+
+				if (subjects.first().tag().startsWith("IN") || subjects.last().tag().startsWith("IN"))
 					continue;
-				if(objects.first().tag().startsWith("IN") || objects.last().tag().startsWith("IN"))
+				if (objects.first().tag().startsWith("IN") || objects.last().tag().startsWith("IN"))
 					continue;
-				
+				if (!objectsContainNN)
+					continue;
+
 				RelationArgument subj = new RelationArgument(last, subjects, sentenceNum, depAnno, true);
 				RelationArgument obj = new RelationArgument(objects.last(), objects, sentenceNum, depAnno, false);
 

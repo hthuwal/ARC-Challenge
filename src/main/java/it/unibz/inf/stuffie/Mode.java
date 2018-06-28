@@ -19,6 +19,7 @@ public interface Mode {
 		AS_VERB_COMPOUND, AS_OBJECT_COMPOUND, NO_OBJECT
 	}
 
+	
 	enum SyntheticRelation implements Mode {
 		ENABLED_NON_REDUNDANT, ENABLED_REDUNDANT, DISABLED
 	}

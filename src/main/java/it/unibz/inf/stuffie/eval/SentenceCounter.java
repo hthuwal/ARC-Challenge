@@ -1,12 +1,9 @@
 package it.unibz.inf.stuffie.eval;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.TreeSet;
 import java.util.stream.Stream;
 
 import it.unibz.inf.stuffie.Stuffie;
