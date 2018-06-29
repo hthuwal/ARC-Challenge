@@ -2,6 +2,7 @@ package it.unibz.inf.stuffie;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.TreeSet;
@@ -33,8 +34,12 @@ public class SynthRelExtractor extends PipelineStep<TreeSet<RelationInstance>, C
 		}
 	}
 
+	public SynthRelExtractor() {
+		this(null,null,null);
+	}
+
 	@Override
-	protected TreeSet<RelationInstance> run(CoreMap sentence, int sentenceNum) {
+	protected TreeSet<RelationInstance> run(CoreMap sentence, int sentenceNum, HashMap<String, RelationArgument> idToComponentMap) {
 		TreeSet<RelationInstance> res = new TreeSet<RelationInstance>();
 
 		SemanticGraph depAnno = sentence.get(BasicDependenciesAnnotation.class);

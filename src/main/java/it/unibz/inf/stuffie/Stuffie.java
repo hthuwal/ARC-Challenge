@@ -1,11 +1,13 @@
 package it.unibz.inf.stuffie;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Function;
 
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -18,16 +20,16 @@ public class Stuffie {
 	private Properties stProp;
 	private StanfordCoreNLP stPline;
 
-	private VerbExtractor vExtr = new VerbExtractor(null, null, null);
-	private SubjectExtractor sExtr = new SubjectExtractor(null, null, null);
-	private ObjectExtractor oExtr = new ObjectExtractor(null, null, null);
-	private LongSubjectExtractor lsExtr = new LongSubjectExtractor(null, null, null);
+	private VerbExtractor vExtr = new VerbExtractor();
+	private SubjectExtractor sExtr = new SubjectExtractor();
+	private ObjectExtractor oExtr = new ObjectExtractor();
+	private LongSubjectExtractor lsExtr = new LongSubjectExtractor();
 
-	private NounExpander nExp = new NounExpander(null, null, null);
-	private ConnectorExpander cExp = new ConnectorExpander(null, null, null);
-	private VerbExpander vExp = new VerbExpander(null, null, null);
+	private NounExpander nExp = new NounExpander();
+	private ConnectorExpander cExp = new ConnectorExpander();
+	private VerbExpander vExp = new VerbExpander();
 
-	private SynthRelExtractor srExtr = new SynthRelExtractor(null, null, null);
+	private SynthRelExtractor srExtr = new SynthRelExtractor();
 
 	private PipelineStep<?, ?> steps[] = new PipelineStep[] { vExtr, sExtr, oExtr, lsExtr, nExp, cExp, vExp, srExtr };
 
@@ -40,6 +42,8 @@ public class Stuffie {
 
 	private HashMap<Class<? extends Mode>, Mode> modes = new HashMap<>();
 	private HashMap<Class<? extends PipelineStep<?, ?>>, Class<? extends Mode>[]> relevantPlineModes = new HashMap<>();
+
+
 
 	public void setMode(Mode m) {
 		modes.put(m.getClass(), m);
@@ -111,47 +115,43 @@ public class Stuffie {
 		stPline.annotate(stAnno);
 		refreshPlines();
 
-		List<CoreMap> sentences = stAnno.get(SentencesAnnotation.class);
-		int iter = 1;
+		HashMap<String, RelationArgument> idToComponentMap = new HashMap<>();
 		TreeSet<RelationInstance> rels = new TreeSet<RelationInstance>();
-		for (CoreMap sentence : sentences) {
-			rels.addAll(vExtr.run(sentence, iter));
-			iter++;
-		}
+		List<CoreMap> sentences = stAnno.get(SentencesAnnotation.class);
 
-		iter = 1;
-		for (RelationInstance relIns : rels) {
-			sExtr.run(relIns, iter);
-			oExtr.run(relIns, iter);
-			iter++;
-		}
+		runPipeline(true, o-> true, sentences, rels, idToComponentMap, vExtr);
+		runPipeline(true, o -> true, sentences, rels, idToComponentMap, sExtr, oExtr);
+		runPipeline(modes.get(Mode.DependentSubject.class) != Mode.DependentSubject.HIDE_ALL,
+				o -> ((RelationInstance) o).getSubject() == null, sentences, rels, idToComponentMap, lsExtr);
+		runPipeline(modes.get(Mode.SyntheticRelation.class) != Mode.SyntheticRelation.DISABLED, o-> true, sentences, rels, idToComponentMap, srExtr);
+		runPipeline(true, relIns -> true, sentences, rels, idToComponentMap, nExp, cExp, vExp);
 
-		if (modes.get(Mode.DependentSubject.class) != Mode.DependentSubject.HIDE_ALL) {
-			iter = 1;
-			for (RelationInstance relIns : rels) {
-				if (relIns.getSubject() == null) {
-					lsExtr.run(relIns, iter);
+
+		return rels;
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	void runPipeline(boolean outerCond, Function<Object, Boolean> innerCond, List<CoreMap> sentences, TreeSet<RelationInstance> rels, HashMap<String, RelationArgument> idToComponentMap, PipelineStep... steps) {
+		
+		Collection col;
+		if(steps[0] instanceof Expander || steps[0] instanceof ComponentExtractor)
+			col = rels;
+		else
+			col = sentences;
+		
+		int iter = 1;		
+		if (outerCond) {
+			for (Object obj : col) {
+				for (PipelineStep step : steps) {
+					if (innerCond.apply(obj)) {
+						Object ret = step.run(obj, iter, idToComponentMap);
+						if(ret instanceof Collection)
+							rels.addAll((Collection) ret);
+					}
 				}
 				iter++;
 			}
 		}
-
-		iter = 1;
-		for (CoreMap sentence : sentences) {
-			if (modes.get(Mode.SyntheticRelation.class) != Mode.SyntheticRelation.DISABLED)
-				rels.addAll(srExtr.run(sentence, iter));
-			iter++;
-		}
-
-		iter = 1;
-		for (RelationInstance relIns : rels) {
-			nExp.run(relIns, iter);
-			cExp.run(relIns, iter);
-			vExp.run(relIns, iter);
-			iter++;
-		}
-
-		return rels;
 	}
 
 	public String parseRelation(String text) {

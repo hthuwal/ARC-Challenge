@@ -1,5 +1,6 @@
 package it.unibz.inf.stuffie;
 
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.TreeSet;
 
@@ -17,8 +18,12 @@ public class VerbExtractor extends PipelineStep<TreeSet<RelationInstance>, CoreM
 		super(stAnno, stProp, stPipe, relevantModes);
 	}
 
+	public VerbExtractor() {
+		super();
+	}
+
 	@Override
-	protected TreeSet<RelationInstance> run(CoreMap sentence, int sentenceNum) {
+	protected TreeSet<RelationInstance> run(CoreMap sentence, int sentenceNum, HashMap<String, RelationArgument> idToComponentMap) {
 		TreeSet<RelationInstance> res = new TreeSet<RelationInstance>();
 
 		SemanticGraph depAnno = sentence.get(BasicDependenciesAnnotation.class);

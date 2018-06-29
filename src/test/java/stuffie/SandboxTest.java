@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.Properties;
 
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
-import edu.stanford.nlp.ling.CoreAnnotations.TokensAnnotation;
-import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -26,7 +24,7 @@ public class SandboxTest {
 
 		String x = "1-2";
 		System.out.println(x.split("-")[1]);
-
+		
 		Annotation stAnno;
 		Properties stProp;
 		StanfordCoreNLP stPline;

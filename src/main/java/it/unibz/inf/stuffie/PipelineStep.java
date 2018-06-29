@@ -13,7 +13,11 @@ public abstract class PipelineStep<R,P> {
 	protected StanfordCoreNLP stPipe;
 	protected HashMap<Class<? extends Mode>, Mode> modes = new HashMap<>();
 	
-	public PipelineStep(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode[] relevantModes) {
+	public PipelineStep() {
+		this(null,null,null);
+	}
+	
+	public PipelineStep(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
 		super();
 		refresh(stAnno, stProp, stPipe, relevantModes);
 		
@@ -22,7 +26,7 @@ public abstract class PipelineStep<R,P> {
 		}
 	}
 	
-	protected void refresh(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode[] relevantModes) {
+	protected void refresh(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
 		this.stAnno = stAnno;
 		this.stProp = stProp;
 		this.stPipe = stPipe;
@@ -32,6 +36,6 @@ public abstract class PipelineStep<R,P> {
 		}
 	}
 	
-	protected abstract R run(P par, int iteration);
+	protected abstract R run(P par, int iteration, HashMap<String, RelationArgument> idToComponentMap);
 	
 }

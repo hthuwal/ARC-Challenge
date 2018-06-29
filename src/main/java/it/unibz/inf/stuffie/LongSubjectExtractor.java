@@ -1,5 +1,6 @@
 package it.unibz.inf.stuffie;
 
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.TreeSet;
 
@@ -15,8 +16,12 @@ public class LongSubjectExtractor extends SubjectExtractor {
 		super(stAnno, stProp, stPipe, relevantModes);
 	}
 	
+	public LongSubjectExtractor() {
+		super();
+	}
+
 	@Override
-	protected Boolean run(RelationInstance rel, int iteration) {
+	protected Boolean run(RelationInstance rel, int iteration,HashMap<String, RelationArgument> idToComponentMap) {
 		IndexedWord verbSrc = rel.getVerb().headword;
 		SemanticGraph depAnno = rel.getVerb().getDepAnno();
 
@@ -35,7 +40,7 @@ public class LongSubjectExtractor extends SubjectExtractor {
 				return false;
 			else {
 				verbSrc = advcls.first();
-				boolean res = traverseOneStep(rel, iteration, verbSrc, depAnno);
+				boolean res = traverseOneStep(rel, iteration, verbSrc, depAnno,idToComponentMap);
 				if(res)
 					return true;
 			}

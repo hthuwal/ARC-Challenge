@@ -1,5 +1,6 @@
 package it.unibz.inf.stuffie;
 
+import java.util.HashMap;
 import java.util.Properties;
 
 import edu.stanford.nlp.ling.IndexedWord;
@@ -13,8 +14,12 @@ public class NounExpander extends Expander {
 		super(stAnno, stProp, stPipe, "resource/noun_expand.txt", relevantModes);
 	}
 
+	public NounExpander() {
+		super("resource/noun_expand.txt");
+	}
+
 	@Override
-	protected Boolean run(RelationInstance par, int iteration) {
+	protected Boolean run(RelationInstance par, int iteration, HashMap<String, RelationArgument> idToComponentMap) {
 		RelationArgument subj = par.getSubject();
 		RelationArgument obj = par.getObject();
 

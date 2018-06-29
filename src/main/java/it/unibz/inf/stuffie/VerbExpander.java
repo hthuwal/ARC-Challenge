@@ -1,5 +1,6 @@
 package it.unibz.inf.stuffie;
 
+import java.util.HashMap;
 import java.util.Properties;
 
 import edu.stanford.nlp.ling.IndexedWord;
@@ -13,8 +14,12 @@ public class VerbExpander extends Expander {
 		super(stAnno, stProp, stPipe, "resource/verb_expand.txt", relevantModes);
 	}
 
+	public VerbExpander() {
+		super("resource/verb_expand.txt");
+	}
+
 	@Override
-	protected Boolean run(RelationInstance par, int iteration) {
+	protected Boolean run(RelationInstance par, int iteration, HashMap<String, RelationArgument> idToComponentMap) {
 		return expandVerb(par.getVerb(), par.getVerb().getHeadword());
 	}
 	

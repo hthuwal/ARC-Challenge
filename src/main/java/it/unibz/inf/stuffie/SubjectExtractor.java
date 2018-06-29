@@ -1,11 +1,8 @@
 package it.unibz.inf.stuffie;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.LinkedHashSet;
+import java.util.HashMap;
 import java.util.Properties;
 import java.util.TreeSet;
-import java.util.regex.Pattern;
 
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -13,48 +10,40 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 import edu.stanford.nlp.trees.UniversalEnglishGrammaticalRelations;
 
-public class SubjectExtractor extends PipelineStep<Boolean, RelationInstance> {
-
-	protected LinkedHashSet<DependencyArc> subjArcs;
+public class SubjectExtractor extends ComponentExtractor {
 
 	public SubjectExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
-		super(stAnno, stProp, stPipe, relevantModes);
-		subjArcs = new LinkedHashSet<DependencyArc>();
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("resource/subject_arcs.txt"));
-			for (String line = br.readLine(); line != null; line = br.readLine()) {
-				String x[] = line.split(Pattern.quote(","));
-				subjArcs.add(new DependencyArc(UniversalEnglishGrammaticalRelations.shortNameToGRel.get(x[0]),
-						DependencyArc.Direction.valueOf(x[1])));
-			}
-			br.close();
-		} catch (Exception e) {
+		super(stAnno, stProp, stPipe, "resource/subject_arcs.txt", relevantModes);
+	}
 
-		}
+	public SubjectExtractor() {
+		super("resource/subject_arcs.txt");
 	}
 
 	@Override
-	protected Boolean run(RelationInstance rel, int iteration) {
+	protected Boolean run(RelationInstance rel, int iteration, HashMap<String, RelationArgument> idToComponentMap) {
 		IndexedWord verbSrc = rel.getVerb().headword;
 		SemanticGraph depAnno = rel.getVerb().getDepAnno();
 
-		if(traverseOneStep(rel, iteration, verbSrc, depAnno)) {
+		if (traverseOneStep(rel, iteration, verbSrc, depAnno, idToComponentMap)) {
 			return true;
 		} else {
 			TreeSet<IndexedWord> cops = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc));
-			cops.addAll(depAnno.getParentsWithReln(verbSrc, UniversalEnglishGrammaticalRelations.shortNameToGRel.get("cop")));
-			
-			if(cops.isEmpty())
+			cops.addAll(depAnno.getParentsWithReln(verbSrc,
+					UniversalEnglishGrammaticalRelations.shortNameToGRel.get("cop")));
+
+			if (cops.isEmpty())
 				return false;
 			else
-				return traverseOneStep(rel, iteration, cops.first(), depAnno);
+				return traverseOneStep(rel, iteration, cops.first(), depAnno, idToComponentMap);
 		}
 
 	}
-	
-	protected Boolean traverseOneStep(RelationInstance rel, int iteration, IndexedWord verbSrc, SemanticGraph depAnno) {
+
+	protected Boolean traverseOneStep(RelationInstance rel, int iteration, IndexedWord verbSrc, SemanticGraph depAnno,
+			HashMap<String, RelationArgument> idToComponentMap) {
 		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc));
-		for (DependencyArc arc : subjArcs) {
+		for (DependencyArc arc : arcs) {
 			if (arc.getDir() == DependencyArc.Direction.OUT)
 				candidates.addAll(depAnno.getChildrenWithReln(verbSrc, arc.getRel()));
 			else
@@ -67,10 +56,11 @@ public class SubjectExtractor extends PipelineStep<Boolean, RelationInstance> {
 					true);
 			subj.addChainFromVerb(new TraversalArc(verbSrc, arc.getRel(), subj.headword, arc.getDir()));
 			rel.setSubject(subj);
-			
+			idToComponentMap.put(subj.id, subj);
+			subj.setRelativeID(rel.getId() + "s");
 			return true;
 		}
-		
+
 		return false;
 	}
 

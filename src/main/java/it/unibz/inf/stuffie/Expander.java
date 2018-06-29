@@ -13,7 +13,7 @@ import edu.stanford.nlp.trees.UniversalEnglishGrammaticalRelations;
 public abstract class Expander extends PipelineStep<Boolean, RelationInstance> {
 
 	protected LinkedHashSet<ExpansionArc> expansionArcs;
-
+	
 	public Expander(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
 		super(stAnno, stProp, stPipe, relevantModes);
 	}
@@ -45,6 +45,10 @@ public abstract class Expander extends PipelineStep<Boolean, RelationInstance> {
 		} catch (Exception e) {
 
 		}
+	}
+	
+	public Expander(String ruleSrc) {
+		this(null,null,null,ruleSrc);
 	}
 
 }
