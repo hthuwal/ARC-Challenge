@@ -4,4 +4,5 @@ nmod,OUT
 xcomp,OUT
 ccomp,OUT
 advcl,OUT
-advmod, OUT
+advmod,OUT
+acl:relcl,IN

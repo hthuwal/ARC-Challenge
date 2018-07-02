@@ -105,4 +105,9 @@ public class RelationArgument extends RelationComponent {
 		this.relativeID = relativeID;
 	}
 
+	public void setContextDependent(boolean contextDependent) {
+		this.contextDependent = contextDependent;
+		owner.getVerb().setContextDependent(contextDependent);
+	}
+
 }

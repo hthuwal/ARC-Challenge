@@ -36,7 +36,8 @@ public class RelationInstance implements Comparable<RelationInstance> {
 
 	public RelationInstance(RelationVerb verb) {
 		super();
-		facets = new TreeSet<RelationArgument>(new RelationComponentComparator(verb));
+		RelationComponentComparator rcc = new RelationComponentComparator(verb);
+		facets = new TreeSet<RelationArgument>(rcc::compareByPointOfComparison);
 		this.verb = verb;
 		this.id = verb.id;
 	}
@@ -74,38 +75,43 @@ public class RelationInstance implements Comparable<RelationInstance> {
 
 	@Override
 	public int compareTo(RelationInstance o) {
-		int ret = verb.sentenceID.compareTo(o.verb.sentenceID);
-		if (ret == 0 && !verb.isSynthetic()) {
-			ret = Integer.compare(verb.headword.index(), o.verb.headword.index());
-			if (ret != 0)
-				return ret;
-		}
-		if (ret == 0) {
-			if (subject != null && o.subject == null)
-				return -1;
-			else if (subject == null && o.subject != null)
-				return 1;
-			else if (subject == null && o.subject == null) {
-				ret = 0;
-			} else {
-				ret = subject.id.compareTo(o.subject.id);
-			}
-		}
-		if (ret == 0) {
-			if (object != null && o.object == null)
-				return -1;
-			else if (object == null && o.object != null)
-				return 1;
-			else if (object == null && o.object == null) {
-				ret = 0;
-			} else {
-				ret = object.id.compareTo(o.object.id);
-			}
-		}
-		if (ret == 0) {
-			ret = id.compareTo(o.getId());
-		}
-		return ret;
+		if(!verb.isSynthetic() && o.verb.isSynthetic())
+			return -1;
+		if(verb.isSynthetic() && !o.verb.isSynthetic())
+			return 1;
+		
+		return new StringIDComparator().compare(id, o.id);
+//		if (ret == 0 && !verb.isSynthetic()) {
+//			ret = Integer.compare(verb.headword.index(), o.verb.headword.index());
+//			if (ret != 0)
+//				return ret;
+//		}
+//		if (ret == 0) {
+//			if (subject != null && o.subject == null)
+//				return -1;
+//			else if (subject == null && o.subject != null)
+//				return 1;
+//			else if (subject == null && o.subject == null) {
+//				ret = 0;
+//			} else {
+//				ret = subject.id.compareTo(o.subject.id);
+//			}
+//		}
+//		if (ret == 0) {
+//			if (object != null && o.object == null)
+//				return -1;
+//			else if (object == null && o.object != null)
+//				return 1;
+//			else if (object == null && o.object == null) {
+//				ret = 0;
+//			} else {
+//				ret = object.id.compareTo(o.object.id);
+//			}
+//		}
+//		if (ret == 0) {
+//			ret = id.compareTo(o.getId());
+//		}
+//		return ret;
 	}
 
 	/**

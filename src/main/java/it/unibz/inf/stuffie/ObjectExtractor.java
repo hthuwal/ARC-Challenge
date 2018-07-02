@@ -5,6 +5,8 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.google.common.collect.TreeMultimap;
+
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -23,7 +25,7 @@ public class ObjectExtractor extends ComponentExtractor {
 	}
 
 	@Override
-	protected Boolean run(RelationInstance rel, int iteration, HashMap<String, RelationArgument> idToComponentMap) {
+	protected Boolean run(RelationInstance rel, int iteration, TreeMultimap<String, RelationComponent> idToComponentMap) {
 		IndexedWord verbSrc = rel.getVerb().headword;
 		SemanticGraph depAnno = rel.getVerb().getDepAnno();
 
@@ -60,18 +62,18 @@ public class ObjectExtractor extends ComponentExtractor {
 		if (candidates.isEmpty())
 			return false;
 
-		boolean first = true;
+		int i = 0;
 		for (IndexedWord candidate : candidates) {
 			DependencyArc arc = arcTempStorage.get(candidate.index());
 			RelationArgument obj = new RelationArgument(candidate, rel.getVerb().getSentenceID(), depAnno, false);
 			obj.addChainFromVerb(new TraversalArc(verbSrc, arc.getRel(), obj.headword, arc.getDir()));
 
-			if (first) {
-				rel.setObject(obj);
-				first = false;
+			if (i == 0) {
+				addComponent(rel,obj,rel::setObject,idToComponentMap,"o", arc.getRel().getShortName().equals("relcl"));
 			} else {
-				rel.addFacet(obj);
+				addComponent(rel,obj,rel::addFacet,idToComponentMap,"f"+i, arc.getRel().getShortName().equals("relcl"));
 			}
+			i++;
 		}
 
 		return true;

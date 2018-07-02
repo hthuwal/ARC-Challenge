@@ -16,10 +16,10 @@ public interface Mode {
 	}
 
 	enum FacetConnector implements Mode {
-		AS_VERB_COMPOUND, AS_OBJECT_COMPOUND, NO_OBJECT
+		AS_VERB_COMPOUND, AS_OBJECT_COMPOUND
 	}
 
-	
+	// DONE
 	enum SyntheticRelation implements Mode {
 		ENABLED_NON_REDUNDANT, ENABLED_REDUNDANT, DISABLED
 	}
@@ -53,6 +53,7 @@ public interface Mode {
 		DISABLED, ENABLED
 	}
 	
+	// DONE
 	enum RelOrdering implements Mode {
 		INDEX_BASED, DEPENDENCY_BASED
 	}

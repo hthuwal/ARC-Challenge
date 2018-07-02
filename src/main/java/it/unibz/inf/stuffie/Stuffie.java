@@ -9,6 +9,9 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Function;
 
+import com.google.common.collect.Ordering;
+import com.google.common.collect.TreeMultimap;
+
 import edu.stanford.nlp.ling.CoreAnnotations.SentencesAnnotation;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -23,15 +26,16 @@ public class Stuffie {
 	private VerbExtractor vExtr = new VerbExtractor();
 	private SubjectExtractor sExtr = new SubjectExtractor();
 	private ObjectExtractor oExtr = new ObjectExtractor();
+	private EnhancedSubjectExtractor esExtr = new EnhancedSubjectExtractor();
 	private LongSubjectExtractor lsExtr = new LongSubjectExtractor();
 
+	private SynthRelExtractor srExtr = new SynthRelExtractor();
+	
 	private NounExpander nExp = new NounExpander();
 	private ConnectorExpander cExp = new ConnectorExpander();
 	private VerbExpander vExp = new VerbExpander();
 
-	private SynthRelExtractor srExtr = new SynthRelExtractor();
-
-	private PipelineStep<?, ?> steps[] = new PipelineStep[] { vExtr, sExtr, oExtr, lsExtr, nExp, cExp, vExp, srExtr };
+	private PipelineStep<?, ?> steps[] = new PipelineStep[] { vExtr, sExtr, oExtr, esExtr, lsExtr, srExtr, nExp, cExp, vExp };
 
 	private Mode[] defaultModes = { Mode.Dependent.SEPARATED, Mode.DependentSubject.TRANSFER_ALL,
 			Mode.ClausalConnection.AS_FACET, Mode.FacetConnector.AS_VERB_COMPOUND,
@@ -42,8 +46,6 @@ public class Stuffie {
 
 	private HashMap<Class<? extends Mode>, Mode> modes = new HashMap<>();
 	private HashMap<Class<? extends PipelineStep<?, ?>>, Class<? extends Mode>[]> relevantPlineModes = new HashMap<>();
-
-
 
 	public void setMode(Mode m) {
 		modes.put(m.getClass(), m);
@@ -92,7 +94,6 @@ public class Stuffie {
 				relevantPlineModes.put(cls, (Class<? extends Mode>[]) new Class<?>[] {});
 
 			step.refresh(stAnno, stProp, stPline, relevantModes);
-
 		}
 	}
 
@@ -115,37 +116,44 @@ public class Stuffie {
 		stPline.annotate(stAnno);
 		refreshPlines();
 
-		HashMap<String, RelationArgument> idToComponentMap = new HashMap<>();
-		TreeSet<RelationInstance> rels = new TreeSet<RelationInstance>();
+		TreeMultimap<String, RelationComponent> idToComponentMap = TreeMultimap.create(Ordering.natural(),
+				new RelationComponentComparator()::compareByContextDependency);
+		TreeSet<RelationInstance> rels;
+		if (modes.get(Mode.RelOrdering.class) == Mode.RelOrdering.INDEX_BASED)
+			rels = new TreeSet<RelationInstance>();
+		else
+			rels = new TreeSet<RelationInstance>(new RelationInstanceComparator());
 		List<CoreMap> sentences = stAnno.get(SentencesAnnotation.class);
 
-		runPipeline(true, o-> true, sentences, rels, idToComponentMap, vExtr);
+		runPipeline(true, o -> true, sentences, rels, idToComponentMap, vExtr);
 		runPipeline(true, o -> true, sentences, rels, idToComponentMap, sExtr, oExtr);
 		runPipeline(modes.get(Mode.DependentSubject.class) != Mode.DependentSubject.HIDE_ALL,
-				o -> ((RelationInstance) o).getSubject() == null, sentences, rels, idToComponentMap, lsExtr);
-		runPipeline(modes.get(Mode.SyntheticRelation.class) != Mode.SyntheticRelation.DISABLED, o-> true, sentences, rels, idToComponentMap, srExtr);
-		runPipeline(true, relIns -> true, sentences, rels, idToComponentMap, nExp, cExp, vExp);
-
+				o -> ((RelationInstance) o).getSubject() == null, sentences, rels, idToComponentMap, esExtr, lsExtr);
+		runPipeline(modes.get(Mode.SyntheticRelation.class) != Mode.SyntheticRelation.DISABLED, o -> true, sentences,
+				rels, idToComponentMap, srExtr);
+		runPipeline(true, o -> true, sentences, rels, idToComponentMap, nExp, cExp, vExp);
 
 		return rels;
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	void runPipeline(boolean outerCond, Function<Object, Boolean> innerCond, List<CoreMap> sentences, TreeSet<RelationInstance> rels, HashMap<String, RelationArgument> idToComponentMap, PipelineStep... steps) {
-		
+	void runPipeline(boolean outerCond, Function<Object, Boolean> innerCond, List<CoreMap> sentences,
+			TreeSet<RelationInstance> rels, TreeMultimap<String, RelationComponent> idToComponentMap,
+			PipelineStep... steps) {
+
 		Collection col;
-		if(steps[0] instanceof Expander || steps[0] instanceof ComponentExtractor)
+		if (steps[0] instanceof Expander || steps[0] instanceof ComponentExtractor)
 			col = rels;
 		else
 			col = sentences;
-		
-		int iter = 1;		
+
+		int iter = 1;
 		if (outerCond) {
 			for (Object obj : col) {
 				for (PipelineStep step : steps) {
 					if (innerCond.apply(obj)) {
 						Object ret = step.run(obj, iter, idToComponentMap);
-						if(ret instanceof Collection)
+						if (ret instanceof Collection)
 							rels.addAll((Collection) ret);
 					}
 				}

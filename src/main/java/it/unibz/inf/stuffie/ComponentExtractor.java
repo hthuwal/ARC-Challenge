@@ -11,10 +11,11 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.trees.UniversalEnglishGrammaticalRelations;
 
 public abstract class ComponentExtractor extends PipelineStep<Boolean, RelationInstance> {
-	
+
 	protected LinkedHashSet<DependencyArc> arcs;
-	
-	public ComponentExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, String arcResources, Mode... relevantModes) {
+
+	public ComponentExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, String arcResources,
+			Mode... relevantModes) {
 		super(stAnno, stProp, stPipe, relevantModes);
 		arcs = new LinkedHashSet<DependencyArc>();
 		try {
@@ -33,5 +34,5 @@ public abstract class ComponentExtractor extends PipelineStep<Boolean, RelationI
 	public ComponentExtractor(String arcResources) {
 		this(null, null, null, arcResources);
 	}
-	
+
 }

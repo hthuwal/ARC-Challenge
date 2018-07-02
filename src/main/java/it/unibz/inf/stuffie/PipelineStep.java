@@ -2,6 +2,9 @@ package it.unibz.inf.stuffie;
 
 import java.util.HashMap;
 import java.util.Properties;
+import java.util.function.Consumer;
+
+import com.google.common.collect.TreeMultimap;
 
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
@@ -36,6 +39,16 @@ public abstract class PipelineStep<R,P> {
 		}
 	}
 	
-	protected abstract R run(P par, int iteration, HashMap<String, RelationArgument> idToComponentMap);
+	protected void addComponent(RelationInstance rel, RelationArgument ra, Consumer<RelationArgument> func,
+			TreeMultimap<String, RelationComponent> idToComponentMap, String relID, boolean contextDependent) {
+		ra.setRelativeID(rel.getId()+relID);
+		ra.setOwner(rel);
+		ra.setContextDependent(contextDependent);
+		func.accept(ra);
+		idToComponentMap.put(ra.id, ra);
+		idToComponentMap.put(ra.getRelativeID(), ra);
+	}
+	
+	protected abstract R run(P param, int iteration, TreeMultimap<String, RelationComponent> idToComponentMap);
 	
 }

@@ -6,15 +6,18 @@ import edu.stanford.nlp.semgraph.SemanticGraph;
 public class RelationVerb extends RelationComponent {
 
 	private String synthVerb;
+	protected SemanticGraph depAnnoEnch;
 	
-	public RelationVerb(IndexedWord headword, int sentID, SemanticGraph depAnno) {
+	public RelationVerb(IndexedWord headword, int sentID, SemanticGraph depAnno, SemanticGraph depAnnoEnch) {
 		super(headword, sentID, depAnno);
+		this.depAnnoEnch = depAnnoEnch;
 	}
 	
-	public RelationVerb(String synthVerb, int sentID, SemanticGraph depAnno, int synthID) {
+	public RelationVerb(String synthVerb, int sentID, SemanticGraph depAnno, SemanticGraph depAnnoEnch, int synthID) {
 		super(null, sentID, depAnno);
 		this.synthVerb = synthVerb;
 		this.id = sentenceID + "." + synthID;
+		this.depAnnoEnch = depAnnoEnch;
 	}
 	
 	public boolean isSynthetic() {
@@ -36,6 +39,10 @@ public class RelationVerb extends RelationComponent {
 
 	public SemanticGraph getDepAnno() {
 		return depAnno;
+	}
+
+	public SemanticGraph getEnchDepAnno() {
+		return depAnnoEnch;
 	}
 
 	

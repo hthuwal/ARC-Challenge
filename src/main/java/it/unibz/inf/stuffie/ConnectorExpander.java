@@ -1,7 +1,8 @@
 package it.unibz.inf.stuffie;
 
-import java.util.HashMap;
 import java.util.Properties;
+
+import com.google.common.collect.TreeMultimap;
 
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -19,7 +20,7 @@ public class ConnectorExpander extends Expander {
 	}
 
 	@Override
-	protected Boolean run(RelationInstance par, int iteration, HashMap<String, RelationArgument> idToComponentMap) {
+	protected Boolean run(RelationInstance par, int iteration, TreeMultimap<String, RelationComponent> idToComponentMap) {
 		RelationArgument subj = par.getSubject();
 		RelationArgument obj = par.getObject();
 
@@ -60,6 +61,7 @@ public class ConnectorExpander extends Expander {
 		}
 
 		if (!found && isFacet) {
+			
 			arg.setConnector(new RelationArgumentConnector(null, arg.sentenceID, depAnno));
 		}
 

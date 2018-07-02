@@ -2,11 +2,12 @@ package it.unibz.inf.stuffie;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.TreeSet;
 import java.util.stream.Stream;
+
+import com.google.common.collect.TreeMultimap;
 
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -35,11 +36,12 @@ public class SynthRelExtractor extends PipelineStep<TreeSet<RelationInstance>, C
 	}
 
 	public SynthRelExtractor() {
-		this(null,null,null);
+		this(null, null, null);
 	}
 
 	@Override
-	protected TreeSet<RelationInstance> run(CoreMap sentence, int sentenceNum, HashMap<String, RelationArgument> idToComponentMap) {
+	protected TreeSet<RelationInstance> run(CoreMap sentence, int sentenceNum,
+			TreeMultimap<String, RelationComponent> idToComponentMap) {
 		TreeSet<RelationInstance> res = new TreeSet<RelationInstance>();
 
 		SemanticGraph depAnno = sentence.get(BasicDependenciesAnnotation.class);
@@ -52,11 +54,11 @@ public class SynthRelExtractor extends PipelineStep<TreeSet<RelationInstance>, C
 
 		for (SemanticGraphEdge e : apposEdges) {
 			RelationInstance ri = new RelationInstance(
-					new RelationVerb("be", sentenceNum, depAnno, e.getTarget().index()));
+					new RelationVerb("be", sentenceNum, depAnno, null, e.getTarget().index()));
 			RelationArgument subj = new RelationArgument(e.getSource(), sentenceNum, depAnno, true);
 			RelationArgument obj = new RelationArgument(e.getTarget(), sentenceNum, depAnno, false);
-			ri.setSubject(subj);
-			ri.setObject(obj);
+			addComponent(ri, subj, ri::setSubject, idToComponentMap, "s", true);
+			addComponent(ri, obj, ri::setObject, idToComponentMap, "o", true);
 			res.add(ri);
 		}
 
@@ -105,9 +107,10 @@ public class SynthRelExtractor extends PipelineStep<TreeSet<RelationInstance>, C
 				RelationArgument obj = new RelationArgument(objects.last(), objects, sentenceNum, depAnno, false);
 
 				RelationInstance ri = new RelationInstance(
-						new RelationVerb("be", sentenceNum, depAnno, objects.last().index()));
-				ri.setSubject(subj);
-				ri.setObject(obj);
+						new RelationVerb("be", sentenceNum, depAnno, null, objects.last().index()));
+
+				addComponent(ri, subj, ri::setSubject, idToComponentMap, "s", true);
+				addComponent(ri, obj, ri::setObject, idToComponentMap, "o", true);
 				res.add(ri);
 			}
 		}

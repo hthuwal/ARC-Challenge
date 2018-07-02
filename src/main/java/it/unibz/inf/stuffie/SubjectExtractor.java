@@ -1,8 +1,9 @@
 package it.unibz.inf.stuffie;
 
-import java.util.HashMap;
 import java.util.Properties;
 import java.util.TreeSet;
+
+import com.google.common.collect.TreeMultimap;
 
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
@@ -20,8 +21,13 @@ public class SubjectExtractor extends ComponentExtractor {
 		super("resource/subject_arcs.txt");
 	}
 
+	protected SubjectExtractor(String res) {
+		super(res);
+	}
+
 	@Override
-	protected Boolean run(RelationInstance rel, int iteration, HashMap<String, RelationArgument> idToComponentMap) {
+	protected Boolean run(RelationInstance rel, int iteration,
+			TreeMultimap<String, RelationComponent> idToComponentMap) {
 		IndexedWord verbSrc = rel.getVerb().headword;
 		SemanticGraph depAnno = rel.getVerb().getDepAnno();
 
@@ -41,7 +47,7 @@ public class SubjectExtractor extends ComponentExtractor {
 	}
 
 	protected Boolean traverseOneStep(RelationInstance rel, int iteration, IndexedWord verbSrc, SemanticGraph depAnno,
-			HashMap<String, RelationArgument> idToComponentMap) {
+			TreeMultimap<String, RelationComponent> idToComponentMap) {
 		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc));
 		for (DependencyArc arc : arcs) {
 			if (arc.getDir() == DependencyArc.Direction.OUT)
@@ -55,9 +61,8 @@ public class SubjectExtractor extends ComponentExtractor {
 			RelationArgument subj = new RelationArgument(candidates.first(), rel.getVerb().getSentenceID(), depAnno,
 					true);
 			subj.addChainFromVerb(new TraversalArc(verbSrc, arc.getRel(), subj.headword, arc.getDir()));
-			rel.setSubject(subj);
-			idToComponentMap.put(subj.id, subj);
-			subj.setRelativeID(rel.getId() + "s");
+			addComponent(rel, subj, rel::setSubject, idToComponentMap, "s", subj.getChainFromVerb().size() > 1
+					|| arc.getRel().getShortName().equals("acl") || arc.getRel().getShortName().contains("xsubj"));
 			return true;
 		}
 

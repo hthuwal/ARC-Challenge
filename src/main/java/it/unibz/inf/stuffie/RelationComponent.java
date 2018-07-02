@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.semgraph.SemanticGraph;
 
-public class RelationComponent {
+public class RelationComponent implements Comparable<RelationComponent> {
 
 	protected static final Pattern VERB_PATTERN = Pattern.compile("VB|VBD|VBG|VBN|VBP|VBZ");
 	protected static final String NULL_CMPNT = "<_>";
@@ -17,6 +17,8 @@ public class RelationComponent {
 	protected String id;
 	protected SemanticGraph depAnno;
 	protected boolean isStatic;
+	protected RelationInstance owner;
+	protected boolean contextDependent = false;
 
 	public boolean isStatic() {
 		return isStatic;
@@ -87,6 +89,27 @@ public class RelationComponent {
 
 	public void addWords(IndexedWord iw) {
 		words.add(iw);
+	}
+	
+	public RelationInstance getOwner() {
+		return owner;
+	}
+
+	public void setOwner(RelationInstance owner) {
+		this.owner = owner;
+	}
+
+	@Override
+	public int compareTo(RelationComponent o) {
+		return new StringIDComparator().compare(id, o.id);
+	}
+	
+	public boolean isContextDependent() {
+		return contextDependent;
+	}
+	
+	public void setContextDependent(boolean contextDependent) {
+		this.contextDependent = contextDependent;
 	}
 
 }
