@@ -32,10 +32,10 @@ public class Stuffie {
 	private SynthRelExtractor srExtr = new SynthRelExtractor();
 	
 	private NounExpander nExp = new NounExpander();
-	private ConnectorExpander cExp = new ConnectorExpander();
 	private VerbExpander vExp = new VerbExpander();
+	private ConnectorExpander cExp = new ConnectorExpander();
 
-	private PipelineStep<?, ?> steps[] = new PipelineStep[] { vExtr, sExtr, oExtr, esExtr, lsExtr, srExtr, nExp, cExp, vExp };
+	private PipelineStep<?, ?> steps[] = new PipelineStep[] { vExtr, sExtr, oExtr, esExtr, lsExtr, srExtr, nExp, vExp, cExp };
 
 	private Mode[] defaultModes = { Mode.Dependent.SEPARATED, Mode.DependentSubject.TRANSFER_ALL,
 			Mode.ClausalConnection.AS_FACET, Mode.FacetConnector.AS_VERB_COMPOUND,
@@ -131,7 +131,7 @@ public class Stuffie {
 				o -> ((RelationInstance) o).getSubject() == null, sentences, rels, idToComponentMap, esExtr, lsExtr);
 		runPipeline(modes.get(Mode.SyntheticRelation.class) != Mode.SyntheticRelation.DISABLED, o -> true, sentences,
 				rels, idToComponentMap, srExtr);
-		runPipeline(true, o -> true, sentences, rels, idToComponentMap, nExp, cExp, vExp);
+		runPipeline(true, o -> true, sentences, rels, idToComponentMap, nExp, vExp, cExp);
 
 		return rels;
 	}

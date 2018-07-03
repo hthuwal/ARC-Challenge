@@ -75,11 +75,11 @@ public class RelationInstance implements Comparable<RelationInstance> {
 
 	@Override
 	public int compareTo(RelationInstance o) {
-		if(!verb.isSynthetic() && o.verb.isSynthetic())
+		if (!verb.isSynthetic() && o.verb.isSynthetic())
 			return -1;
-		if(verb.isSynthetic() && !o.verb.isSynthetic())
+		if (verb.isSynthetic() && !o.verb.isSynthetic())
 			return 1;
-		
+
 		return new StringIDComparator().compare(id, o.id);
 //		if (ret == 0 && !verb.isSynthetic()) {
 //			ret = Integer.compare(verb.headword.index(), o.verb.headword.index());
@@ -150,40 +150,47 @@ public class RelationInstance implements Comparable<RelationInstance> {
 	}
 
 	/**
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set
 	 */
 	public void setId(String id) {
 		this.id = id;
 	}
 
 	/**
-	 * @param subject
-	 *            the subject to set
+	 * @param subject the subject to set
 	 */
 	public void setSubject(RelationArgument subject) {
 		this.subject = subject;
 	}
 
+	public void setSubject(RelationComponent subject) {
+		setSubject((RelationArgument) subject);
+	}
+
 	/**
-	 * @param verb
-	 *            the verb to set
+	 * @param verb the verb to set
 	 */
 	public void setVerb(RelationVerb verb) {
 		this.verb = verb;
 	}
+	
+	public void setVerb(RelationComponent verb) {
+		setVerb((RelationVerb) verb);
+	}
 
 	/**
-	 * @param object
-	 *            the object to set
+	 * @param object the object to set
 	 */
 	public void setObject(RelationArgument object) {
 		this.object = object;
 	}
 
+	public void setObject(RelationComponent object) {
+		this.object = (RelationArgument) object;
+	}
+
 	/**
-	 * @param facets
-	 *            the facets to set
+	 * @param facets the facets to set
 	 */
 	public void setFacets(TreeSet<RelationArgument> facets) {
 		this.facets = facets;
@@ -191,5 +198,9 @@ public class RelationInstance implements Comparable<RelationInstance> {
 
 	public void addFacet(RelationArgument facet) {
 		facets.add(facet);
+	}
+
+	public void addFacet(RelationComponent facet) {
+		facets.add((RelationArgument) facet);
 	}
 }

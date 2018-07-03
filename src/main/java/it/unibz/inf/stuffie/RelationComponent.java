@@ -19,6 +19,7 @@ public class RelationComponent implements Comparable<RelationComponent> {
 	protected boolean isStatic;
 	protected RelationInstance owner;
 	protected boolean contextDependent = false;
+	protected String relativeID;
 
 	public boolean isStatic() {
 		return isStatic;
@@ -110,6 +111,14 @@ public class RelationComponent implements Comparable<RelationComponent> {
 	
 	public void setContextDependent(boolean contextDependent) {
 		this.contextDependent = contextDependent;
+	}
+	
+	public String getRelativeID() {
+		return relativeID;
+	}
+
+	public void setRelativeID(String relativeID) {
+		this.relativeID = relativeID;
 	}
 
 }

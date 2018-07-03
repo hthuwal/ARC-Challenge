@@ -1,7 +1,7 @@
 compound,C
 nummod,C
 det,C
-advmod,C
+advmod,C,E,WRB
 amod,C
 nmod,C
 nmod:poss,C
@@ -11,5 +11,7 @@ nmod:word,C
 nmod:npmod,C
 case,C
 mark,C
+conj,C
+cc,C
 acl,R
 acl:relcl,R

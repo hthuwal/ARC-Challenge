@@ -11,7 +11,6 @@ public class RelationArgument extends RelationComponent {
 	private RelationArgumentConnector connector;
 	private TreeSet<String> contexts;
 	private boolean isSubject;
-	private String relativeID;
 
 	public RelationArgument(IndexedWord headword, int sentID, SemanticGraph depAnno, boolean isSubject) {
 		super(headword, sentID, depAnno);
@@ -97,12 +96,8 @@ public class RelationArgument extends RelationComponent {
 		this.connector = conn;
 	}
 
-	public String getRelativeID() {
-		return relativeID;
-	}
-
-	public void setRelativeID(String relativeID) {
-		this.relativeID = relativeID;
+	public void setConnector(RelationComponent conn) {
+		setConnector((RelationArgumentConnector) conn);
 	}
 
 	public void setContextDependent(boolean contextDependent) {

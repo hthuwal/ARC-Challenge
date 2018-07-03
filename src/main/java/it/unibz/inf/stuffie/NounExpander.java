@@ -53,7 +53,7 @@ public class NounExpander extends Expander {
 		SemanticGraph depAnno = arg.depAnno;
 		for (ExpansionArc arc : expansionArcs) {
 			for (IndexedWord iw : depAnno.getChildrenWithReln(current, arc.getRel())) {
-				if (arc.getT().equals(ExpansionArc.ExpansionType.C)) {
+				if (arc.getT().equals(ExpansionArc.ExpansionType.C) && arc.checkTargetPOS(iw.tag())) {
 					arg.addWords(iw);
 					idToComponentMap.put(arg.getSentenceID() + "." + iw.index(), arg);
 					ret = ret && expandObject(par, arg, iw, idToComponentMap);

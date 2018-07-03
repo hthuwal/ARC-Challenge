@@ -15,7 +15,6 @@ import edu.stanford.nlp.trees.UniversalEnglishGrammaticalRelations;
 
 public class ObjectExtractor extends ComponentExtractor {
 
-
 	public ObjectExtractor(Annotation stAnno, Properties stProp, StanfordCoreNLP stPipe, Mode... relevantModes) {
 		super(stAnno, stProp, stPipe, "resource/object_arcs.txt", relevantModes);
 	}
@@ -25,9 +24,11 @@ public class ObjectExtractor extends ComponentExtractor {
 	}
 
 	@Override
-	protected Boolean run(RelationInstance rel, int iteration, TreeMultimap<String, RelationComponent> idToComponentMap) {
+	protected Boolean run(RelationInstance rel, int iteration,
+			TreeMultimap<String, RelationComponent> idToComponentMap) {
 		IndexedWord verbSrc = rel.getVerb().headword;
 		SemanticGraph depAnno = rel.getVerb().getDepAnno();
+		SemanticGraph enchDepAnno = rel.getVerb().getEnchDepAnno();
 
 		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc, true));
 		HashMap<Integer, DependencyArc> arcTempStorage = new HashMap<Integer, DependencyArc>();
@@ -35,6 +36,16 @@ public class ObjectExtractor extends ComponentExtractor {
 			Set<IndexedWord> temp;
 			if (arc.getDir() == DependencyArc.Direction.OUT) {
 				temp = depAnno.getChildrenWithReln(verbSrc, arc.getRel());
+
+				if (targetPOS.containsKey(arc.getRel().getShortName())) {
+					Set<String> posSet = targetPOS.get(arc.getRel().getShortName());
+					TreeSet<IndexedWord> removal = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc, true));
+					for (IndexedWord iw : temp) {
+						if (!posSet.contains(iw.tag()))
+							removal.add(iw);
+					}
+					temp.removeAll(removal);
+				}
 
 				if (!temp.isEmpty() && arc.getRel().getShortName().equals("ccomp")) {
 					Set<IndexedWord> shiftingSet = depAnno.getChildrenWithReln(verbSrc, arc.getRel());
@@ -50,6 +61,7 @@ public class ObjectExtractor extends ComponentExtractor {
 						}
 					}
 				}
+
 			} else
 				temp = depAnno.getParentsWithReln(verbSrc, arc.getRel());
 
@@ -69,9 +81,11 @@ public class ObjectExtractor extends ComponentExtractor {
 			obj.addChainFromVerb(new TraversalArc(verbSrc, arc.getRel(), obj.headword, arc.getDir()));
 
 			if (i == 0) {
-				addComponent(rel,obj,rel::setObject,idToComponentMap,"o", arc.getRel().getShortName().equals("relcl"));
+				addComponent(rel, obj, candidate, rel::setObject, idToComponentMap, "o",
+						arc.getRel().getShortName().equals("relcl"));
 			} else {
-				addComponent(rel,obj,rel::addFacet,idToComponentMap,"f"+i, arc.getRel().getShortName().equals("relcl"));
+				addComponent(rel, obj, candidate, rel::addFacet, idToComponentMap, "f" + i,
+						arc.getRel().getShortName().equals("relcl"));
 			}
 			i++;
 		}

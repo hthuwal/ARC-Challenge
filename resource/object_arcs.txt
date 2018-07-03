@@ -4,5 +4,7 @@ nmod,OUT
 xcomp,OUT
 ccomp,OUT
 advcl,OUT
-advmod,OUT
+advmod,OUT,RB,RBR,RBS
+conj,OUT
+dep,OUT,VBD,VBG,VBN,VBP,VBZ
 acl:relcl,IN

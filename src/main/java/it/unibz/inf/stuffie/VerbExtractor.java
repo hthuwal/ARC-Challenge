@@ -39,8 +39,10 @@ public class VerbExtractor extends PipelineStep<TreeSet<RelationInstance>, CoreM
 					.isEmpty()
 					&& depAnno.getParentsWithReln(verb,
 							UniversalEnglishGrammaticalRelations.shortNameToGRel.get("auxpass")).isEmpty()) {
-				res.add(new RelationInstance(new RelationVerb(verb, sentenceNum, depAnno, depAnnoEnch)));
-//				idToComponentMap.put(sentenceNum + "." + verb.index(), value)
+				RelationVerb rv = new RelationVerb(verb, sentenceNum, depAnno, depAnnoEnch);
+				RelationInstance rel = new RelationInstance(rv);
+				res.add(rel);
+				addComponent(rel, rv, verb, rel::setVerb, idToComponentMap, "v", rv.isContextDependent());
 			}
 
 		}

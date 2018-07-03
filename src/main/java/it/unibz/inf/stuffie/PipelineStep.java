@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import com.google.common.collect.TreeMultimap;
 
+import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 
@@ -39,13 +40,13 @@ public abstract class PipelineStep<R,P> {
 		}
 	}
 	
-	protected void addComponent(RelationInstance rel, RelationArgument ra, Consumer<RelationArgument> func,
+	protected void addComponent(RelationInstance rel, RelationComponent ra, IndexedWord iw, Consumer<RelationComponent> func,
 			TreeMultimap<String, RelationComponent> idToComponentMap, String relID, boolean contextDependent) {
 		ra.setRelativeID(rel.getId()+relID);
 		ra.setOwner(rel);
 		ra.setContextDependent(contextDependent);
 		func.accept(ra);
-		idToComponentMap.put(ra.id, ra);
+		idToComponentMap.put(ra.getSentenceID() + "." + iw.index(), ra);
 		idToComponentMap.put(ra.getRelativeID(), ra);
 	}
 	

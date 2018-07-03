@@ -21,10 +21,10 @@ public class VerbExpander extends Expander {
 
 	@Override
 	protected Boolean run(RelationInstance par, int iteration, TreeMultimap<String, RelationComponent> idToComponentMap) {
-		return expandVerb(par.getVerb(), par.getVerb().getHeadword());
+		return expandVerb(par.getVerb(), par.getVerb().getHeadword(), idToComponentMap);
 	}
 	
-	private Boolean expandVerb(RelationVerb arg, IndexedWord current) {
+	private Boolean expandVerb(RelationVerb arg, IndexedWord current, TreeMultimap<String, RelationComponent> idToComponentMap) {
 		if(arg.isSynthetic())
 			return true;
 		
@@ -34,7 +34,8 @@ public class VerbExpander extends Expander {
 			for (IndexedWord iw : depAnno.getChildrenWithReln(current, arc.getRel())) {
 				if (arc.getT().equals(ExpansionArc.ExpansionType.C) && arc.checkTargetPOS(iw.tag())) {
 					arg.addWords(iw);
-					ret = ret && expandVerb(arg, iw);
+					idToComponentMap.put(arg.getSentenceID() + "." + iw.index(), arg);
+					ret = ret && expandVerb(arg, iw, idToComponentMap);
 				}
 			}
 		}
