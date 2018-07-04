@@ -1,6 +1,7 @@
 compound,C
 nummod,C
 det,C
+neg,C
 advmod,C,E,WRB
 amod,C
 nmod,C
@@ -10,8 +11,8 @@ nmod:agent,C
 nmod:word,C
 nmod:npmod,C
 case,C
-mark,C
 conj,C
 cc,C
+cc:preconj,C
 acl,R
 acl:relcl,R

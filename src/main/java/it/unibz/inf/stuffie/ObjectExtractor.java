@@ -26,9 +26,24 @@ public class ObjectExtractor extends ComponentExtractor {
 	@Override
 	protected Boolean run(RelationInstance rel, int iteration,
 			TreeMultimap<String, RelationComponent> idToComponentMap) {
+
 		IndexedWord verbSrc = rel.getVerb().headword;
 		SemanticGraph depAnno = rel.getVerb().getDepAnno();
-		SemanticGraph enchDepAnno = rel.getVerb().getEnchDepAnno();
+
+		TreeSet<IndexedWord> cops = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc));
+		cops.addAll(
+				depAnno.getParentsWithReln(verbSrc, UniversalEnglishGrammaticalRelations.shortNameToGRel.get("cop")));
+
+		if (cops.isEmpty()) {
+			return traverseOneStep(rel, iteration, verbSrc, idToComponentMap);
+		} else
+			return traverseOneStep(rel, iteration, verbSrc, idToComponentMap)
+					&& traverseOneStep(rel, iteration, cops.first(), idToComponentMap);
+	}
+
+	private Boolean traverseOneStep(RelationInstance rel, int iteration, IndexedWord verbSrc,
+			TreeMultimap<String, RelationComponent> idToComponentMap) {
+		SemanticGraph depAnno = rel.getVerb().getDepAnno();
 
 		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc, true));
 		HashMap<Integer, DependencyArc> arcTempStorage = new HashMap<Integer, DependencyArc>();
@@ -46,11 +61,11 @@ public class ObjectExtractor extends ComponentExtractor {
 					}
 					temp.removeAll(removal);
 				}
-
+				
 				if (!temp.isEmpty() && arc.getRel().getShortName().equals("ccomp")) {
 					Set<IndexedWord> shiftingSet = depAnno.getChildrenWithReln(verbSrc, arc.getRel());
 					for (IndexedWord iw : shiftingSet) {
-						if (iw.tag().equals("JJ")) {
+						if (!iw.tag().startsWith("VB")) {
 							TreeSet<IndexedWord> realVBs = new TreeSet<IndexedWord>(new IndexedWordComparator(iw));
 							realVBs.addAll(depAnno.getChildrenWithReln(iw,
 									UniversalEnglishGrammaticalRelations.shortNameToGRel.get("cop")));
@@ -80,12 +95,14 @@ public class ObjectExtractor extends ComponentExtractor {
 			RelationArgument obj = new RelationArgument(candidate, rel.getVerb().getSentenceID(), depAnno, false);
 			obj.addChainFromVerb(new TraversalArc(verbSrc, arc.getRel(), obj.headword, arc.getDir()));
 
-			if (i == 0) {
+			if (i == 0 && rel.getObject() == null) {
 				addComponent(rel, obj, candidate, rel::setObject, idToComponentMap, "o",
 						arc.getRel().getShortName().equals("relcl"));
+				removeComponent(rel.getVerb(), candidate, idToComponentMap);
 			} else {
 				addComponent(rel, obj, candidate, rel::addFacet, idToComponentMap, "f" + i,
 						arc.getRel().getShortName().equals("relcl"));
+				removeComponent(rel.getVerb(), candidate, idToComponentMap);
 			}
 			i++;
 		}

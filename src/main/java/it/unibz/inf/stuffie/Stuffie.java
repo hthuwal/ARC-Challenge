@@ -30,12 +30,13 @@ public class Stuffie {
 	private LongSubjectExtractor lsExtr = new LongSubjectExtractor();
 
 	private SynthRelExtractor srExtr = new SynthRelExtractor();
-	
+
 	private NounExpander nExp = new NounExpander();
 	private VerbExpander vExp = new VerbExpander();
 	private ConnectorExpander cExp = new ConnectorExpander();
 
-	private PipelineStep<?, ?> steps[] = new PipelineStep[] { vExtr, sExtr, oExtr, esExtr, lsExtr, srExtr, nExp, vExp, cExp };
+	private PipelineStep<?, ?> steps[] = new PipelineStep[] { vExtr, sExtr, oExtr, esExtr, lsExtr, srExtr, nExp, vExp,
+			cExp };
 
 	private Mode[] defaultModes = { Mode.Dependent.SEPARATED, Mode.DependentSubject.TRANSFER_ALL,
 			Mode.ClausalConnection.AS_FACET, Mode.FacetConnector.AS_VERB_COMPOUND,
@@ -125,13 +126,12 @@ public class Stuffie {
 			rels = new TreeSet<RelationInstance>(new RelationInstanceComparator());
 		List<CoreMap> sentences = stAnno.get(SentencesAnnotation.class);
 
-		runPipeline(true, o -> true, sentences, rels, idToComponentMap, vExtr);
-		runPipeline(true, o -> true, sentences, rels, idToComponentMap, sExtr, oExtr);
+		runPipeline(true, o -> true, sentences, rels, idToComponentMap, vExtr, vExp, sExtr, oExtr);
 		runPipeline(modes.get(Mode.DependentSubject.class) != Mode.DependentSubject.HIDE_ALL,
 				o -> ((RelationInstance) o).getSubject() == null, sentences, rels, idToComponentMap, esExtr, lsExtr);
 		runPipeline(modes.get(Mode.SyntheticRelation.class) != Mode.SyntheticRelation.DISABLED, o -> true, sentences,
 				rels, idToComponentMap, srExtr);
-		runPipeline(true, o -> true, sentences, rels, idToComponentMap, nExp, vExp, cExp);
+		runPipeline(true, o -> true, sentences, rels, idToComponentMap, nExp, cExp);
 
 		return rels;
 	}
@@ -142,15 +142,14 @@ public class Stuffie {
 			PipelineStep... steps) {
 
 		Collection col;
-		if (steps[0] instanceof Expander || steps[0] instanceof ComponentExtractor)
-			col = rels;
-		else
-			col = sentences;
-
 		int iter = 1;
 		if (outerCond) {
-			for (Object obj : col) {
-				for (PipelineStep step : steps) {
+			for (PipelineStep step : steps) {
+				if (step instanceof Expander || step instanceof ComponentExtractor)
+					col = rels;
+				else
+					col = sentences;
+				for (Object obj : col) {
 					if (innerCond.apply(obj)) {
 						Object ret = step.run(obj, iter, idToComponentMap);
 						if (ret instanceof Collection)

@@ -44,6 +44,5 @@ public class RelationVerb extends RelationComponent {
 	public SemanticGraph getEnchDepAnno() {
 		return depAnnoEnch;
 	}
-
 	
 }

@@ -34,7 +34,7 @@ public abstract class ComponentExtractor extends PipelineStep<Boolean, RelationI
 			}
 			br.close();
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 	}
 

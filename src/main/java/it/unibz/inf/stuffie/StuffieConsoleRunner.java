@@ -96,7 +96,10 @@ public class StuffieConsoleRunner {
 		while (!text.equals("q")) {
 			System.out.println("Enter text to extract, or <h> for help: ");
 			text = reader.nextLine();
-			if (text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') {
+			if(text.isEmpty()) {
+				System.out.println("Empty line. Please try again.");
+			}
+			else if(text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') {
 				text = text.substring(1, text.length() - 1);
 				if (text.contains("=")) {
 					Mode m = getValidMode(text);

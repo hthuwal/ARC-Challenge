@@ -1,10 +1,12 @@
 dobj,OUT
 cop,IN
 nmod,OUT
+nmod:poss,OUT
+nmod:tmod,OUT
 xcomp,OUT
 ccomp,OUT
 advcl,OUT
-advmod,OUT,RB,RBR,RBS
+advmod,OUT,RB,RBR,RBS,NN
 conj,OUT
 dep,OUT,VBD,VBG,VBN,VBP,VBZ
 acl:relcl,IN

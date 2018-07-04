@@ -39,7 +39,7 @@ public class RelationComponentComparator {
 		if (ra1 instanceof RelationArgument && ra2 instanceof RelationArgument)
 			return new RelationArgumentComparator().compare((RelationArgument) ra1, (RelationArgument) ra2);
 
-		return 0;
+		return new StringIDComparator().compare(ra1.getId(), ra2.getId());
 	}
 
 }

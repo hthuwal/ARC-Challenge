@@ -31,33 +31,50 @@ public class ConnectorExpander extends Expander {
 
 		if (subj != null && !subj.isStatic()) {
 			if (!subj.getChainFromVerb().isEmpty())
-				ret = ret && expandConnector(subj, subj.getHeadword(),
-						subj.getChainFromVerb().get(0).rel.getShortName().equals("acl"), false, idToComponentMap);
+				ret = ret && extractConnector(subj, subj.getHeadword(),
+						subj.getChainFromVerb().get(0).rel.getShortName().equals("acl"), false, "s", idToComponentMap);
 			else {
-				ret = ret && expandConnector(subj, subj.getHeadword(), false, false, idToComponentMap);
+				ret = ret && extractConnector(subj, subj.getHeadword(), false, false, "s", idToComponentMap);
 			}
 		}
 		if (obj != null && !obj.isStatic())
-			ret = ret && expandConnector(obj, obj.getHeadword(), false, false, idToComponentMap);
+			ret = ret && extractConnector(obj, obj.getHeadword(), false, false, "o", idToComponentMap);
 
+		int facetCount = 1;
 		for (RelationArgument arg : par.getFacets()) {
-			ret = ret && expandConnector(arg, arg.getHeadword(), false, true, idToComponentMap);
+			ret = ret && extractConnector(arg, arg.getHeadword(), false, true, "f" + facetCount, idToComponentMap);
+			facetCount++;
 		}
 
 		return ret;
 	}
 
-	private Boolean expandConnector(RelationArgument arg, IndexedWord headword, boolean isACL, boolean isFacet,
-			TreeMultimap<String, RelationComponent> idToComponentMap) {
+	private Boolean extractConnector(RelationArgument arg, IndexedWord headword, boolean isACL, boolean isFacet,
+			String relID, TreeMultimap<String, RelationComponent> idToComponentMap) {
 		SemanticGraph depAnno = arg.depAnno;
 
-		boolean found = traverseOneStep(depAnno, arg, headword, isACL, idToComponentMap);
+		TreeSet<IndexedWord> copulas = new TreeSet<IndexedWord>(new IndexedWordComparator());
+		copulas.addAll(
+				depAnno.getParentsWithReln(headword, UniversalEnglishGrammaticalRelations.shortNameToGRel.get("cop")));
+		boolean found;
+		if (copulas.isEmpty()) {
+			found = traverseOneStep(depAnno, arg, headword, isACL, relID, idToComponentMap);
+		} else {
+			found = traverseOneStep(depAnno, arg, copulas.first(), isACL, relID, idToComponentMap);
+		}
+
 		if (!found) {
-			TreeSet<IndexedWord> copulas = new TreeSet<IndexedWord>(new IndexedWordComparator());
-			copulas.addAll(depAnno.getParentsWithReln(headword,
-					UniversalEnglishGrammaticalRelations.shortNameToGRel.get("cop")));
-			if (!copulas.isEmpty()) {
-				traverseOneStep(depAnno, arg, copulas.first(), isACL, idToComponentMap);
+			TreeSet<IndexedWord> conjunctions = new TreeSet<IndexedWord>(new IndexedWordComparator(headword));
+			conjunctions.addAll(depAnno.getParentsWithReln(headword,
+					UniversalEnglishGrammaticalRelations.shortNameToGRel.get("conj")));
+			if (!conjunctions.isEmpty()) {
+				IndexedWord headOfConj = conjunctions.first();
+				IndexedWord cc = depAnno.getChildWithReln(headOfConj,
+						UniversalEnglishGrammaticalRelations.COORDINATION);
+				RelationArgumentConnector rac = new RelationArgumentConnector(cc, arg.sentenceID, depAnno);
+				expandConnector(rac);
+				addComponent(arg.getOwner(), rac, cc, arg::setConnector, idToComponentMap, relID + "c", false);
+				found = true;
 			}
 		}
 
@@ -69,29 +86,51 @@ public class ConnectorExpander extends Expander {
 	}
 
 	private Boolean traverseOneStep(SemanticGraph depAnno, RelationArgument arg, IndexedWord headword, boolean isACL,
-			TreeMultimap<String, RelationComponent> idToComponentMap) {
+			String relID, TreeMultimap<String, RelationComponent> idToComponentMap) {
+		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(new IndexedWordComparator(arg.getOwner().getVerb().headword));
 		for (ExpansionArc arc : expansionArcs) {
 			for (IndexedWord iw : depAnno.getChildrenWithReln(headword, arc.getRel())) {
 				if (arc.getT().equals(ExpansionArc.ExpansionType.C) && arc.checkTargetPOS(iw.tag())) {
 					if (!isACL) {
-						RelationArgumentConnector rac = new RelationArgumentConnector(iw, arg.sentenceID, depAnno);
-						StringBuilder relID = new StringBuilder();
-						char last = arg.getRelativeID().charAt(arg.getRelativeID().length() - 1);
-						if (Character.isDigit(last)) {
-							relID.append(arg.getRelativeID().charAt(arg.getRelativeID().length() - 2));
-							relID.append(last);
-						} else
-							relID.append(last);
-
-						addComponent(arg.getOwner(), rac, iw, arg::setConnector, idToComponentMap, relID.toString(),
-								false);
-
+						candidates.add(iw);
 					}
-					return true;
 				}
 			}
 		}
+		
+		if(!candidates.isEmpty()) {
+			IndexedWord iw = candidates.first();
+			RelationArgumentConnector rac = new RelationArgumentConnector(iw, arg.sentenceID, depAnno);
+			expandConnector(rac);
+			addComponent(arg.getOwner(), rac, iw, arg::setConnector, idToComponentMap, relID + "c", false);
+			removeComponent(arg, iw, idToComponentMap);
+			return true;
+		}
 		return false;
+	}
+
+	private void expandConnector(RelationArgumentConnector rac) {
+		SemanticGraph depAnno = rac.depAnno;
+		IndexedWord headword = rac.getHeadword();
+		IndexedWord next = depAnno.getNodeByIndex(headword.index() + 1);
+		if (next.tag().equals("WRB")) {
+			expand(next, rac);
+		}
+	}
+
+	private void expand(IndexedWord head, RelationArgumentConnector rac) {
+		rac.addWords(head);
+		SemanticGraph depAnno = rac.depAnno;
+		for (IndexedWord par : depAnno.getParentsWithReln(head,
+				UniversalEnglishGrammaticalRelations.ADVERBIAL_MODIFIER)) {
+			if (!rac.getWords().contains(par))
+				expand(par, rac);
+		}
+		for (IndexedWord par : depAnno.getChildrenWithReln(head,
+				UniversalEnglishGrammaticalRelations.ADVERBIAL_MODIFIER)) {
+			if (!rac.getWords().contains(par))
+				expand(par, rac);
+		}
 	}
 
 }

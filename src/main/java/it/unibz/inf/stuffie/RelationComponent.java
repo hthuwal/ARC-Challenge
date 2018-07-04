@@ -92,6 +92,10 @@ public class RelationComponent implements Comparable<RelationComponent> {
 		words.add(iw);
 	}
 	
+	public TreeSet<IndexedWord> getWords() {
+		return words;
+	}
+	
 	public RelationInstance getOwner() {
 		return owner;
 	}
@@ -119,6 +123,14 @@ public class RelationComponent implements Comparable<RelationComponent> {
 
 	public void setRelativeID(String relativeID) {
 		this.relativeID = relativeID;
+	}
+	
+	public void removeWord(IndexedWord iw) {
+		words.remove(iw);
+	}
+
+	public String getId() {
+		return id;
 	}
 
 }
