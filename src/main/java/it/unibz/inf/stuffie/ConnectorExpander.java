@@ -1,5 +1,6 @@
 package it.unibz.inf.stuffie;
 
+import java.util.NavigableSet;
 import java.util.Properties;
 import java.util.TreeSet;
 
@@ -58,9 +59,9 @@ public class ConnectorExpander extends Expander {
 				depAnno.getParentsWithReln(headword, UniversalEnglishGrammaticalRelations.shortNameToGRel.get("cop")));
 		boolean found;
 		if (copulas.isEmpty()) {
-			found = traverseOneStep(depAnno, arg, headword, isACL, relID, idToComponentMap);
+			found = traverseOneStep(depAnno, arg, headword, isACL, false, relID, idToComponentMap);
 		} else {
-			found = traverseOneStep(depAnno, arg, copulas.first(), isACL, relID, idToComponentMap);
+			found = traverseOneStep(depAnno, arg, copulas.first(), true, isACL, relID, idToComponentMap);
 		}
 
 		if (!found) {
@@ -85,20 +86,35 @@ public class ConnectorExpander extends Expander {
 		return true;
 	}
 
-	private Boolean traverseOneStep(SemanticGraph depAnno, RelationArgument arg, IndexedWord headword, boolean isACL,
+	private Boolean traverseOneStep(SemanticGraph depAnno, RelationArgument arg, IndexedWord headword, boolean isACL, boolean isCopular,
 			String relID, TreeMultimap<String, RelationComponent> idToComponentMap) {
-		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(new IndexedWordComparator(arg.getOwner().getVerb().headword));
+		TreeSet<IndexedWord> candidates = new TreeSet<IndexedWord>(
+				new IndexedWordComparator(arg.getOwner().getVerb().headword));
 		for (ExpansionArc arc : expansionArcs) {
 			for (IndexedWord iw : depAnno.getChildrenWithReln(headword, arc.getRel())) {
 				if (arc.getT().equals(ExpansionArc.ExpansionType.C) && arc.checkTargetPOS(iw.tag())) {
-					if (!isACL) {
+					if (!isACL && (!isCopular || (isCopular && !iw.tag().endsWith("RB")))) {
 						candidates.add(iw);
+//						if (idToComponentMap.containsKey(arg.getSentenceID() + "." + iw.index())) {
+//							NavigableSet<RelationComponent> rcs = idToComponentMap.get(arg.getSentenceID() + "." + iw.index());
+//							boolean found = false;
+//							for(RelationComponent rc : rcs) {
+//								if(rc instanceof RelationArgumentConnector) {
+//									found = true;
+//									break;
+//								}
+//							}
+//							if(!found)
+//								candidates.add(iw);
+//						} else {
+//							candidates.add(iw);
+//						}
 					}
 				}
 			}
 		}
-		
-		if(!candidates.isEmpty()) {
+
+		if (!candidates.isEmpty()) {
 			IndexedWord iw = candidates.first();
 			RelationArgumentConnector rac = new RelationArgumentConnector(iw, arg.sentenceID, depAnno);
 			expandConnector(rac);
