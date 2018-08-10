@@ -7,3 +7,27 @@
 
 # Intellij specific
 /.idea/
+
+/do_analysis/ARC-Challenge-Test.jsonl
+
+/bin/
+
+/do_analysis/ARC-Challenge-Test_as_entailment_default.jsonl
+
+/do_analysis/ARC-Challenge-Test_as_entailment_with_struct_default.jsonl
+
+/do_analysis/ARC-Challenge-Test_predictions_dgem_default.jsonl
+
+/do_analysis/ARC-Challenge-Test_with_hits_default.jsonl
+
+/etc/
+
+/include/
+
+/lib/
+
+/man/
+
+/pip-selfcheck.json
+
+/share/
