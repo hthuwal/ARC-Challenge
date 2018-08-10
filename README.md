@@ -36,12 +36,16 @@ dataset), and use two types of models to predict the correct answer.
   
 
  ## Setup data/models
+ 0. Run Elastic Search
+  ```
+  bin/elasticsearch -E http.port=9400 -E transport.tcp.port=9500 
+  ```
+
  1. Download the data and models into `data/` folder. This will also build the ElasticSearch
  index (assumes ElasticSearch 6+ is running on `ES_HOST` machine defined in the script)
   ```
   sh scripts/download_data.sh
   ```
-  
  
  ## Running baseline models
  Run the entailment-based baseline solvers against a question set using `scripts/evaluate_solver.sh`
