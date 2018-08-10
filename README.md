@@ -25,7 +25,7 @@ dataset), and use two types of models to predict the correct answer.
  3. Install the requirements in the environment: 
  
    ```
-   sh scripts/install_requirements.sh
+   bash scripts/install_requirements.sh
    ```
  
  4. Install pytorch as per instructions on <http://pytorch.org/>. Command as of Feb. 26, 2018:
@@ -44,7 +44,7 @@ dataset), and use two types of models to predict the correct answer.
  1. Download the data and models into `data/` folder. This will also build the ElasticSearch
  index (assumes ElasticSearch 6+ is running on `ES_HOST` machine defined in the script)
   ```
-  sh scripts/download_data.sh
+bash scripts/download_data.sh
   ```
  
  ## Running baseline models
@@ -52,7 +52,7 @@ dataset), and use two types of models to predict the correct answer.
 
  For example, to evaluate the DGEM model on the Challenge Set, run:
 ```
-sh scripts/evaluate_solver.sh \
+bash scripts/evaluate_solver.sh \
 	data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl \
 	data/ARC-V1-Models-Feb2018/dgem/
 ```
@@ -60,7 +60,7 @@ sh scripts/evaluate_solver.sh \
 
  To evaluate the BiDAF model, use the `evaluate_bidaf.sh` script
 ```
- sh scripts/evaluate_bidaf.sh \
+bash scripts/evaluate_bidaf.sh \
     data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl \
     data/ARC-V1-Models-Feb2018/bidaf/
 ```
@@ -120,7 +120,7 @@ sh scripts/evaluate_solver.sh \
    3. Run the `evaluate_bidaf.sh` script with your learned model in `my_awesome_model/model.tar.gz`:
 
     ```
-     sh scripts/evaluate_solver.sh \
+    bash scripts/evaluate_solver.sh \
         data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl \
         my_awesome_model/
     ``` 
