@@ -28,3 +28,5 @@ python scripts/index-corpus.py \
 	data/ARC-V1-Feb2018-2/ARC_Corpus.txt \
 	arc_corpus \
 	$ES_HOST
+
+# python scripts/index-corpus.py data/ARC-V1-Feb2018-2/ARC_Corpus.txt arc_corpus 127.0.0.1 -p 9400
