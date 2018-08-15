@@ -14,7 +14,7 @@ entities = {word: 0 for word in entities_file.read().splitlines()}
 entities_file.close()
 
 for line in tqdm(corpus_file):
-    line = line.split()
+    line = line.lower().split()
     for word in line:
         if word in entities:
             entities[word] += 1

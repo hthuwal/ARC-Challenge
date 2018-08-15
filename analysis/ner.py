@@ -50,7 +50,7 @@ with open("ARC-Challenge-Test_qapredictions_dgem_default.jsonl", "r") as in_file
 
         for key in final:
             text = final[key]
-            tokenized_text = word_tokenize(text)
+            tokenized_text = word_tokenize(text.lower())
             data = data + tokenized_text
 
     cleaned_data = [regex.sub('', token) for token in data if token not in stop_words]
