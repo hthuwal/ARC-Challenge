@@ -21,7 +21,7 @@ regex = re.compile('[^a-zA-Z]')
 count = 0
 
 
-with open("ARC-Challenge-Test_qapredictions_dgem_default.jsonl", "r") as in_file, open("named_entities.txt", "w") as out_file:
+with open("ARC-Challenge-Test_qapredictions_dgem_default.jsonl", "r") as in_file, open("results/named_entities.txt", "w") as out_file:
     data = []
     for line in tqdm(in_file):
         line = json.loads(line)
