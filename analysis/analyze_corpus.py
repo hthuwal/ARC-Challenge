@@ -3,6 +3,7 @@ import os
 import csv
 from tqdm import tqdm
 
+path = os.path.dirname(sys.argv[1])
 corpus_name, _ = os.path.splitext(os.path.basename(sys.argv[1]))
 print(corpus_name)
 
@@ -18,7 +19,7 @@ for line in tqdm(corpus_file):
         if word in entities:
             entities[word] += 1
 
-out_file = open(corpus_name + "_analysis.csv", "w")
+out_file = open(os.path.join(path, corpus_name + "_analysis.csv"), "w")
 csvw = csv.writer(out_file)
 csvw.writerow(["Word", "num_occurrences"])
 
