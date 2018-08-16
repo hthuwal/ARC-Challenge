@@ -2,10 +2,12 @@ import sys
 import os
 import csv
 from tqdm import tqdm
+import re
 
 path = os.path.dirname(sys.argv[1])
 corpus_name, _ = os.path.splitext(os.path.basename(sys.argv[1]))
 print(corpus_name)
+regex = re.compile('[^a-zA-Z]')
 
 corpus_file = open(sys.argv[1], "r")
 entities_file = open("results/named_entities.txt", "r")
@@ -16,6 +18,7 @@ entities_file.close()
 for line in tqdm(corpus_file):
     line = line.lower().split()
     for word in line:
+        word = regex.sub('', word)
         if word in entities:
             entities[word] += 1
 
