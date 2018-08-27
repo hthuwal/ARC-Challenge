@@ -1,3 +1,8 @@
+- Elasticsearch
+  + `./bin/elasticsearch -E http.port=9400 -E transport.tcp.port=9500`
+  + for any curl command to run fir remove http_proxy
+  + curl -X GET "localhost:9400/_cat/indices?v"
+
 # ARC-Solvers
 Library of baseline solvers for AI2 Reasoning Challenge (ARC) Set (http://data.allenai.org/arc/).
 These solvers retrieve relevant sentences from a large text corpus (ARC_Corpus.txt in the
