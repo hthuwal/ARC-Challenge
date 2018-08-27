@@ -1,8 +1,11 @@
 import json
 import csv
+import sys
 
 count = 0
-with open("ARC-Challenge-Test_qapredictions_dgem_default.jsonl", "r") as in_file, open("results/ARC-Challenge-Test_qapredictions_dgem_default.csv", "w") as out_file:
+file = sys.argv[1]
+output = sys.argv[2]
+with open(file, "r") as in_file, open("results/" + output, "w") as out_file:
     csvw = csv.writer(out_file)
     for line in in_file:
         line = json.loads(line)
