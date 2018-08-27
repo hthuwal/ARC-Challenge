@@ -63,7 +63,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(os.path.join(__file__, os.par
 from arc_solvers.processing.es_search import EsSearch, EsHit
 
 MAX_HITS = 8
-es_search = EsSearch(es_client={'host': "localhost", 'port': 9400}, max_hits_per_choice=MAX_HITS, max_hits_retrieved=100)
+# es_search = EsSearch(es_client={'host': "localhost", 'port': 9400}, max_hits_per_choice=MAX_HITS, max_hits_retrieved=100)
 
 
 def add_retrieved_text(qa_file, output_file):
@@ -133,4 +133,10 @@ if __name__ == "__main__":
     if len(sys.argv) < 3:
         raise ValueError("Provide at least two arguments: "
                          "question-answer json file, output file name")
+    es_search = EsSearch(es_client={'host': "localhost", 'port': 9400}, max_hits_per_choice=MAX_HITS, max_hits_retrieved=100)
+    if len(sys.argv) > 3:
+        es_search._indices = sys.argv[3].strip().split("-")
+
+    print("Using Corpuses: %s" % es_search._indices)
+
     add_retrieved_text(sys.argv[1], sys.argv[2])
