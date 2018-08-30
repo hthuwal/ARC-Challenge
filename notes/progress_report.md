@@ -1,6 +1,36 @@
 ##30th Aug 2018
 Can we use or learn from the top models at [The Stanford Question Answering Dataset](https://rajpurkar.github.io/SQuAD-explorer/)?
 
+### ElasticSearch
+
+#### Analogy
+Relational DB ⇒ Databases ⇒ Tables ⇒ Rows      ⇒ Columns   
+Elasticsearch ⇒ Indices   ⇒ Types  ⇒ Documents ⇒ Fields
+- Almost Real Time
+- Scalable, Fast, Reliable, Distributed etc
+- Its all about how beautifully documents are stored
+
+Document : Stored as a Json Object
+index: a place where document live
+
+#### Querying
+
+**Types**
+
+1. **Structured**: Query on Fields of the Json Object. Similar to SQL queries
+	1. query string
+	2. query DSL (JSON request body)
+2. **Unstructured (What DGEM uses)**: A full-text query, find all documents matching the search keywords and sort them by relevance score.
+	1. Elastic Search **analyzes** the text and creates ***inverted index -_-***
+	2. Preprocessing: tokenization, character_filters, to_lowercase, stemming, synonyms (these people call it "**analysis**" and done by **analyzers**)
+		- can create custom analyzers
+		- some defualts: standard, language specific 	
+	3. TF/IDF with field length normalization (Local IDF not even Global for scalability).
+	4. It uses Lucene's Practical Scoring Function
+	5. Other option: SOTA Okapi BM25 ranking function.
+		- BM25 has upper limit on term frequency: nonlinear TF saturation	 
+	6. Can cosnsider proximity by saving position of words in inverted index
+	5. RegExp, prefix matching.
 ----
 
 Support Sentences retrieved using the NCERT raw dataset were very small. Some even containing only 1 word!! Therefore tried to consolidate data:
