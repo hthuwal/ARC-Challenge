@@ -1,6 +1,54 @@
 ##30th Aug 2018
 Can we use or learn from the top models at [The Stanford Question Answering Dataset](https://rajpurkar.github.io/SQuAD-explorer/)?
 
+### What the code does
+
+**Creating Index from Cropus**  
+
+- Each line of document converted to a json object with raw_text as one of the entries.
+- Bulk add the documents to ES index
+- analyzer used: snowball stemmer
+	+ standard tokenizer: split on anything non alphanumeric
+	+ convert to lowercase
+	+ remove stopwards
+	+ stemming using snowball stemmer
+
+**Querying Support Sentences**
+
+- Q<sub>i</sub> + Option<sub>ij</sub>
+- analyzer(Q<sub>i</sub>) must be present in doc and contriubte to score
+- analyzer(Option<sub>ij</sub>) must be present but doesnt to contriubte to overall score 
+- Top 10 hits are returned by ES of which top 8 are kept
+- Convert QA + support  -> hypothesis + support(premise)
+- hypothesis -> Open IE -> structured hypothesis
+- DGEM: does **support(premise) entails hypothesis?** returns score for every such pair 
+- for each Option<sub>ij</sub> -> returns maximum (score, hypothesis) as score
+- Choose option with maximum score. If k options have highest score and one fo them is correct: marks = (1/k)
+
+**Example**
+```Json
+{
+  "id": "Mercury_7175875",
+  "question": {
+    "stem": "An astronomer observes that a planet rotates faster after a meteorite impact. Which is the most likely effect of this increase in rotation?",
+    "choice": {
+      "text": "Planetary density will decrease.",
+      "label": "A"
+    },
+    "support": {
+      "text": "As latitude increases and the speed of the earth's rotation decreases, Coriolis effect increases.",
+      "type": "sentence",
+      "ir_pos": 0,
+      "ir_score": 33.626408
+    }
+  },
+  "answerKey": "C",
+  "premise": "As latitude increases and the speed of the earth's rotation decreases, Coriolis effect increases.",
+  "hypothesis": "An astronomer observes that a planet rotates faster after a meteorite impact. Planetary density will decrease is the most likely effect of this increase in rotation.",
+  "hypothesisStructure": "An astronomer<>observes<>that a planet rotates faster after a meteorite impact$$$a planet<>rotates faster<>$$$Planetary density<>will decrease<>$$$Planetary density will decrease<>is<>the most likely effect of this increase in rotation",
+  "score": 0.061089504510164
+}
+```
 ### ElasticSearch
 
 #### Analogy
@@ -319,7 +367,7 @@ Basically removes most of the factoid questions(more likely to be present in the
 
 
 #### 1. Table ILP 2016, Score: 26.97
-	
+
 - ILP over semi structured knowledge base (Tables).
 - components of q, a<sub>i</sub>, table_celss, headers -> nodes of graph.
 - edge weights: similaity and entailment using WordNet. [Tuple Inference paper claims that this gives unreliable scores on longer phrases]
