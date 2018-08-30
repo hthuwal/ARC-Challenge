@@ -6,9 +6,10 @@ Can we use or learn from the top models at [The Stanford Question Answering Data
 #### Analogy
 Relational DB ⇒ Databases ⇒ Tables ⇒ Rows      ⇒ Columns   
 Elasticsearch ⇒ Indices   ⇒ Types  ⇒ Documents ⇒ Fields
+
 - Almost Real Time
 - Scalable, Fast, Reliable, Distributed etc
-- Its all about how beautifully documents are stored
+- Its all about how beautifully documents are stored -_-_
 
 Document : Stored as a Json Object
 index: a place where document live
@@ -31,12 +32,13 @@ index: a place where document live
 		- BM25 has upper limit on term frequency: nonlinear TF saturation	 
 	6. Can cosnsider proximity by saving position of words in inverted index
 	5. RegExp, prefix matching.
+
 ----
 
-Support Sentences retrieved using the NCERT raw dataset were very small. Some even containing only 1 word!! Therefore tried to consolidate data:
+#### Consolidate NCERT dataset
 
-**Consolidate NCERT dataset**: Consolidate all Lines not seperated by blank lines into paragraphs.: *Score 20.98*.
-
+- Support Sentences retrieved using the NCERT raw dataset were very small. Some even containing only 1 word!! Therefore tried to consolidate data   
+- Consolidate all Lines not seperated by blank lines into paragraphs: **Score 20.98**.
 - Why did this decrease? Are all the results below random baseline just **"random"**?
 
 ## 27th Aug 2018
@@ -215,7 +217,7 @@ Frequency of Named Entities in the respective datasets is now in the [spreadshee
 - [X] Debug the remaining two neural models (ongoing)
 - [X] Read WordTree A corpus of Explanation Graphs 
 - [ ] Go through the code of DGEM paper to better understand the architecture
-- [ ] See if the errors can be reduced using WordNet, WebChild or changes in the architecture.
+- [x] See if the errors can be reduced using WordNet, WebChild, NCERT.
 
 
 ## 16th July 2018
