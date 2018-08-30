@@ -6,7 +6,7 @@ count = 0
 file = sys.argv[1]
 output = sys.argv[2]
 with open(file, "r") as in_file, open("results/" + output, "w") as out_file:
-    csvw = csv.writer(out_file)
+    csvw = csv.writer(out_file, delimiter="\t")
     for line in in_file:
         line = json.loads(line)
         question = line['question']['stem']
