@@ -1,5 +1,26 @@
 ##30th Aug 2018
-Can we use or learn from the top models at [The Stanford Question Answering Dataset](https://rajpurkar.github.io/SQuAD-explorer/)?
+### Manual Analysis NCERT vs ARC
+
+Some Examples where NCERT scored greater than ARC
+
++ Question: A caterpillar eats an oak leaf. Which of the following best describes the energy transfer in this situation?
+	* Correct Answer: **Energy is transferred from the** leaf to the caterpillar.
+	* ARC: All support sentences just say **caterpillar eats leaf**
+	* NCERT: Support: **energy is transferred from the** former to the
+		- **Almost Exact sentence was present**
++ Question: 22 Sandy is conducting an investigation to find out which food his dog likes best. Which is the manipulated variable in his investigation?
+	* Correct Answer: The kind of food he gives his dog
+	* All NCERT support sentences: **his**
+	* No Corelation whatsover. **his** is present in other options too
+
++ Question: A potential negative impact of building a dam on a river is that the dam
+	* Correct Answer(A): prevents **sediment** from flowing downstream.
+	* ARC gets support for (A): Dams alter the flow, temperature and **sediment** in river systems.
+	* But selects (C: prevents **seasonal** **downstream** **flooding**) whose support was -> Since the Blue Nile is a highly **seasonal** river, the dam would reduce **flooding** **downstream** of the dam, including on the 40 km stretch within Ethiopia.
+	* NCERT all support: increases the life of the downstream dam. chooses correct.
+	* support doesnt seem to "support" the predicted answer.
+
+It just all seems random that some questions were answered correctly!!
 
 ### What the code does
 
