@@ -1,4 +1,17 @@
 ##30th Aug 2018
+Can we use or learn from the top models at [The Stanford Question Answering Dataset](https://rajpurkar.github.io/SQuAD-explorer/)?
+
+- Answer Reading Comprehension Questions
+- also abstain when presented with a question that cannot be answered (Only in 2.0)
+
+**Ideas**   
+- Remove Elastic Search from Pipeline.
+	1. Run SOTA model from above to extact proposed answer from the Corpus.
+		* May be entire corpus at once
+		* Or One paragaph at a time
+		** Then guess the option based on those proposed answer. Using DGEM or somehting else.
+	2. OR Run SOTA model to extract proposed words fom options. Will tell where answer is not present. Then choose from remaining?
+
 ### Manual Analysis NCERT vs ARC
 
 Some Examples where NCERT scored greater than ARC
@@ -24,11 +37,11 @@ It just all seems random that some questions were answered correctly!!
 
 ### What the code does
 
-**Creating Index from Cropus**  
+**Creating Index from Cropus**
 
 - Each line of document converted to a json object with raw_text as one of the entries.
 - Bulk add the documents to ES index
-- analyzer used: snowball stemmer
+- **analyzer** used: snowball stemmer
 	+ standard tokenizer: split on anything non alphanumeric
 	+ convert to lowercase
 	+ remove stopwards
@@ -37,8 +50,8 @@ It just all seems random that some questions were answered correctly!!
 **Querying Support Sentences**
 
 - Q<sub>i</sub> + Option<sub>ij</sub>
-- analyzer(Q<sub>i</sub>) must be present in doc and contriubte to score
-- analyzer(Option<sub>ij</sub>) must be present but doesnt to contriubte to overall score 
+- **analyzer**(Q<sub>i</sub>) must be present in doc and contriubte to score
+- **analyzer**(Option<sub>ij</sub>) must be present but doesnt to contriubte to overall score 
 - Top 10 hits are returned by ES of which top 8 are kept
 - Convert QA + support  -> hypothesis + support(premise)
 - hypothesis -> Open IE -> structured hypothesis
