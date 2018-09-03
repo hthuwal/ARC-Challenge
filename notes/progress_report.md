@@ -50,7 +50,53 @@ Faced: Mmemory Error for just a 2.3MB file
 - Each clause is then maximally shortened, producing a set of entailed shorter sentence fragments. 
 - These fragments are then segmented into OpenIE triples, and output by the system. 
 
-##30th Aug 2018
+---
+
+#### Context of the support sentences
+
+##### TL;DR
+
+- The ARC dataset seem to have no structure at all. 
+- The dataset is just a huge collection of Random Sentences from Academics Resource.
+-  There is no context that exists around any sentence.
+- [Link to first 100 lines of corpus](https://gist.github.com/hthuwal/6c4a7fc9454cfef851b2c6ac6033b022)
+
+**Support Sentence:** Since the Blue Nile is a highly seasonal river, the dam would reduce flooding downstream of the dam, including on the 40 km stretch within Ethiopia.
+
+- 5 sentences before this in corpus:
+
+	- By showing how the planet’s sped up while at certain points in their orbits, and slowed down in others, Kepler resolved this.
+	- Artificially sweetened beverages can make naturally sweet foods taste less appealing.
+	- Interphase and the mitotic phase
+	- 310) Chromalveolate Alveolata (Ciliates, Dinoflagellates, Apicomplexans)
+	- By the time national socialism rose to power in Germany the jews had come to the consensus that race was definitely bad for the jews, and they were throwing all their efforts into an idea, a movement that would eventually be called “anti-racism”.
+
+- 5 sentences after this in corpus
+
+	- Before adding this tag , think about whether this is the best option .
+	- But I doubt that you’ll find that view among the regulars in this forum.
+    - Perhaps for her separate property she may, with her husband, appoint an agent or attorney; Cro.
+    - Trust you to auto-ship toner as needed, monitored by software installed in their printers.
+	- Locomotives of the London and North Eastern Railway .
+
+**Support Sentence:** Dams alter the flow, temperature and sediment in river systems.
+
+- 5 sentences before this in corpus:
+
+	+ Don't have golgi body, Endo Retic, mitochondria, or chloroplasts.
+	+ In urban areas, raccoons may nest in drainpipes, basements, crawl spaces and house attics.
+	+ Fix ave/histo fix does not calculate local values
+	+ Etodolac may increase the anticoagulant activities of Heparin.
+
+- 5 sentences after this in corpus:
+
+	+ Hospital codes the patient for over an hour, is unable to get her back.
+	+ Another study of cucumber extracts in animals, published in the  Archives of Dermatological Research , found increased overall antioxidant benefits.
+	+ Mira AL makes it easy to make research quality photometric measurements of any number of stars with any number of standards on any number of images.
+	+ Treat outdoors or in a well-ven- tilated room.
+	+ Sense-organs as ten- taculocysts.
+
+## 30th Aug 2018
 Can we use or learn from the top models at [The Stanford Question Answering Dataset](https://rajpurkar.github.io/SQuAD-explorer/)?
 
 - Answer Reading Comprehension Questions
