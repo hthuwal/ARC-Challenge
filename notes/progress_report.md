@@ -1,7 +1,7 @@
-##3rd Sep 2018
+## 3rd Sep 2018
 
 
-**Assuming Corpus Graph is built, A simple approach for prediction** 
+#### Assuming Corpus Graph is built, A simple approach for prediction
 
 - Perform hashing for each edge in the corpus graph of the corpus
 	+ This will take a lot of time and space but will make querying O(1).
@@ -9,7 +9,7 @@
 - Check how many edges of these graphs are present in the hashtable of the corpus graph. say **K<sub>j</sub>**
 - Prediction -> Based on some function of k and number of edges in **G<sub>j</sub>**
 
-**Observations**
+#### Observations
 
 - The rendered graph corresponding to **100** triplets consists of several connected components. Instead of one big connected graph. 
 - This may get reduced by certain amount, If we preprocess the data that is lemmetization, stopwords removal etc.
@@ -22,11 +22,14 @@ Also, The rendered image does not represent all the generated triplets **(82752)
 
 ---
 
-**Graph Plotted corresponding to 100 triplets:**
+#### Graph Plotted corresponding to 100 triplets:
 
 ![](Open_IE_graph_NCERT.png)
+<!-- ![](https://i.imgur.com/s6dvZHp.png) -->
 
 ---
+
+#### Try to run OpenIE on NCERT dataset first (because its small)
 
 - Ran on the entire Raw NCERT dataset `(Just 2.3MB)`.
 - `java.lang.OutOfMemoryError`
@@ -42,6 +45,7 @@ Faced: Mmemory Error for just a 2.3MB file
 
 ---
 
+#### Basic steps done by openIE
 - First split each sentence into a set of entailed clauses. 
 - Each clause is then maximally shortened, producing a set of entailed shorter sentence fragments. 
 - These fragments are then segmented into OpenIE triples, and output by the system. 
