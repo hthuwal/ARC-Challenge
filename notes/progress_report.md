@@ -1,17 +1,46 @@
 ##3rd Sep 2018
 
-- Ran on the entire NCERT dataset `(2.3MB)`.
+
+**Assuming Corpus Graph is built, A simple approach for prediction** 
+
+- Perform hashing for each edge in the corpus graph of the corpus
+	+ This will take a lot of time and space but will make querying O(1).
+- Convert Each **Q+a<sub>j</sub>** to a graph say (**G<sub>j</sub>**).
+- Check how many edges of these graphs are present in the hashtable of the corpus graph. say **K<sub>j</sub>**
+- Prediction -> Based on some function of k and number of edges in **G<sub>j</sub>**
+
+**Observations**
+
+- The rendered graph corresponding to **100** triplets consists of several connected components. Instead of one big connected graph. 
+- This may get reduced by certain amount, If we preprocess the data that is lemmetization, stopwords removal etc.
+
+Also, The rendered image does not represent all the generated triplets **(82752)**. The graph corresponding to the entire dataset may well be a single connected graph.
+
+- Can't render such a graph as image.
+- Run BFS/DFS to check connectedness?
+	+ 82752 lines, two edges per line => Graph with 165504 edges for (2.3 MB file).
+
+---
+
+**Graph Plotted corresponding to 100 triplets:**
+
+![](Open_IE_graph_NCERT.png)
+
+---
+
+- Ran on the entire Raw NCERT dataset `(Just 2.3MB)`.
 - `java.lang.OutOfMemoryError`
-- NCERT dataset was split into 10KB small files
-- 228 files were created
-- Wrote a script to run OpenIE on each of them to extract structured relation triple from them.
+
+Faced: Mmemory Error for just a 2.3MB file
+
+- NCERT dataset was split into 10KB small files.
+- 228 files were created.
+- Wrote a script to run Stanford OpenIE on each of them to extract structured relation triple from them.
 - Took 35 mins
 - ARC Corpus is `1.5GB` in size. 
 - Assuming nothing fails. it would take **nearly 17 days!!** to just extract the triplets from it.
-- This time doesn't include the creation of the graph etc.
----
 
-Steps: (**confirm these**)
+---
 
 - First split each sentence into a set of entailed clauses. 
 - Each clause is then maximally shortened, producing a set of entailed shorter sentence fragments. 
@@ -24,6 +53,7 @@ Can we use or learn from the top models at [The Stanford Question Answering Data
 - also abstain when presented with a question that cannot be answered (Only in 2.0)
 
 **Ideas**   
+
 - Remove Elastic Search from Pipeline.
 	1. Run SOTA model from above to extact proposed answer from the Corpus.
 		* May be entire corpus at once
