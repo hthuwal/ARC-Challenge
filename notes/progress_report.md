@@ -1,3 +1,22 @@
+##3rd Sep 2018
+
+- Ran on the entire NCERT dataset `(2.3MB)`.
+- `java.lang.OutOfMemoryError`
+- NCERT dataset was split into 10KB small files
+- 228 files were created
+- Wrote a script to run OpenIE on each of them to extract structured relation triple from them.
+- Took 35 mins
+- ARC Corpus is `1.5GB` in size. 
+- Assuming nothing fails. it would take **nearly 17 days!!** to just extract the triplets from it.
+- This time doesn't include the creation of the graph etc.
+---
+
+Steps: (**confirm these**)
+
+- First split each sentence into a set of entailed clauses. 
+- Each clause is then maximally shortened, producing a set of entailed shorter sentence fragments. 
+- These fragments are then segmented into OpenIE triples, and output by the system. 
+
 ##30th Aug 2018
 Can we use or learn from the top models at [The Stanford Question Answering Dataset](https://rajpurkar.github.io/SQuAD-explorer/)?
 
