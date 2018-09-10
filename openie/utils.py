@@ -3,6 +3,8 @@ from subprocess import Popen
 from graph import Graph
 import os
 import sys
+from stanfordcorenlp import StanfordCoreNLP
+import json
 
 JAVA_BIN_PATH = 'java'
 STANFORD_IE_FOLDER = 'stanford-corenlp'
@@ -89,3 +91,68 @@ def stanford_ie(string, coref=False):
     assert not java_process.returncode, 'ERROR: Call to stanford_ie exited with a non-zero code status.'
 
     return Graph(out)
+
+
+class StanfordNLP:
+    def __init__(self, host='http://localhost', port=9000):
+        self.nlp = StanfordCoreNLP(host, port=port,
+                                   timeout=30000)  # , quiet=False, logging_level=logging.DEBUG)
+        self.props = {
+            'annotators': 'natlog,openie',
+            'pipelineLanguage': 'en',
+            'openie.format': 'ollie'
+        }
+
+    def word_tokenize(self, sentence):
+        return self.nlp.word_tokenize(sentence)
+
+    def pos(self, sentence):
+        return self.nlp.pos_tag(sentence)
+
+    def ner(self, sentence):
+        return self.nlp.ner(sentence)
+
+    def parse(self, sentence):
+        return self.nlp.parse(sentence)
+
+    def dependency_parse(self, sentence):
+        return self.nlp.dependency_parse(sentence)
+
+    def annotate(self, sentence):
+        return json.loads(self.nlp.annotate(sentence, properties=self.props))
+
+    @staticmethod
+    def tokens_to_dict(_tokens):
+        tokens = defaultdict(dict)
+        for token in _tokens:
+            tokens[int(token['index'])] = {
+                'word': token['word'],
+                'lemma': token['lemma'],
+                'pos': token['pos'],
+                'ner': token['ner']
+            }
+        return tokens
+
+
+def stanford_ie_v2(string):
+    out = "/tmp/hypo_out"
+
+    sNLP = StanfordNLP()
+    ans = sNLP.annotate(string)
+
+    with open(out, "w") as f:
+        for each in ans['sentences']:
+            if len(each['openie']) != 0:
+                for triplet in each['openie']:
+                    subj = triplet['subject']
+                    pred = triplet['relation']
+                    obj = triplet['object']
+                    f.write("1.000: (%s; %s; %s)\n" % (subj, pred, obj))
+    # assert not java_process.returncode, 'ERROR: Call to stanford_ie exited with a non-zero code status.'
+    return Graph(out)
+
+
+if __name__ == '__main__':
+    sNLP = StanfordNLP()
+    text = 'A blog post using Stanford CoreNLP Server. Visit www.khalidalnajjar.com for more details.'
+    print("Annotate:", sNLP.annotate(text))
