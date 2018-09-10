@@ -69,7 +69,18 @@ class Graph(object):
                 num.append(self.dfs(key, visited))
         return Counter(num)
 
+    def num_nodes(self):
+        return len(self.adj)
+
+    def num_edges(self):
+        edge = 0
+        for node in self.adj:
+            edge += len(self.adj[node])
+        return edge / 2
+
 
 if __name__ == '__main__':
     g = Graph("results/ncert/stanford-openie.txt")
+    print(g.num_nodes())
+    print(g.num_edges())
     print(g.connectedness())
