@@ -33,14 +33,14 @@ class Graph(object):
     def read(self, stem=False):
         relations = open(self.source_file, "r").readlines()
         relations = process_entity_relations(relations)
-        relations = [strip(entity_relations, stem) for entity_relations in tqdm(relations)]
+        relations = [strip(entity_relations, stem) for entity_relations in relations]
         return relations
 
     def build(self, stem=False):
-        print("Reading anc cleaning relations")
+        # print("Reading and cleaning relations")
         relations = self.read(stem)
-        print("Building Graph")
-        for entity_relation in tqdm(relations):
+        # print("Building Graph")
+        for entity_relation in relations:
             subj = entity_relation[0]
             pred = entity_relation[1]
             obj = entity_relation[2]
