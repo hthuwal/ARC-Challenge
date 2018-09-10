@@ -2,6 +2,34 @@
 
 
 #### Creation of Graph (NCERT): With coreference Resolution
+- Coreference Resolution on each of the splitted 10KB files gave memory overflow error.
+- Divided ncert file into small 1KB files
+- Coreferene resolution made the tuple extraction process very slow.
+- Took ~6 hours
+- Can perform stemming before creating graph. Stopword removal still renders predicates empty
+- Analysis of the resultant graph:
+	+ Number of Nodes: 43493
+	+ Number of Edges: 73291
+	+ Number of Weakly Connected Components (using DFS): 771
+
+|Number of Nodes|Number of Components|
+|:-------------:|:------------------:|
+|41296			| 1					|
+|27				| 1					|
+|19				| 1					|
+|15				| 1					|
+|14				| 1					|
+|13				| 2					|
+|10				| 1					|
+|9				| 7					|
+|8				| 7					|
+|7				| 20				|
+|6				| 12				|
+|5				| 25				|
+|4				| 52				|
+|3				| 149				|
+|2				| 484				|
+|1				| 7					|
 
 #### Creation of Graph for Question Hypothesis Pairs
 
