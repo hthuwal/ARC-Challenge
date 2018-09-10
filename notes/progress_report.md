@@ -1,5 +1,21 @@
 ## 11th Sep 2018
-#### Creation of Graph
+
+#### Creation of Graph for Question Hypothesis Pairs
+
+- For each question Q<sub>i</sub>
+- For each option a<sub>ij</sub>
+- Generate for hypothesis h<sub>ij</sub>: Replace wh word in question by option
+- Run OpenIE on each hypothesis to create four graphs.
+	+ Initial Approach:
+		* Spawn a java process for each hypothesis, generate triplets, then graph
+		* Didn't complete in even one day.
+		* Too slow 1.5 minutes for loading all annotators, ~2 minutes per hypothesis
+		* 1174 x 4 x 2 = 9392 minutes = 6.0 days
+	+ Run a standalone OpenIE server
+		* API call to the server from a python script
+
+
+#### Creation of Graph (NCERT): Without coreference Resolution
 
 - Wrote a python script to process the output of OpenIE annotator and create a graph. 
 - For each extracted triplet add the following
