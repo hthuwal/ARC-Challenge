@@ -65,7 +65,7 @@ def replace_wh_word_with_blank(question_str: str):
         return re.sub(" this[ \?]", " ___ ", question_str)
 
 
-def stanford_ie(string):
+def stanford_ie(string, coref=False):
     tmp_file = "/tmp/hypo.txt"
     out = "/tmp/hypo_out"
     with open(tmp_file, "w") as f:
@@ -73,9 +73,14 @@ def stanford_ie(string):
 
     absolute_path_to_script = os.path.dirname(os.path.realpath(__file__)) + '/'
     command = 'cd {};'.format(absolute_path_to_script)
-    command += '{} -mx4g -cp "stanford-corenlp/*" ' \
-               'edu.stanford.nlp.naturalli.OpenIE -resolve_coref true -annotators tokenize,ssplit,pos,lemma,ner,depparse,natlog,coref,openie {} -format ollie > {}'. \
-        format(JAVA_BIN_PATH, tmp_file, out)
+    if coref:
+        command += '{} -mx4g -cp "stanford-corenlp/*" ' \
+                   'edu.stanford.nlp.naturalli.OpenIE -resolve_coref true -annotators tokenize,ssplit,pos,lemma,ner,depparse,natlog,coref,openie {} -format ollie > {}'. \
+            format(JAVA_BIN_PATH, tmp_file, out)
+    else:
+        command += '{} -mx4g -cp "stanford-corenlp/*" ' \
+                   'edu.stanford.nlp.naturalli.OpenIE {} -format ollie > {}'. \
+            format(JAVA_BIN_PATH, tmp_file, out)
 
     print('Executing command = {}'.format(command))
     java_process = Popen(command, stdout=sys.stderr, shell=True)
