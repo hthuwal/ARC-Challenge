@@ -63,3 +63,24 @@ def replace_wh_word_with_blank(question_str: str):
         # If all else fails, assume "this ?" indicates the blank. Used in Turk-authored questions
         # e.g. Virtually every task performed by living organisms requires this?
         return re.sub(" this[ \?]", " ___ ", question_str)
+
+
+def stanford_ie(string):
+    tmp_file = "/tmp/hypo.txt"
+    out = "/tmp/hypo_out"
+    with open(tmp_file, "w") as f:
+        f.write(string)
+
+    absolute_path_to_script = os.path.dirname(os.path.realpath(__file__)) + '/'
+    command = 'cd {};'.format(absolute_path_to_script)
+    command += '{} -mx4g -cp "stanford-corenlp/*" ' \
+               'edu.stanford.nlp.naturalli.OpenIE -resolve_coref true -annotators tokenize,ssplit,pos,lemma,ner,depparse,natlog,coref,openie {} -format ollie > {}'. \
+        format(JAVA_BIN_PATH, tmp_file, out)
+
+    print('Executing command = {}'.format(command))
+    java_process = Popen(command, stdout=sys.stderr, shell=True)
+    java_process.wait()
+
+    assert not java_process.returncode, 'ERROR: Call to stanford_ie exited with a non-zero code status.'
+
+    return Graph(out)
