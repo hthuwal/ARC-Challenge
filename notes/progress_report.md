@@ -1,5 +1,8 @@
 ## 11th Sep 2018
 
+
+#### Creation of Graph (NCERT): With coreference Resolution
+
 #### Creation of Graph for Question Hypothesis Pairs
 
 - For each question Q<sub>i</sub>
@@ -12,7 +15,8 @@
 		* Too slow 1.5 minutes for loading all annotators, ~2 minutes per hypothesis
 		* 1174 x 4 x 2 = 9392 minutes = 6.0 days
 	+ Run a standalone OpenIE server
-		* API call to the server from a python script
+		* API call to the server from a python script and dump the generated graphs.
+		* 1 hour 21 minutes(4.18sec per question)
 
 
 #### Creation of Graph (NCERT): Without coreference Resolution
