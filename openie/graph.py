@@ -18,7 +18,7 @@ def process_entity_relations(entity_relations_str, verbose=True):
 def strip(list_of_strings, stem=False):
     stemmer = nltk.stem.porter.PorterStemmer()
     if stem:
-        list_of_strings = [" ".join([stemmer.stem(word) for word in each.strip().split() if word not in stopwords]) for each in list_of_strings]
+        list_of_strings = [" ".join([stemmer.stem(word) for word in each.strip().split()]) for each in list_of_strings]
     else:
         list_of_strings = [each.strip().lower() for each in list_of_strings]
     # list_of_strings = [stemmer.stem(each) for each in list_of_strings if each not in stopwords]
