@@ -1,5 +1,19 @@
-## 3rd Sep 2018
+#### Analyzed why OpenIE analysis of just 2.3 MB file was taking 35 minutes?
+- Reasons
+	+ Was using a python script to create a seperate child process.
+	+ Each child process used Stanford openIE parser seperately for each file.
+ 	+ Each call and return involved "running a seperate java program" causing huge overhead
+ 
+- Solution
+	+ The OpenIE annotator can accept multiple files as arguments
+	+ Call it only once with all the files as arguments
+	+ Cumulate the results of all the files into a single file
 
+- This reduced the time from 35 minutes to just 2 minutes 33 seconds!!
+
+---
+
+## 3rd Sep 2018
 
 #### Assuming Corpus Graph is built, A simple approach for prediction
 
