@@ -17,9 +17,9 @@ rm -rf $TMP_DIR
 mkdir -p $TMP_DIR
 
 if [ "$(uname)" == "Darwin" ]; then
-    gsplit -b 10k --numeric-suffixes $1 ${TMP_DIR}/small_
+    gsplit -b 1k --numeric-suffixes $1 ${TMP_DIR}/small_
 else
-    split -b 10k --numeric-suffixes $1 ${TMP_DIR}/small_
+    split -b 1k --numeric-suffixes $1 ${TMP_DIR}/small_
 fi
 
 file_list="/tmp/openie/file_list.txt"
