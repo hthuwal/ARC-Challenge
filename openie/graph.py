@@ -1,4 +1,5 @@
 import nltk
+import sys
 from tqdm import tqdm
 from collections import defaultdict, Counter
 
@@ -80,7 +81,8 @@ class Graph(object):
 
 
 if __name__ == '__main__':
-    g = Graph("results/ncert/stanford-openie.txt")
+    file = sys.argv[1]
+    g = Graph(file)
     print(g.num_nodes())
     print(g.num_edges())
     print(g.connectedness())
