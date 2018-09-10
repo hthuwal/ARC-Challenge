@@ -1,3 +1,38 @@
+## 11th Sep 2018
+#### Creation of Graph
+
+- Wrote a python script to process the output of OpenIE annotator and create a graph. 
+- For each extracted triplet add the following
+	+ subject -----predicate-----> object
+	+ object -----rev_predicate----> subject (In order to be able to check weekly connectedness)
+- If we do stemming and stopword removal before creating graph, most of the triplets loose one or more of the elements because a large number of them are pronouns. So created a graph without doing stemming/stopword removal.
+- ~~TODO: Need to do coreference resolution before performing stopword removal/stemming.~~
+- Analysis of the resultant graph:
+	+ Number of Nodes: 45232
+	+ Number of Edges: 74497
+	+ Number of Weakly Connected Components (using DFS): 730   
+
+
+|Number of Nodes|Number of Components|
+|:-------------:|:------------------:|
+|43114			| 1					 |
+|19				| 2					 |
+|15				| 1					 |
+|14				| 1					 |
+|13				| 2					 |
+|11				| 1					 |
+|10				| 3					 |
+|9				| 5					 |
+|8				| 9					 |
+|7				| 19			     |
+|6				| 12			     |
+|5				| 29			     |
+|4				| 48			     |
+|3				| 131			     |
+|2				| 466			     |
+
+
+
 #### Analyzed why OpenIE analysis of just 2.3 MB file was taking 35 minutes?
 - Reasons
 	+ Was using a python script to create a seperate child process.
