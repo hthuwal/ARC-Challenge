@@ -82,7 +82,10 @@ class Graph(object):
 
 if __name__ == '__main__':
     file = sys.argv[1]
-    g = Graph(file)
+    stem = sys.argv[2]
+    stem = True if stem == "True" else False
+    print(stem)
+    g = Graph(file, stem)
     print(g.num_nodes())
     print(g.num_edges())
     print(g.connectedness())
