@@ -1,6 +1,15 @@
 ## 11th Sep 2018
 
 #### Results: Question wise predictions are present in the spread sheet
+|Corpus/Method|Points Scored|
+|-------------|:-----------:|
+|NCERT + DGEM |22.99|
+|NCERT openIE + Graph Comparison Algo| 23.929|
+|NCERT openIE (with coreference resolution) + Graph Comparison Algo| 24.017|
+
+Results though improved are still below the random baseline.
+- Can try different graph comparison algo, with partial word matching?
+- Better coreference resolution with bigger file sizes?
 
 #### Predicting for each question
 - Get score for each hypothesis
