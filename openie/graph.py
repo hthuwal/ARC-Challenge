@@ -1,28 +1,9 @@
-import nltk
 import sys
-from tqdm import tqdm
+import utils
 from collections import defaultdict, Counter
 
 with open("stopwords_en.txt", "r") as f:
     stopwords = [each.strip() for each in f.readlines()]
-
-
-def process_entity_relations(entity_relations_str, verbose=True):
-    # format is ollie.
-    entity_relations = list()
-    for s in entity_relations_str:
-        entity_relations.append(s[s.find("(") + 1:s.find(")")].split(';'))
-    return entity_relations
-
-
-def strip(list_of_strings, stem=False):
-    stemmer = nltk.stem.porter.PorterStemmer()
-    if stem:
-        list_of_strings = [" ".join([stemmer.stem(word) for word in each.strip().split()]) for each in list_of_strings]
-    else:
-        list_of_strings = [each.strip().lower() for each in list_of_strings]
-    # list_of_strings = [stemmer.stem(each) for each in list_of_strings if each not in stopwords]
-    return list_of_strings
 
 
 class Graph(object):
@@ -33,8 +14,8 @@ class Graph(object):
 
     def read(self, stem=False):
         relations = open(self.source_file, "r").readlines()
-        relations = process_entity_relations(relations)
-        relations = [strip(entity_relations, stem) for entity_relations in relations]
+        relations = utils.process_entity_relations(relations)
+        relations = [utils.strip(entity_relations, stem) for entity_relations in relations]
         return relations
 
     def build(self, stem=False):
