@@ -39,4 +39,4 @@ with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r"
         q_graphs[line['id']] = {'correct_answer': correct_answer, 'option_graphs': option_graphs}
 
 print(len(q_graphs))
-pickle.dump(q_graphs, open("q_graphs", "wb"))
+pickle.dump(q_graphs, open("q_graphs_coref", "wb"))
