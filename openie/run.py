@@ -1,10 +1,21 @@
 from graph import Graph
 import dill as pickle
 import sys
+import json
 
-corpus_graph = Graph(sys.argv[1])
-qa_graphs = pickle.load(open(sys.argv[2], "rb"))
-out = sys.argv[3]
+questions = {}
+with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file:
+    for line in (in_file):
+        line = json.loads(line)
+        question = line['question']['stem']
+        questions[line['id']] = question
+
+stem = sys.argv[2]
+stem = True if stem == "True" else False
+print(stem)
+corpus_graph = Graph(sys.argv[1], stem)
+qa_graphs = pickle.load(open(sys.argv[3], "rb"))
+out = sys.argv[4]
 scores = {}
 
 for question_id in qa_graphs:
@@ -33,6 +44,6 @@ with open(out, "w") as f:
                 point = (1 / len(possible_answers))
 
         points += point
-        f.write("%s\t%s\t%s\t%f\n" % (question_id, correct_answer, str(possible_answers), point))
+        f.write("%s\t%s\t%s\t%f\n" % (questions[question_id], correct_answer, str(possible_answers), point))
 
 print(points / len(scores))
