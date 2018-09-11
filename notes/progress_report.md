@@ -1,4 +1,27 @@
+## Some Frequently Accessed Links
+- [Spreadsheet](https://docs.google.com/spreadsheets/d/151zuO4OEE7Z1zyyDnMPC5DXp-aeJ31ROvm_7-edUVa8/edit#gid=1975852286)
+- [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/)
+- [ARC Datset Description](http://data.allenai.org/arc/arc-corpus/)
+- [ARC Leaderboard](http://data.allenai.org/arc/)
+- [WebChild](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/webchild/)
+
 ## 11th Sep 2018
+
+#### Misc
+
+- There are 1119 Challenge questions provided for training the models. We haven't used them in any way (Since we didn't got to designing/training any neural models).
+- Mausam's OpenIE [does not support coreference resolution](https://github.com/dair-iitd/OpenIE-standalone/issues/20). It acts on each sentence independently.
+- StanfordCoreNLP openIE does.
+- Two new additions to the leader board of ARC Challenge: (Will go through these papers next)
+	+ ET-RR [Ni et al. 2018](https://nijianmo.github.io/paper/msr-2018.pdf)
+		* Claimed Score: 36.36 
+		* Initial Impressions: Seems to have some complex multilayer neural architecture.
+		* By: Microsoft Business Applications Group AI Research and University of California San Diego
+	+ BiLSTM Max-out [Mihaylov et al. 2018](https://github.com/allenai/ARC-Solvers/blob/master/arc_solvers/models/qa/README.md#bilstm-max-out-with-question-to-choices-max-attention)
+		* Claimed Score: 33.87
+		* Initial impressions: Much Simpler than ET-PR
+		* By: Allen Institute for AI and University of Heidelberg
+		* Going to be published in 2018 EMNLP.
 
 #### Results: Question wise predictions are present in the spread sheet
 |Corpus/Method|Points Scored|
@@ -718,4 +741,4 @@ Basically removes most of the factoid questions(more likely to be present in the
 
 - Manual creation of entailment dataset 
 - Find Type of entailment. Done manually using Amazon Mechanincal Turk
-- Manual convesion of every (q, a<sub>i</sub>) to entailment form: 
+- Manual convesion of every (q, a<sub>i</sub>) to entailment form:: 
