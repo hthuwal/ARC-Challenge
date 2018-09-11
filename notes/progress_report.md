@@ -1,12 +1,41 @@
 ## 11th Sep 2018
 
+#### Results: Question wise predictions are present in the spread sheet
+
+#### Predicting for each question
+- Get score for each hypothesis
+- Predict the options with maximum scores
+- Points = (1/number of predictions)
+
+#### Algorithm Used for scoring hypothesis graph
+- Corpus Graph (C<sub>g</sub>)
+- Hypothesis Graph (H<sub>g</sub>)
+- The score per (H<sub>g</sub>) consists of:
+	+ Fraction of nodes of H<sub>g</sub> that are present in C<sub>g</sub>
+	+ For each edge **He<sub>p</sub>:** a--p-->b in H<sub>g</sub> (where a and b are nodes and p is label), if an edge **Ce<sub>q</sub>:** a--q-->b is present in C<sub>g</sub>. Score for He<sub>p</sub> is defined as the  average of score(p, q) for all such q.
+	+ score(p, q): is the fraction of words of p that are present in q
+
+#### Creation of Graph for Question Hypothesis Pairs
+
+- For each question Q<sub>i</sub>
+	+ For each option a<sub>ij</sub>
+- Generate hypothesis h<sub>ij</sub>: Replace wh word in question by option
+- Run OpenIE on each hypothesis to create four graphs.
+	+ Initial Approach:
+		* Spawn a java process for each hypothesis, generate triplets, then generate graph
+		* Didn't complete in even one day.
+		* Too slow 1.5 minutes for loading all annotators, ~2 minutes per hypothesis
+		* 1174 x 4 x 2 = 9392 minutes = 6.0 days
+	+ Run a standalone OpenIE server
+		* API call to the server from a python script and dump the generated graphs.
+		* 1 hour 21 minutes(4.18 sec per question)
 
 #### Creation of Graph (NCERT): With coreference Resolution
 - Coreference Resolution on each of the splitted 10KB files gave memory overflow error.
-- Divided ncert file into small 1KB files
-- Coreferene resolution made the tuple extraction process very slow.
+- Divided ncert file into small 1KB files (splitting into such small files might have caused loosing some coreference)
+- Coreferene resolution + large number of files, made the tuple extraction process very slow.
 - Took ~6 hours
-- Can perform stemming before creating graph. Stopword removal still renders predicates empty
+- Can perform stemming before creating graph. Stopword removal still renders predicates empty.
 - Analysis of the resultant graph:
 	+ Number of Nodes: 43493
 	+ Number of Edges: 73291
@@ -30,22 +59,6 @@
 |3				| 149				|
 |2				| 484				|
 |1				| 7					|
-
-#### Creation of Graph for Question Hypothesis Pairs
-
-- For each question Q<sub>i</sub>
-- For each option a<sub>ij</sub>
-- Generate for hypothesis h<sub>ij</sub>: Replace wh word in question by option
-- Run OpenIE on each hypothesis to create four graphs.
-	+ Initial Approach:
-		* Spawn a java process for each hypothesis, generate triplets, then graph
-		* Didn't complete in even one day.
-		* Too slow 1.5 minutes for loading all annotators, ~2 minutes per hypothesis
-		* 1174 x 4 x 2 = 9392 minutes = 6.0 days
-	+ Run a standalone OpenIE server
-		* API call to the server from a python script and dump the generated graphs.
-		* 1 hour 21 minutes(4.18sec per question)
-
 
 #### Creation of Graph (NCERT): Without coreference Resolution
 
@@ -696,4 +709,4 @@ Basically removes most of the factoid questions(more likely to be present in the
 
 - Manual creation of entailment dataset 
 - Find Type of entailment. Done manually using Amazon Mechanincal Turk
-- Manual convesion of every (q, a<sub>i</sub>) to entailment form.
+- Manual convesion of every (q, a<sub>i</sub>) to entailment form: 
