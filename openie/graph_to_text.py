@@ -19,7 +19,7 @@ def graph_to_triplets(g):
     return triplets
 
 
-with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file:
+with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file, open("out.tsv", "w") as out:
     for line in in_file:
         line = json.loads(line)
         qid = line['id']
@@ -47,11 +47,20 @@ with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r"
             if options[option] != "":
                 hypothesis[option] = utils.create_hypothesis(question, options[option])
 
-        print("Question: ", org_ques, "\n")
+        print("\nQuestion: ", org_ques)
         triplets = {key: graph_to_triplets(value) for key, value in qa_graphs[qid]['option_graphs'].items()}
+        trips = {}
+        row = org_ques + "\t"
         for key in hypothesis:
-            print(key, ":", options[key], "\n")
+            row += options[key] + "\t"
+            print("\n", key, ":", options[key], "\n")
             print("Hypothesis-%s:" % key, hypothesis[key], "\n")
-            print("Extracted triplets")
+            row += hypothesis[key] + "\t"
+            print("Extracted triplets: subj || pred || obj")
+            trips = ""
             for subj, pred, obj in triplets[key]:
                 print(subj, "---", pred, "-->", obj)
+                trips += ("%s --- %s --> %s || " % (subj, pred, obj))
+            row += trips + "\t"
+        out.write(row + "\n")
+        # input()
