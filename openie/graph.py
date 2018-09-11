@@ -79,6 +79,43 @@ class Graph(object):
             edge += len(self.adj[node])
         return edge / 2
 
+    def compare_strings(self, a, b):
+        a = a.lower().split()
+        b = b.lower().split()
+        score = 0
+        for each in a:
+            if each in b:
+                score += 1
+        return score / len(a)
+
+    def compare_edge_labels(self, e_a_list, e_b_list):
+        score = 0
+        e_a_list = [each for each in e_a_list if not each.startswith('rev')]
+        e_b_list = [each for each in e_b_list if not each.startswith('rev')]
+        for ea in e_a_list:
+            for eb in e_b_list:
+                score += self.compare_strings(ea, eb)
+        return score / (len(e_a_list) * len(e_b_list))
+
+    def compare_edges(self, e_a, e_b):
+        score = 0
+        for nbr in e_a:
+            if nbr in e_b:
+                score += self.compare_edge_labels(list(e_a[nbr]), list(e_b[nbr]))
+        return score / (len(e_a))
+
+    def contains(self, g):
+        score = {}
+        score['nodes'] = 0
+        score['edges'] = 0
+
+        for node in g.adj:
+            if node in self.adj:
+                score['nodes'] += 1
+                score['edges'] += self.compare_edges(g.adj[node], self.adj[node])
+
+        return score
+
 
 if __name__ == '__main__':
     file = sys.argv[1]
