@@ -30,10 +30,10 @@ find ${TMP_DIR}/small_* > "$file_list"
 if ! [ -f "$2" ]; then
 	if [ "$3" == "coref" ]; then
 		echo "With Anaphora Resolution"
-		java -mx4g -cp "stanford-corenlp/*" edu.stanford.nlp.naturalli.OpenIE -threads 16 -resolve_coref true -annotators tokenize,ssplit,pos,lemma,ner,depparse,natlog,coref,openie -filelist "$file_list" -format ollie > "$2"
+		java -mx30g -cp "stanford-corenlp/*" edu.stanford.nlp.naturalli.OpenIE -threads 16 -resolve_coref true -annotators tokenize,ssplit,pos,lemma,ner,depparse,natlog,coref,openie -filelist "$file_list" -format ollie > "$2"
 	else
 		echo "Without Anaphora Resolution"
-		java -mx30g -cp "stanford-corenlp/*" edu.stanford.nlp.naturalli.OpenIE -threads 16 -filelist "$file_list" -format ollie > "$2"
+		java -mx4g -cp "stanford-corenlp/*" edu.stanford.nlp.naturalli.OpenIE -threads 16 -filelist "$file_list" -format ollie > "$2"
 	fi
 else
 	echo "$2 already exists"
