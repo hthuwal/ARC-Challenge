@@ -16,20 +16,22 @@ TMP_DIR=/tmp/openie/large_corpus
 rm -rf $TMP_DIR
 mkdir -p $TMP_DIR
 
-echo -e "Splitting the data into small 1kb files\n"
+echo -e "Splitting the data into small 10kb files\n"
 
 if [ "$(uname)" == "Darwin" ]; then
-    gsplit -b 1k --numeric-suffixes $1 ${TMP_DIR}/small_
+    gsplit -b 10k --numeric-suffixes $1 ${TMP_DIR}/small_
 else
-    time split -b 1k --numeric-suffixes $1 ${TMP_DIR}/small_
+    time split -b 10k --numeric-suffixes $1 ${TMP_DIR}/small_
 fi
 
+num_files=$(ls ${TMP_DIR}/ | wc -l)
+echo -e "Splitted $1 into $num_files 10kb files\n"
+
+echo -e "Adding small file_names to a file.\n"
 file_list="/tmp/openie/file_list.txt"
-find ${TMP_DIR}/small_* > "$file_list"
 
-num_files=$(find ${TMP_DIR}/small_* -type f | wc -l)
-
-echo "Splitted $1 into $num_files 1kb files\n"
+find ${TMP_DIR}/ > "$file_list"
+sed '1d' "$file_list" > tmpfile; mv tmpfile "$file_list"
 
 if ! [ -f "$2" ]; then
 	if [ "$3" == "coref" ]; then
