@@ -3,8 +3,12 @@ import utils
 from graph import Graph
 from tqdm import tqdm
 import dill as pickle
+import sys
 
 q_graphs = {}
+out = sys.argv[1]
+coref = sys.argv[2]
+coref = True if coref == "True" else False
 with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file:
     for line in tqdm(in_file):
         line = json.loads(line)
@@ -34,9 +38,9 @@ with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r"
         option_graphs = {}
 
         for option in hypothesis:
-            option_graphs[option] = utils.stanford_ie_v2(hypothesis[option])
+            option_graphs[option] = utils.stanford_ie_v2(hypothesis[option], coref)
 
         q_graphs[line['id']] = {'correct_answer': correct_answer, 'option_graphs': option_graphs}
 
 print(len(q_graphs))
-pickle.dump(q_graphs, open("q_graphs_coref", "wb"))
+pickle.dump(q_graphs, open(out, "wb"))
