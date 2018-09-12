@@ -7,7 +7,7 @@ from tqdm import tqdm
 import dill as pickle
 
 qa_graphs = pickle.load(open(sys.argv[1], "rb"))
-
+out_file = sys.argv[2]
 
 def graph_to_triplets(g):
     triplets = []
@@ -19,7 +19,7 @@ def graph_to_triplets(g):
     return triplets
 
 
-with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file, open("out.tsv", "w") as out:
+with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file, open(out_file, "w") as out:
     for line in in_file:
         line = json.loads(line)
         qid = line['id']
