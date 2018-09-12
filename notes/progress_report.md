@@ -6,7 +6,7 @@
 - [ARC Leaderboard](http://data.allenai.org/arc/)
 - [WebChild](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/webchild/)
 
-#### StanfordNLP vs openIE(mausams)
+#### StanfordNLP vs openIE(mausam)
 
 **Stanford does not do n-ary extraction**
 
