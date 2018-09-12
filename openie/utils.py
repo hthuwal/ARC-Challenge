@@ -95,7 +95,7 @@ def stanford_ie(string, coref=False):
 
 
 class StanfordNLP:
-    def __init__(self, host='http://localhost', port=9000):
+    def __init__(self, host='http://localhost', port=9000, coref=False):
         self.nlp = StanfordCoreNLP(host, port=port,
                                    timeout=30000)  # , quiet=False, logging_level=logging.DEBUG)
         self.props = {
@@ -103,6 +103,8 @@ class StanfordNLP:
             'pipelineLanguage': 'en',
             'openie.format': 'ollie'
         }
+        if coref:
+            self.props['annotators'] = 'natlog,openie,coref'
 
     def word_tokenize(self, sentence):
         return self.nlp.word_tokenize(sentence)
@@ -135,10 +137,10 @@ class StanfordNLP:
         return tokens
 
 
-def stanford_ie_v2(string):
+def stanford_ie_v2(string, coref=False):
     out = "/tmp/hypo_out"
 
-    sNLP = StanfordNLP()
+    sNLP = StanfordNLP(coref=coref)
     ans = sNLP.annotate(string)
 
     with open(out, "w") as f:
@@ -169,6 +171,7 @@ def strip(list_of_strings, stem=False):
         list_of_strings = [each.strip().lower() for each in list_of_strings]
     # list_of_strings = [stemmer.stem(each) for each in list_of_strings if each not in stopwords]
     return list_of_strings
+
 
 if __name__ == '__main__':
     sNLP = StanfordNLP()
