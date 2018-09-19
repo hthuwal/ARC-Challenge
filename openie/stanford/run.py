@@ -33,7 +33,8 @@ qa_graphs = pickle.load(open(sys.argv[3], "rb"))
 out = sys.argv[4]
 scores = {}
 
-for question_id in qa_graphs:
+print("Predicting and Calculating scores")
+for question_id in tqdm(qa_graphs):
     scores[question_id] = {}
 
     scores[question_id]['correct_answer'] = qa_graphs[question_id]['correct_answer']
