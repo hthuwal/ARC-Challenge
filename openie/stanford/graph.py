@@ -126,6 +126,18 @@ class Graph(object):
         return (score['nodes'] / (1 + len(g.adj))) + score['edges']
         # return score
 
+    def __repr__(self):
+        representation = "Number of Nodes: %d \
+            \nNumber of Edges: %d \
+            \nComponents: \
+            \nNodes\tNumber of components \
+            """ % (self.num_nodes(), self.num_edges())
+
+        components = self.connectedness()
+        for a, b in components:
+            representation += "\n%d\t%d" % (a, b)
+        return representation + "\n"
+
 
 if __name__ == '__main__':
     file = sys.argv[1]
