@@ -15,6 +15,12 @@
 
 ---
 ## 20th Sep 2018
+
+#### Mausams openIE
+
+- Difficulty setting up the build environment as don't have administrator access on the aryabhatta server
+- Will setup the build environment on the DAIR lab machine.
+
 #### StanfordNLP openIE with coref on ARC
 
 - Still running!
