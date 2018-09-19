@@ -4,7 +4,7 @@ import sys
 import json
 
 questions = {}
-with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file:
+with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file:
     for line in (in_file):
         line = json.loads(line)
         question = line['question']['stem']
