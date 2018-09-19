@@ -6,6 +6,13 @@
 - [ARC Leaderboard](http://data.allenai.org/arc/)
 - [WebChild](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/webchild/)
 
+#### StanfordNLP openIE over the ARC Dataset
+- Split the 1.3GB ARC corpus into 10kb files.
+- Core dumped after running for 28 hours.
+- Split the 1.3GB ARC corpus into 1kb files.
+- 2.91GB file of triplets
+- Took 11.39 hours (No errors!!).
+
 #### StanfordNLP vs openIE(mausam)
 
 **Stanford does not do n-ary extraction**
