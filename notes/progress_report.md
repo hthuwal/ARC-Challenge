@@ -11,7 +11,28 @@
 - Core dumped after running for 28 hours.
 - Split the 1.3GB ARC corpus into 1kb files.
 - 2.91GB file of triplets
-- Took 11.39 hours (No errors!!).
+- Took 11.39 hours.
+- Creating Graph took around ~15 minutes.
+- Unable to dump the corpus graph at the moment, due to memory issues.
+
+Graph Details:
+
+- Analysis of the resultant graph:
+    - Number of Nodes: 21317833             
+    - Number of Edges: 40606342             
+
+|Nodes   |Number of components|
+|:------:|:------------------:|
+|20605758    |1|
+|1004    |1|
+|1002    |4|
+|1001    |2|
+|1000    |1|
+|100-999 |74|
+|20-99   |840|
+|19  |108|
+|10-19   |2639|
+|1-9 |254438|
 
 #### StanfordNLP vs openIE(mausam)
 
