@@ -1,4 +1,4 @@
-## Some Frequently Accessed Links
+## Frequently Accessed Links
 - [MTP_Results before OpenIE](https://docs.google.com/spreadsheets/d/151zuO4OEE7Z1zyyDnMPC5DXp-aeJ31ROvm_7-edUVa8/edit#gid=1975852286)
 - [MTP_OpenIE_NCERT](https://docs.google.com/spreadsheets/d/1BgyFyzLrojTdp14Msg0WW2u-FU9rdBp6-hvgmqye8Ac/edit#gid=0)
 - [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/)
@@ -10,11 +10,16 @@
         * You might find this cleaner than the sheet.
     + [OpenIE on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert.txt)
     + [OpenIE + coref on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert-coref.txt)
-    + [OpenIE on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc.txt).  3GB file!!
+    + [OpenIE on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc.txt).  
+        * 3GB file. Can't add this to the google sheets
 
-### StanfordNLP openIE with coref on ARC
+---
+## 20th Sep 2018
+#### StanfordNLP openIE with coref on ARC
 
 - Still running!
+
+---
 
 #### Results
 
@@ -25,6 +30,8 @@
 |ARC + Graph Comparison Algo| 27.41|
 
 The scores per question have been added to the spreadsheet.
+
+---
 
 #### StanfordNLP openIE over the ARC Dataset
 - Split the 1.3GB ARC corpus into 10kb files.
@@ -53,6 +60,8 @@ Graph Details:
 |19  |108|
 |10-19   |2639|
 |1-9 |254438|
+
+---
 
 #### StanfordNLP vs openIE(mausam)
 
