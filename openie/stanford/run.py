@@ -46,7 +46,7 @@ for question_id in tqdm(qa_graphs):
 
 points = 0
 with open(out, "w") as f:
-    for question_id in scores:
+    for question_id in tqdm(scores):
         point = 0
         correct_answer = scores[question_id]['correct_answer']
         option_scores = list(scores[question_id]['options'].items())
