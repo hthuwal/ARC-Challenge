@@ -66,7 +66,10 @@ class Graph(object):
         for key in self.adj:
             if not visited[key]:
                 num.append(self.dfs(key, visited))
-        return Counter(num)
+        components = list(Counter(num).items())
+        components.sort(key=lambda x: x[0], reverse=True)
+
+        return components
 
     def num_nodes(self):
         return len(self.adj)
