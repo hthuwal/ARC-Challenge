@@ -5,6 +5,16 @@
 - [ARC Datset Description](http://data.allenai.org/arc/arc-corpus/)
 - [ARC Leaderboard](http://data.allenai.org/arc/)
 - [WebChild](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/webchild/)
+- Links to Open IE triplets
+    + [OpenIE on Questions](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
+        * You might find this cleaner than the sheet.
+    + [OpenIE on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert.txt)
+    + [OpenIE + coref on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert-coref.txt)
+    + [OpenIE on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc.txt).  3GB file!!
+
+### StanfordNLP openIE with coref on ARC
+
+- Still running!
 
 #### Results
 
@@ -13,6 +23,8 @@
 |ARC + DGEM with openIE (opensource) | 26.41|
 |ARC + DGEM with openIE (proprietary) | 27.11|
 |ARC + Graph Comparison Algo| 27.41|
+
+The scores per question have been added to the spreadsheet.
 
 #### StanfordNLP openIE over the ARC Dataset
 - Split the 1.3GB ARC corpus into 10kb files.
@@ -67,9 +79,9 @@ Sentence: The U.S. president Barack Obama gave his speech on Tuesday and Wednesd
 - Moved all the openIE results to this new spreadsheet (google sheets was raising a warning that number of cells in the sheet is exceeding a threshold)
 - Link to the text files:
 	+ [OpenIE on Questions](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
-		* You might find this cleaner than the sheet.
-	+ [OpenIE on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie.txt)
-	+ [OpenIE + coref on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-coref.txt)
+        * You might find this cleaner than the sheet.
+    + [OpenIE on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert.txt)
+    + [OpenIE + coref on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert-coref.txt).
 
 ## 11th Sep 2018
 #### Misc
