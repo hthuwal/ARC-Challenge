@@ -6,6 +6,14 @@
 - [ARC Leaderboard](http://data.allenai.org/arc/)
 - [WebChild](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/webchild/)
 
+#### Results
+
+|Corpus/Method|Points Scored|
+|-------------|:-----------:|
+|ARC + DGEM with openIE (opensource) | 26.41|
+|ARC + DGEM with openIE (proprietary) | 27.11|
+|ARC + Graph Comparison Algo| 27.41|
+
 #### StanfordNLP openIE over the ARC Dataset
 - Split the 1.3GB ARC corpus into 10kb files.
 - Core dumped after running for 28 hours.
