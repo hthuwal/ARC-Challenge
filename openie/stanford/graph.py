@@ -1,5 +1,8 @@
 import sys
 from collections import defaultdict, Counter
+from tqdm import tqdm
+import nltk
+
 
 with open("stopwords_en.txt", "r") as f:
     stopwords = [each.strip() for each in f.readlines()]
@@ -8,8 +11,9 @@ with open("stopwords_en.txt", "r") as f:
 def process_entity_relations(entity_relations_str, verbose=True):
     # format is ollie.
     entity_relations = list()
-    for s in entity_relations_str:
-        entity_relations.append(s[s.find("(") + 1:s.find(")")].split(';'))
+    for s in tqdm(entity_relations_str):
+        temp = s[s.find("(") + 1:s.find(")")].split(';')
+        entity_relations.append(temp)
     return entity_relations
 
 
@@ -24,27 +28,31 @@ def strip(list_of_strings, stem=False):
 
 
 class Graph(object):
-    def __init__(self, file, stem=False):
+    def __init__(self, file, stem=False, disable_progress_bar=True):
         self.adj = defaultdict(lambda: defaultdict(set))
         self.source_file = file
-        self.build(stem)
+        self.build(stem=stem, disable_progress_bar=disable_progress_bar)
 
     def read(self, stem=False):
         relations = open(self.source_file, "r").readlines()
+        print("Converting into list of triplets")
         relations = process_entity_relations(relations)
-        relations = [strip(entity_relations, stem) for entity_relations in relations]
+        print("Stripping")
+        relations = [strip(entity_relations, stem) for entity_relations in tqdm(relations)]
         return relations
 
-    def build(self, stem=False):
-        # print("Reading and cleaning relations")
+    def build(self, stem=False, disable_progress_bar=True):
+        print("Reading and cleaning relations")
         relations = self.read(stem)
-        # print("Building Graph")
-        for entity_relation in relations:
-            subj = entity_relation[0]
-            pred = entity_relation[1]
-            obj = entity_relation[2]
-            self.adj[subj][obj].add(pred)
-            self.adj[obj][subj].add("rev_" + pred)
+        print("Building Graph")
+        for entity_relation in tqdm(relations, disable=disable_progress_bar):
+            if(len(entity_relation) == 3):
+                subj = entity_relation[0]
+                pred = entity_relation[1]
+                obj = entity_relation[2]
+                self.adj[subj][obj].add(pred)
+                self.adj[obj][subj].add("rev_" + pred)
+        del relations
 
     def dfs(self, start, visited):
         st = []
