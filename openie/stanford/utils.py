@@ -154,25 +154,6 @@ def stanford_ie_v2(string, coref=False):
     # assert not java_process.returncode, 'ERROR: Call to stanford_ie exited with a non-zero code status.'
     return Graph(out)
 
-
-def process_entity_relations(entity_relations_str, verbose=True):
-    # format is ollie.
-    entity_relations = list()
-    for s in entity_relations_str:
-        entity_relations.append(s[s.find("(") + 1:s.find(")")].split(';'))
-    return entity_relations
-
-
-def strip(list_of_strings, stem=False):
-    stemmer = nltk.stem.porter.PorterStemmer()
-    if stem:
-        list_of_strings = [" ".join([stemmer.stem(word) for word in each.strip().split()]) for each in list_of_strings]
-    else:
-        list_of_strings = [each.strip().lower() for each in list_of_strings]
-    # list_of_strings = [stemmer.stem(each) for each in list_of_strings if each not in stopwords]
-    return list_of_strings
-
-
 if __name__ == '__main__':
     sNLP = StanfordNLP()
     text = 'A blog post using Stanford CoreNLP Server. Visit www.khalidalnajjar.com for more details.'
