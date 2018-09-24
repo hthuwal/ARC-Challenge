@@ -19,7 +19,10 @@
 ## 25th Sep 2018
 
 
-### Results
+
+---
+
+#### Updated Results
 
 |Corpus/Method|Points Scored|
 |-------------|:-----------:|
@@ -27,6 +30,7 @@
 |ARC + DGEM with openIE (proprietary) | 27.11|
 |ARC + Graph Comparison Algo| 27.41|
 |ARC + Coref + Graph Comparison Algo | 27.82|
+|max(ARC, NCERT)|27.199|
 
 The scores per question have been added to the spreadsheet.
 
