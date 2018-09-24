@@ -1,6 +1,6 @@
 ## Frequently Accessed Links
 - [MTP_Results before OpenIE](https://docs.google.com/spreadsheets/d/151zuO4OEE7Z1zyyDnMPC5DXp-aeJ31ROvm_7-edUVa8/edit#gid=1975852286)
-- [MTP_OpenIE_NCERT](https://docs.google.com/spreadsheets/d/1BgyFyzLrojTdp14Msg0WW2u-FU9rdBp6-hvgmqye8Ac/edit#gid=0)
+- [MTP_OpenIE](https://docs.google.com/spreadsheets/d/1BgyFyzLrojTdp14Msg0WW2u-FU9rdBp6-hvgmqye8Ac/edit#gid=0)
 - [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/)
 - [ARC Datset Description](http://data.allenai.org/arc/arc-corpus/)
 - [ARC Leaderboard](http://data.allenai.org/arc/)
@@ -12,6 +12,7 @@
     + [OpenIE + coref on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert-coref.txt)
     + [OpenIE on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc.txt).  
         * 3GB file. Can't add this to the google sheets
+    + [openIE + coref on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc-coref.txt).
 
 ---
 
@@ -27,7 +28,11 @@
 |ARC + Graph Comparison Algo| 27.41|
 |ARC + Coref + Graph Comparison Algo | 27.82|
 
-### StanfordNLP openIE with coref resolution
+The scores per question have been added to the spreadsheet.
+
+---
+
+#### StanfordNLP openIE with coref resolution
 - Took 62.8 Hours to complete
 - 2.99 GB files of triplets
 - Creating Graph took around 20 minutes.
