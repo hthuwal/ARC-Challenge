@@ -14,6 +14,40 @@
         * 3GB file. Can't add this to the google sheets
 
 ---
+
+## 25th Sep 2018
+
+
+### Results
+
+|Corpus/Method|Points Scored|
+|-------------|:-----------:|
+|ARC + DGEM with openIE (opensource) | 26.41|
+|ARC + DGEM with openIE (proprietary) | 27.11|
+|ARC + Graph Comparison Algo| 27.41|
+|ARC + Coref + Graph Comparison Algo | 27.82|
+
+### StanfordNLP openIE with coref resolution
+- Took 62.8 Hours to complete
+- 2.99 GB files of triplets
+- Creating Graph took around 20 minutes.
+
+Graph Details:
+
+- Analysis of the resultant graph:
+    - Number of Nodes: 22123223             
+    - Number of Edges: 41976390             
+
+|Nodes|Number_of_components|
+|:---:|:------------------:|
+|21236195|1|
+|100-1004| 87|
+|21-100|1006|
+|10-20|3508|
+|1-9|312931|
+
+---
+
 ## 20th Sep 2018
 
 #### Analysis of the results
