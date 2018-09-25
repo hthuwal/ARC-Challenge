@@ -18,9 +18,13 @@
 
 ## 25th Sep 2018
 
+- Doing Coref resolution on the ARC dataset increased the accuracy by ~0.42 percent.
+- Using both the NCERT and ARC corpus graph to score the hypothesis graph resulted in lower overall score than using just the ARC corpus. Why?
 
-
----
+Todo/In Progress:
+- Manual Analysis of the zero score questions.
+- Running Mausam's OpenIE on the ARC Corpus.
+- Improve the scoring/graph creation algorithm.
 
 #### Updated Results
 
