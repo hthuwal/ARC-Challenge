@@ -16,6 +16,12 @@
 
 ---
 
+- Performing Coreference Resolution on the Questions seems to have no effect on the final scores.
+
+- ARC + NCERT = 25.7565 (Should I normalize the scores?)
+- 25.40 (Normalizing scoresb before adding :/)
+---
+
 ## 25th Sep 2018
 
 - Doing Coref resolution on the ARC dataset increased the accuracy by ~0.42 percent.
