@@ -9,6 +9,7 @@ ends = ['?', '.', '!']
 with open(file, "r") as f, open(target_file, "w") as out:
     count = 0
     for line in f:
+        line = line.strip()
         print("\r" + str(count), end=" ")
         if len(line.strip().split()) > 1:
             if line[-1] not in ends:
