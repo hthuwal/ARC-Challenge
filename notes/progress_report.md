@@ -2,8 +2,8 @@
 - [MTP_Results before OpenIE](https://docs.google.com/spreadsheets/d/151zuO4OEE7Z1zyyDnMPC5DXp-aeJ31ROvm_7-edUVa8/edit#gid=1975852286)
 - [MTP_OpenIE](https://docs.google.com/spreadsheets/d/1BgyFyzLrojTdp14Msg0WW2u-FU9rdBp6-hvgmqye8Ac/edit#gid=0)
 - [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/)
-- [ARC Datset Description](http://data.allenai.org/arc/arc-corpus/)
-- [ARC Leaderboard](http://data.allenai.org/arc/)
+- [ARC Dataset Description](http://data.allenai.org/arc/arc-corpus/)
+- [ARC Leader board](http://data.allenai.org/arc/)
 - [WebChild](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/webchild/)
 - Links to Open IE triplets
     + [OpenIE on Questions](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
@@ -11,15 +11,41 @@
     + [OpenIE on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert.txt)
     + [OpenIE + coref on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert-coref.txt)
     + [OpenIE on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc.txt).  
-        * 3GB file. Can't add this to the google sheets
+        * 3GB file. Can't add this to the Google sheets
     + [openIE + coref on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc-coref.txt).
 
 ---
 
-- Performing Coreference Resolution on the Questions seems to have no effect on the final scores.
+#### Mausam's OpenIE
 
-- ARC + NCERT = 25.7565 (Should I normalize the scores?)
-- 25.40 (Normalizing scoresb before adding :/)
+- Fails on sentences with only one word.
+    + e.g. `Harish.`
+    + Java Null Pointer Exception
+    + Removed all single word sentences from the corpus to solve this.
+- Fails on some sentences with no binary relation of the form relation(subject, object)
+    + e.g. `Chemical Reactions and Equations`
+        * Java Null Pointer Exception
+    + e.g. `Barack Obama, The U.S. President`
+        * 0.88 (Barack Obama; `[is]` The President `[of]`; United States)
+- Because of these "weird errors" Unable to run it on any corpus. After running for several hours the Java process core dumps and raises a Null Pointer Exception.
+- I am using the compiled Java file provided in their repository.
+- I can look into these issues by digging in their Scala code (I have no experience in Scala). But that would deviate the effort to debugging their openIE.
+
+**I've created an issue on their GitHub Repository regarding the same.**
+
+
+---
+
+- Performing Co-reference Resolution on the Questions seems to have no effect on the final scores.
+
+Trying to combine NCERT and ARC corpus graphs:
+
+|Approach| Score | 
+|---------|-------|
+|Score per question = ARC score + NCERT score|25.7565|
+|Score per question = **Sum** of **normalized** score|25.40|
+|Score per question = **max**(ARC score + NCERT score)|27.199|
+
 ---
 
 ## 25th Sep 2018
@@ -27,7 +53,7 @@
 - Doing Coref resolution on the ARC dataset increased the accuracy by ~0.42 percent.
 - Using both the NCERT and ARC corpus graph to score the hypothesis graph resulted in lower overall score than using just the ARC corpus. Why?
 
-Todo/In Progress:
+To-do/In Progress:
 - Manual Analysis of the zero score questions.
 - Running Mausam's OpenIE on the ARC Corpus.
 - Improve the scoring/graph creation algorithm.
@@ -36,11 +62,10 @@ Todo/In Progress:
 
 |Corpus/Method|Points Scored|
 |-------------|:-----------:|
-|ARC + DGEM with openIE (opensource) | 26.41|
+|ARC + DGEM with openIE (open-source) | 26.41|
 |ARC + DGEM with openIE (proprietary) | 27.11|
 |ARC + Graph Comparison Algo| 27.41|
 |ARC + Coref + Graph Comparison Algo | 27.82|
-|max(ARC, NCERT)|27.199|
 
 The scores per question have been added to the spreadsheet.
 
@@ -948,4 +973,5 @@ Basically removes most of the factoid questions(more likely to be present in the
 
 - Manual creation of entailment dataset 
 - Find Type of entailment. Done manually using Amazon Mechanincal Turk
-- Manual convesion of every (q, a<sub>i</sub>) to entailment form:: 
+- Manual convesion of every (q, a<sub>i</sub>) to entailment form::
+: https://github.com/titoBouzout/Dictionaries.git
