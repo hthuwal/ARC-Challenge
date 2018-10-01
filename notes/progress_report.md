@@ -15,6 +15,11 @@
     + [openIE + coref on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc-coref.txt).
 
 --- 
+
+#### The owner of the repo replied
+
+- He gave a solution: Passing **a flag** `--ignore-errors` should apparently solve this issue. Will try that tomorrow.
+
 #### Solving Issue with Mausam's OpenIE
 
 - I ran several sample sentence on their model to figure out a way to run it.
