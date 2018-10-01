@@ -14,10 +14,17 @@
         * 3GB file. Can't add this to the Google sheets
     + [openIE + coref on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc-coref.txt).
 
+--- 
+#### Solved Issue with Mausam's OpenIE
+
+- I ran several sample sentence on their model to figure out a way to run it.
+- I found the following pattern.
+    + The model ran into an exception only when the input sentences does not have a terminating punctuation mark i.e `. ? !`
+    + So for all such sentences I explicitly placed a Full stop at the end.
+
 ---
 
-#### Mausam's OpenIE
-
+#### Issues with Mausam's OpenIE
 - Fails on sentences with only one word.
     + e.g. `Harish.`
     + Java Null Pointer Exception
@@ -27,7 +34,7 @@
         * Java Null Pointer Exception
     + e.g. `Barack Obama, The U.S. President`
         * 0.88 (Barack Obama; `[is]` The President `[of]`; United States)
-- Because of these "weird errors" Unable to run it on any corpus. After running for several hours the Java process core dumps and raises a Null Pointer Exception.
+- ~~Because of these "weird errors" Unable to run it on any corpus. After running for several hours the Java process core dumps and raises a Null Pointer Exception.~~
 - I am using the compiled Java file provided in their repository.
 - I can look into these issues by digging in their Scala code (I have no experience in Scala). But that would deviate the effort to debugging their openIE.
 
