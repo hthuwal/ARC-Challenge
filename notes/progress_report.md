@@ -15,12 +15,18 @@
     + [openIE + coref on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc-coref.txt).
 
 --- 
-#### Solved Issue with Mausam's OpenIE
+#### Solving Issue with Mausam's OpenIE
 
 - I ran several sample sentence on their model to figure out a way to run it.
 - I found the following pattern.
     + The model ran into an exception only when the input sentences does not have a terminating punctuation mark i.e `. ? !`
     + So for all such sentences I explicitly placed a Full stop at the end.
+- **The Java process only uses a single core.!!!**
+- Ran on ncert dataset. After running for an hour got a new exception.
+
+```
+Exception in thread "main" java.util.regex.PatternSyntaxException: Dangling meta character '+' near index 0 
+```
 
 ---
 
