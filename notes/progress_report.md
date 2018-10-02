@@ -15,10 +15,13 @@
     + [openIE + coref on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc-coref.txt).
 
 --- 
-
 #### The owner of the repo replied
 
-- He gave a solution: Passing **a flag** `--ignore-errors` should apparently solve this issue. Will try that tomorrow.
+- He gave a solution: Passing **a flag** `--ignore-errors` should apparently solve this issue. ~~Will try that tomorrow.~~
+- Mausam's openIE on NCERT
+    + Time: 63 minutes
+- ** Output Format is different than the stanfords. Will write a script to convert it.**
+- Along with confidence, it returns a Context sometimes. Can we use it somehow?
 
 #### Solving Issue with Mausam's OpenIE
 
