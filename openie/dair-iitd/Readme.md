@@ -12,5 +12,5 @@ This creates a new preprocessed file with the name `dataset_dair.txt`
 #### Running the model
 
 ```bash
-java -jar openie-assembly.jar text_file >  output_file
+time java -jar openie-assembly.jar -b --split --ignore-errors input_file output_file
 ```
