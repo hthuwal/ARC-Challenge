@@ -22,6 +22,11 @@
     + Time: 63 minutes
 - ** Output Format is different than the stanfords. Will write a script to convert it.**
 - Along with confidence, it returns a Context sometimes. Can we use it somehow?
+- Mausam's openIE on ARC dataset
+    + Was Running on single core :/
+    + Its been 28 hours its still running.
+    + Need to find a way to parallelize this.
+- Created an Issue regarding this on their repository.
 
 #### Solving Issue with Mausam's OpenIE
 
