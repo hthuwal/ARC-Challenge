@@ -14,7 +14,11 @@
         * 3GB file. Can't add this to the Google sheets
     + [openIE + coref on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc-coref.txt).
 
---- 
+---
+
+- The owner of the repo didn't reply regarding multicore support. Another person was facing the same issue and he couldn't find any inbuilt multicore support either.
+- Writing a script to split the data into multiple files and run 32 seperate processes.
+
 #### The owner of the repo replied
 
 - He gave a solution: Passing **a flag** `--ignore-errors` should apparently solve this issue. ~~Will try that tomorrow.~~
@@ -27,6 +31,7 @@
     + Its been 28 hours its still running.
     + Need to find a way to parallelize this.
 - Created an Issue regarding this on their repository.
+- If no inbuilt support might try running it 32 times on 32 splits of the file.
 
 #### Solving Issue with Mausam's OpenIE
 
