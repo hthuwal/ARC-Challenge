@@ -18,6 +18,11 @@
 
 - The owner of the repo didn't reply regarding multicore support. Another person was facing the same issue and he couldn't find any inbuilt multicore support either.
 - Writing a script to split the data into multiple files and run 32 seperate processes.
+- Cannot Run more than 3 parallel instances as each process requires 10GB to jus be loaded. 
+- During processing the memory usage exceeds well over 70 GB for just 3 processes.
+- NCERT:
+    + Time: 30 minutes
+- 
 
 #### The owner of the repo replied
 
