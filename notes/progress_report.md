@@ -5,24 +5,42 @@
 - [ARC Dataset Description](http://data.allenai.org/arc/arc-corpus/)
 - [ARC Leader board](http://data.allenai.org/arc/)
 - [WebChild](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/webchild/)
-- Links to Open IE triplets
-    + [OpenIE on Questions](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
+- [Links to Open IE triplets](https://owncloud.iitd.ac.in/owncloud/index.php/s/M8dLaNwBWDWyrPq/download)
+    + OpenIE on Questions
         * You might find this cleaner than the sheet.
-    + [OpenIE on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert.txt)
-    + [OpenIE + coref on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert-coref.txt)
-    + [OpenIE on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc.txt).  
+    + OpenIE on NCERT
+    + OpenIE + coref on NCERT
+    + OpenIE on ARC
         * 3GB file. Can't add this to the Google sheets
-    + [openIE + coref on ARC](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-arc-coref.txt).
+    + openIE + coref on ARC
 
 ---
+### Update
 
+**Mausam's OpenIE**
+
++ The processes are still running. Its been 127 Hours.
++ 114G/126G Memory Usage.
+![](http://www.cse.iitd.ac.in/~mcs172074/mtp/usage.png)
+
+**Better string Comparison**
+
+- Have Written code to compare graph edges and nodes based on various string comparison Algorithms (Edit Distance, Lavenstine Distance, Jaccard Distance).
+- Unable to run the code as the arya server is already overwhelmed.
+- 16 GB RAM of the DAIR machine is not sufficient.
+- Debugging code, looking for memory leaks. Trying to do memory optimizations.
+- **Should I request a baadal VM?**
+
+---
+#### No MultiCore Support Mausam's openIE
+
+- Created an Issue on their repository.
 - The owner of the repo didn't reply regarding multicore support. Another person was facing the same issue and he couldn't find any inbuilt multicore support either.
 - Writing a script to split the data into multiple files and run 32 seperate processes.
 - Cannot Run more than 3 parallel instances as each process requires 10GB to jus be loaded. 
 - During processing the memory usage exceeds well over 70 GB for just 3 processes.
 - NCERT:
     + Time: 30 minutes
-- 
 
 #### The owner of the repo replied
 
