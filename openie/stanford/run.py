@@ -22,8 +22,8 @@ print(stem)
 if not os.path.exists(CORPUS_GRAPH_DUMP):
     print("Creating graph from corpus triples")
     corpus_graph = Graph(sys.argv[1], stem=stem, disable_progress_bar=False)
-    print("Dumping graph object for future use")
-    pickle.dump(corpus_graph, open(CORPUS_GRAPH_DUMP, "wb"))
+    # print("Dumping graph object for future use")
+    # pickle.dump(corpus_graph, open(CORPUS_GRAPH_DUMP, "wb"), protocol=pickle.HIGHEST_PROTOCOL)
 else:
     print("Corpus graph already exists. Loading it....")
     corpus_graph = pickle.load(open(CORPUS_GRAPH_DUMP, "rb"))
@@ -31,22 +31,27 @@ else:
 print(corpus_graph)
 qa_graphs = pickle.load(open(sys.argv[3], "rb"))
 out = sys.argv[4]
+
+
 scores = {}
 
 print("Predicting and Calculating scores")
-for question_id in tqdm(qa_graphs):
+for question_id in tqdm(qa_graphs, ascii=True):
     scores[question_id] = {}
 
     scores[question_id]['correct_answer'] = qa_graphs[question_id]['correct_answer']
     scores[question_id]["options"] = {}
     for key in qa_graphs[question_id]['option_graphs']:
         scores[question_id]["options"][key] = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
+        # arc = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
+        # # ncert = cg_ncert.compare_graph(qa_graphs[question_id]['option_graphs'][key])
+        # scores[question_id]["options"][key] = (arc, ncert)
 
     # print(scores[question_id])
 
 points = 0
 with open(out, "w") as f:
-    for question_id in tqdm(scores):
+    for question_id in tqdm(scores, ascii=True):
         point = 0
         correct_answer = scores[question_id]['correct_answer']
         option_scores = list(scores[question_id]['options'].items())

@@ -10,8 +10,9 @@ with open("stopwords_en.txt", "r") as f:
 
 def process_entity_relations(entity_relations_str, verbose=True):
     # format is ollie.
+    entity_relations_str = list(entity_relations_str)
     entity_relations = list()
-    for s in tqdm(entity_relations_str):
+    for s in tqdm(entity_relations_str, ascii=True, disable=False):
         temp = s[s.find("(") + 1:s.find(")")].split(';')
         entity_relations.append(temp)
     return entity_relations
@@ -38,14 +39,14 @@ class Graph(object):
         print("Converting into list of triplets")
         relations = process_entity_relations(relations)
         print("Stripping")
-        relations = [strip(entity_relations, stem) for entity_relations in tqdm(relations)]
+        relations = [strip(entity_relations, stem) for entity_relations in tqdm(relations, ascii=True)]
         return relations
 
     def build(self, stem=False, disable_progress_bar=True):
         print("Reading and cleaning relations")
         relations = self.read(stem)
         print("Building Graph")
-        for entity_relation in tqdm(relations, disable=disable_progress_bar):
+        for entity_relation in tqdm(relations, disable=disable_progress_bar, ascii=True):
             if(len(entity_relation) == 3):
                 subj = entity_relation[0]
                 pred = entity_relation[1]
