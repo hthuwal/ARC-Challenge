@@ -72,8 +72,9 @@ with open(out, "w") as f:
             if correct_answer in possible_answers:
                 point = (1 / len(possible_answers))
 
-            option_scores.sort(key=itemgetter(1, 0))
+            option_scores.sort(key=itemgetter(1, 0), reverse=True)
             ranked_answers = [each[0] for each in option_scores]
+            
             for i in range(0, 3):
                 if correct_answer in ranked_answers[0:i + 1]:
                     p_at[i + 1] += 1
@@ -87,4 +88,5 @@ for key in p_at:
 print("Number of questions: ", len(scores))
 print("Score: ", points / len(scores))
 print("Precisoin at: ")
-print(p_at)
+for key in p_at:
+    print("\t%d: " % key, p_at[key])
