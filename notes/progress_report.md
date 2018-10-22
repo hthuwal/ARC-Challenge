@@ -3,7 +3,7 @@
 - [MTP_OpenIE](https://docs.google.com/spreadsheets/d/1BgyFyzLrojTdp14Msg0WW2u-FU9rdBp6-hvgmqye8Ac/edit#gid=0)
 - [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/)
 - [ARC Dataset Description](http://data.allenai.org/arc/arc-corpus/)
-- [ARC Leader board](http://data.allenai.org/arc/)
+- [ARC Leader board](https://leaderboard.allenai.org/arc)
 - [WebChild](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/webchild/)
 - [Links to Open IE triplets](https://owncloud.iitd.ac.in/owncloud/index.php/s/M8dLaNwBWDWyrPq/download)
     + OpenIE on Questions
@@ -23,6 +23,8 @@
     + In case of same score. Sort Lexicographically.
 
 **Results**
+
+---
 
 #### Improving edge label comparison 
 
@@ -58,11 +60,16 @@ Scoring two edges with different labels between same nodes. All scores are on th
 - E + J1
     + Without Coreference: 28.252
 
+---
+
 #### Trying python multicore
 
 Converted the preprocessing code to multi thread to reduce time.
-    + Without Multi-Processing: 9 minutes
-    + With Multi-Processing: 40 Minutes !! (Increased I/O time)
+
++ Without Multi-Processing: 9 minutes
++ With Multi-Processing: 40 Minutes !! (Increased I/O time)
+
+---
 
 ### 10th October 
 
