@@ -104,8 +104,9 @@ class Graph(object):
         e_b_list = [each for each in e_b_list if not each.startswith('rev')]
         for ea in e_a_list:
             for eb in e_b_list:
-                score += max(0, (1 - nltk.edit_distance(ea, eb) / max(len(ea), len(eb))))
-                # score += max(0, (1 - nltk.jaccard_distance(ea, eb)))
+                # score += max(0, (1 - nltk.edit_distance(ea, eb) / max(len(ea), len(eb))))
+                score += max(0, (1 - nltk.jaccard_distance(set(ea), set(eb))))  # jaccard_distance based on each character as element
+                score += max(0, (1 - nltk.jaccard_distance(set(ea.split()), set(eb.split()))))  # jaccard_distance based on each character as element
                 # score += self.compare_strings(ea, eb)
         return score / (1 + len(e_a_list) * len(e_b_list))
 
