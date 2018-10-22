@@ -104,7 +104,8 @@ class Graph(object):
         e_b_list = [each for each in e_b_list if not each.startswith('rev')]
         for ea in e_a_list:
             for eb in e_b_list:
-                score += self.compare_strings(ea, eb)
+                score += nltk.edit_distance(ea, eb)
+                # score += self.compare_strings(ea, eb)
         return score / (1 + len(e_a_list) * len(e_b_list))
 
     def compare_edges(self, e_a, e_b):
