@@ -15,6 +15,17 @@
     + openIE + coref on ARC
 
 ---
+
+#### Improving edge comparison
+
+- Earlier:  
+
+#### Trying python multicore
+
+Converted the preprocessing code to multi thread to reduce time.
+    + Without Multi-Processing: 9 minutes
+    + With Multi-Processing: 40 Minutes !! (Increased I/O time)
+
 ### Update
 
 **Mausam's OpenIE**
