@@ -15,10 +15,48 @@
     + openIE + coref on ARC
 
 ---
+#### Calculating Precison @ 1,2,3
 
-#### Improving edge comparison
+- Precision @ 1: How often is the highest ranked option is correct.
+- Precision @ 2: How often is any of the top two ranked option is correct.
+- Ranking is defined by the score obtained by the graph comparison algorithm
+    + In case of same score. Sort Lexicographically.
 
-- Earlier:  
+**Results**
+
+#### Improving edge label comparison 
+
+Scoring two edges with different labels between same nodes. All scores are on the ARC dataset using the stannford openIE.
+
+- Simple: Fraction of words that match
+    + Without Coreference: 27.41
+    + With Coreference: 
+
+- ~~Edit Distance is the score~~ 
+    + Without Coreference: 26.75
+    + With Coreference: 
+    + Mistake: Wrong metric. Large distance should mean less score
+
+- 1 - Normalized edit distance (E)
+    + Without Coreference: 28.124288
+    + With Coreference: 
+
+- Jaccard Similarity1 (J1)
+    + Each edge label converted to set of characters
+    + Without Coreference: 28.38026
+    + With Coreference: 
+
+- Jaccard Similarity2 (J2)
+    + Each edge label converted to set of words
+    + Without Coreference: 27.68344
+    + With Coreference: 
+
+- J1 + J2
+    + Without Coreference: 27.868
+    + This I was sure would increase the score but it didn't.
+    
+- E + J1
+    + Without Coreference: 28.252
 
 #### Trying python multicore
 
@@ -26,7 +64,7 @@ Converted the preprocessing code to multi thread to reduce time.
     + Without Multi-Processing: 9 minutes
     + With Multi-Processing: 40 Minutes !! (Increased I/O time)
 
-### Update
+### 10th October 
 
 **Mausam's OpenIE**
 
