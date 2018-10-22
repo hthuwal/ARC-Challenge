@@ -1,9 +1,12 @@
+from collections import defaultdict
 from graph import Graph
+from operator import itemgetter
+from tqdm import tqdm
+
 import dill as pickle
-import sys
 import json
 import os
-from tqdm import tqdm
+import sys
 
 CORPUS_GRAPH_DUMP, _ = os.path.splitext(sys.argv[1])
 CORPUS_GRAPH_DUMP += ".graph"
@@ -50,6 +53,11 @@ for question_id in tqdm(qa_graphs, ascii=True):
     # print(scores[question_id])
 
 points = 0
+p_at = defaultdict(int)
+p_at[1] = 0
+p_at[2] = 0
+p_at[3] = 0
+
 with open(out, "w") as f:
     for question_id in tqdm(scores, ascii=True):
         point = 0
@@ -64,7 +72,19 @@ with open(out, "w") as f:
             if correct_answer in possible_answers:
                 point = (1 / len(possible_answers))
 
+            option_scores.sort(key=itemgetter(1, 0))
+            ranked_answers = [each[0] for each in option_scores]
+            for i in range(0, 3):
+                if correct_answer in ranked_answers[0:i + 1]:
+                    p_at[i + 1] += 1
+
         points += point
         f.write("%s\t%s\t%s\t%f\n" % (questions[question_id], correct_answer, str(possible_answers), point))
 
-print(points / len(scores))
+for key in p_at:
+    p_at[key] = p_at[key] / len(scores)
+
+print("Number of questions: ", len(scores))
+print("Score: ", points / len(scores))
+print("Precisoin at: ")
+print(p_at)
