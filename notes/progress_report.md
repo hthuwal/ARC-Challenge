@@ -28,41 +28,44 @@
 
 #### Improving edge label comparison 
 
-Scoring two edges with different labels between same nodes. All scores are on the ARC dataset using the stannford openIE.
+Scoring two edges with different labels between same nodes. All scores are on the ARC dataset using the Stanford openIE.
 
 - Simple: Fraction of words that match
-    + Without Coreference: 27.41
-    + With Coreference: 
+    + Without Co-reference Resolution: 27.41
+    + With Co-reference Resolution: 
 
 - ~~Edit Distance is the score~~ 
-    + Without Coreference: 26.75
-    + With Coreference: 
+    + Without Co-reference Resolution: 26.75
     + Mistake: Wrong metric. Large distance should mean less score
 
 - 1 - Normalized edit distance (E)
-    + Without Coreference: 28.124288
-    + With Coreference: 
+    + Without Co-reference Resolution: 28.124288
+    + With Co-reference Resolution: 28.2949
 
-- Jaccard Similarity1 (J1)
+- Jaccard Similarity 1 (J1)
     + Each edge label converted to set of characters
-    + Without Coreference: 28.38026
-    + With Coreference: 
+    + Without Co-reference Resolution: 28.38026
+    + With Co-reference Resolution: 27.9892
 
-- Jaccard Similarity2 (J2)
+- Jaccard Similarity 2 (J2)
     + Each edge label converted to set of words
-    + Without Coreference: 27.68344
-    + With Coreference: 
+    + Without Co-reference Resolution: 27.68344
+    + With Co-reference Resolution: 27.9109
 
 - J1 + J2
-    + Without Coreference: 27.868
+    + Without Co-reference Resolution: 27.868
+    + With Co-reference Resolution: 27.762
     + This I was sure would increase the score but it didn't.
     
 - E + J1
-    + Without Coreference: 28.252
+    + Without Co-reference Resolution: 28.252
+    + With Co-reference Resolution: 27.569
 
----
+Doing Co-reference Resolution seems to have a negative impact on the total score except for the naive edge comparison and Edit distance approach.
 
-#### Trying python multicore
+~~TODO: Check if same behaviour is observed in Precision @ 1~~
+
+#### Trying python multi core
 
 Converted the preprocessing code to multi thread to reduce time.
 
@@ -81,7 +84,7 @@ Converted the preprocessing code to multi thread to reduce time.
 
 **Better string Comparison**
 
-- Have Written code to compare graph edges and nodes based on various string comparison Algorithms (Edit Distance, Lavenstine Distance, Jaccard Distance).
+- Have Written code to compare graph edges and nodes based on various string comparison Algorithms (Edit Distance, Jaccard Distance).
 - Unable to run the code as the arya server is already overwhelmed.
 - 16 GB RAM of the DAIR machine is not sufficient.
 - Debugging code, looking for memory leaks. Trying to do memory optimizations.
