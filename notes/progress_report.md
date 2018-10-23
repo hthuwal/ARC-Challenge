@@ -15,7 +15,35 @@
     + openIE + coref on ARC
 
 ---
-#### Calculating Precison @ 1,2,3
+
+### 23rd October
+
+Next immediate step is to download and study the ConceptNet knowledge base and use it in place of and alongside the knowledge graph created over ARC.
+
+---
+
+#### New Additions to the Leader Board
+
+- [Improving Question Answering by Commonsense-Based Pre-Training](https://arxiv.org/pdf/1809.03568.pdf)
+    - Score: 33.39
+    - Have Used **ConceptNet** alongside TriAN model
+    - **ConceptNet**
+        + A semantic network or multilingual knowledge base
+        + Knowledge is the accumulation of knowledge from
+            * Crowd sourced resources: Wiktionary and openMind
+            * Expert Created resources: WordNet and JDict
+        + Available in both neural (embeddings) and traditional (node, edge) formats.
+    - They've shown that the embeddings learned over ConceptNet can somewhat remove the limitations of the SOTA Neural approaches which lack commonsense knowledge.
+
+- [Sanity Check](https://arxiv.org/pdf/1807.01836.pdf)
+    + Score: 26.56
+    + Claim: True gain of Neural Network approaches is inflated with respect to the long training time because they are not compared to proper baseline.
+    + They are that proper baseline.
+    + Better Scores on other datasets. but no significant effect in case of ARC.
+
+---
+
+#### Calculating Precision @ 1,2,3
 
 - Precision @ 1: How often is the highest ranked option is correct.
 - Precision @ 2: How often is any of the top two ranked option is correct.
@@ -24,7 +52,33 @@
 
 **Results**
 
----
+- **Without Co-reference Resolution**
+
+    Model's are Running will update result by tomorrow.
+
+    | Method | Score | Precision @ 1 |  Precision @ 2 |  Precision @ 3 |
+    |--------|:-----:|:-------------:|:--------------:|:--------------:|
+    |ARC + Naive| 27.41||||
+    |ARC + J2| 27.6834|||
+    |ARC + J1 + J2| 27.868|||
+    |ARC + E| 28.124|||
+    |ARC + E + J1| 28.252|||
+    |ARC + J1| 28.380|||
+
+- **With Co-reference Resolution**
+
+    | Method | Score | Precision @ 1 |  Precision @ 2 |  Precision @ 3 |
+    |--------|:-----:|:-------------:|:--------------:|:--------------:|
+    |ARC + coref + E + J1| 27.569 | 0.2677 | 0.5085 | 0.7662 |
+    |ARC + coref + J1 + J2| 27.7617 | 0.2687 | 0.5059 | 0.7687 |
+    |ARC + coref + Naive| 27.8256 |0.2671|0.5043|0.7654|
+    |ARC + coref + J2| 27.9109 | 0.2688 | 0.5051 | 0.7635 |
+    |ARC + coref + J1| 27.9892 | 0.2705 | 0.5051 | 0.7679 |
+    |ARC + coref + E| 28.2949 | 0.2739 | 0.5111 | 0.7679 |
+
+    -  As expected the increase in accuracy is due to the increase in Precision @ 1.
+
+--- 
 
 #### Improving edge label comparison 
 
@@ -32,7 +86,7 @@ Scoring two edges with different labels between same nodes. All scores are on th
 
 - Simple: Fraction of words that match
     + Without Co-reference Resolution: 27.41
-    + With Co-reference Resolution: 
+    + With Co-reference Resolution: 27.8256
 
 - ~~Edit Distance is the score~~ 
     + Without Co-reference Resolution: 26.75

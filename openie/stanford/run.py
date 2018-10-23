@@ -31,7 +31,7 @@ else:
     print("Corpus graph already exists. Loading it....")
     corpus_graph = pickle.load(open(CORPUS_GRAPH_DUMP, "rb"))
 
-print(corpus_graph)
+# print(corpus_graph)
 qa_graphs = pickle.load(open(sys.argv[3], "rb"))
 out = sys.argv[4]
 
