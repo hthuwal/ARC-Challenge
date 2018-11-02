@@ -58,12 +58,12 @@ Next immediate step is to download and study the ConceptNet knowledge base and u
 
     | Method | Score | Precision @ 1 |  Precision @ 2 |  Precision @ 3 |
     |--------|:-----:|:-------------:|:--------------:|:--------------:|
-    |ARC + Naive| 27.41||||
-    |ARC + J2| 27.6834|||
+    |ARC + Naive| 27.41|0.2628|0.50256|0.7645|
+    |ARC + J2| 27.6834|0.2662|0.5060|0.7636|
     |ARC + J1 + J2| 27.868|||
-    |ARC + E| 28.124|||
+    |ARC + E| 28.124|0.2730|0.5179|0.7670|
     |ARC + E + J1| 28.252|||
-    |ARC + J1| 28.380|||
+    |ARC + J1| 28.380|0.2747|0.5119|0.7696|
 
 - **With Co-reference Resolution**
 
