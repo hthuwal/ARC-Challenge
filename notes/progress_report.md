@@ -15,6 +15,43 @@
     + openIE + coref on ARC
 
 ---
+### 5th November 
+
+#### Problem of compute resources
+
+##### Problems with HPC
+
+- HPC cpu/gpu is a timesharing system.
+- Submitted jobs are allocated compute resources on a time sharing bases. This increases the running time of the processes.
+    + Time Taken by the code to read the stanford openie triplets, create graph and answer question
+        * AryaBhatta Server: ~20/25 Minutes
+        * HPC (Running on standard Queue)
+            - 1cpu node with 4 cores
+            - Time for which my process ran: 50 Minutes
+            - Real time: ~3 hours.
+- Tried Running the Mausam's openIE on HPC as a job. 
+- HPC kills the process after exceeds the wall time. Maximum wall time is of 7 days. So no point in running it.
+##### Current state of Aryabhatta server
+
+![](http://www.cse.iitd.ac.in/~mcs172074/mtp/arya_usage.png)
+
+- Completely Overwhelmed.
+- Can't use it at all.
+- 128 Gigs of RAM and 128 Gigs of swap storage are completely filled.
+- I am using only ~18 Gigs of RAM.
+- There seems to be a lot of process by a user named **exxonmobi**
+
+---
+
+#### HPC setup
+
+- Familiarized myself with the **qsub** based job submission design of the HPC.
+- Existing code base was in python3 and so were the model and graph dumps.
+- The python3 modules provided by the HPC have broken sqlite installation. This cuses all the `nltk` imports to throw an error.
+- Tried porting code to python2 but would have to run all the stanford openie stuff again as the graph dumps by `dill` of python3 are not backward compatible.
+- Threw away all their modules. Setup anaconda python.
+
+---
 
 ### 23rd October
 
