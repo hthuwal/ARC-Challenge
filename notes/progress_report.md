@@ -17,6 +17,13 @@
 ---
 ### 5th November 
 
+#### Classification of Questions
+
+- The folks in [this paper](https://arxiv.org/pdf/1806.00358.pdf) say that they will release the annotations/classifications of the questions.
+- Haven't been able to find a link to the resource yet.
+- Have Mailed the authors of the paper regarding the same.
+- Meanwhile trying to annotate the questions myself by manually searching the corpus corresponding to each question.
+
 #### [New SOTA Paper: Reading Strategies](https://arxiv.org/pdf/1810.13441v1.pdf)
 
 - 42.32%.
@@ -28,14 +35,6 @@
     + Self-Assessment:
         * Generate Questions and Answers and practice on them.
 - [Tranformer Network](https://arxiv.org/abs/1706.03762)
-
-#### Scatter hpc jobs.
-
-- Running several forks of the jobs on multiple compute nodes speeds up the execution.
-
-    `qsub -P cse -lselect=4:ncpus=1 -lplace=scatter job.sh`
-
-- But the processes were being killed after executing for few minutes.
 
 #### Problem of compute resources
 
@@ -51,6 +50,8 @@
             - Real time: ~3 hours.
 - Tried Running the Mausam's openIE on HPC as a job. 
 - HPC kills the process after exceeds the wall time. Maximum wall time is of 7 days. So no point in running it.
+- Processes get killed randomly. (Probably if load is high).
+
 ##### Current state of Aryabhatta server
 
 ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/arya_usage.png)
@@ -82,7 +83,7 @@ Next immediate step is to download and study the ConceptNet knowledge base and u
 - [Improving Question Answering by Commonsense-Based Pre-Training](https://arxiv.org/pdf/1809.03568.pdf)
     - Score: 33.39
     - Have Used **ConceptNet** alongside TriAN model
-    - **ConceptNet**
+    - [**ConceptNet**](http://conceptnet.io/)
         + A semantic network or multilingual knowledge base
         + Knowledge is the accumulation of knowledge from
             * Crowd sourced resources: Wiktionary and openMind
