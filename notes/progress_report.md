@@ -17,6 +17,26 @@
 ---
 ### 5th November 
 
+#### [New SOTA Paper: Reading Strategies](https://arxiv.org/pdf/1810.13441v1.pdf)
+
+- 42.32%.
+- Strategies + [OFT](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf) (Fine Tuned Transformer Network)
+- Stategies
+    + Back and Forth Reading: Train two OFT networks one reading forward and backward.
+    + Highlight:
+        * [Special Embeddings for Noun and adjectives.](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf)
+    + Self-Assessment:
+        * Generate Questions and Answers and practice on them.
+- [Tranformer Network](https://arxiv.org/abs/1706.03762)
+
+#### Scatter hpc jobs.
+
+- Running several forks of the jobs on multiple compute nodes speeds up the execution.
+
+    `qsub -P cse -lselect=4:ncpus=1 -lplace=scatter job.sh`
+
+- But the processes were being killed after executing for few minutes.
+
 #### Problem of compute resources
 
 ##### Problems with HPC
@@ -40,8 +60,6 @@
 - 128 Gigs of RAM and 128 Gigs of swap storage are completely filled.
 - I am using only ~18 Gigs of RAM.
 - There seems to be a lot of process by a user named **exxonmobi**
-
----
 
 #### HPC setup
 
