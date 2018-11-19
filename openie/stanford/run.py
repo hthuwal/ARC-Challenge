@@ -6,6 +6,7 @@ from tqdm import tqdm
 import json
 import os
 import sys
+import time
 import dill as pickle
 CORPUS_GRAPH_DUMP, _ = os.path.splitext(sys.argv[1])
 CORPUS_GRAPH_DUMP += ".graph"
@@ -27,11 +28,16 @@ if not os.path.exists(CORPUS_GRAPH_DUMP):
     print("Creating graph from corpus triples")
     corpus_graph = Graph(sys.argv[1], stem=stem, disable=False)
     print("Dumping graph object for future use")
+    st = time.time()
     corpus_graph.save(CORPUS_GRAPH_DUMP)
+    et = time.time()
+    print("Graph Dumping Complete. Took %f minutes" % ((et - st) / 60))
 else:
     print("Corpus graph already exists. Loading it....")
+    st = time.time()
     corpus_graph.load(CORPUS_GRAPH_DUMP)
-
+    et = time.time()
+    print("Graph Loading Complete. Took %f minutes" % ((et - st) / 60))
 # print(corpus_graph)
 qa_graphs = pickle.load(open(sys.argv[3], "rb"))
 out = sys.argv[4]
