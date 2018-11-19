@@ -3,7 +3,7 @@ import utils
 from graph import Graph
 from tqdm import tqdm
 import sys
-
+import dill as pickle
 q_graphs = {}
 out = sys.argv[1]
 coref = sys.argv[2]
@@ -43,5 +43,4 @@ with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", 
         q_graphs[line['id']] = {'correct_answer': correct_answer, 'option_graphs': option_graphs}
 
 print(len(q_graphs))
-q_graphs.save(out)
-# pickle.dump(q_graphs, open(out, "wb"))
+pickle.dump(q_graphs, open(out, "wb"))
