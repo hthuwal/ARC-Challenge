@@ -152,7 +152,8 @@ def stanford_ie_v2(string, coref=False):
                     obj = triplet['object']
                     f.write("1.000: (%s; %s; %s)\n" % (subj, pred, obj))
     # assert not java_process.returncode, 'ERROR: Call to stanford_ie exited with a non-zero code status.'
-    return Graph(out)
+    return Graph(file=out, disable=True)
+
 
 if __name__ == '__main__':
     sNLP = StanfordNLP()
