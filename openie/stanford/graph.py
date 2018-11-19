@@ -8,11 +8,11 @@ with open("stopwords_en.txt", "r") as f:
     stopwords = [each.strip() for each in f.readlines()]
 
 
-def process_entity_relations(entity_relations_str, verbose=True):
+def process_entity_relations(entity_relations_str, disable=False):
     # format is ollie.
     entity_relations_str = list(entity_relations_str)
     entity_relations = list()
-    for s in tqdm(entity_relations_str, ascii=True, disable=False):
+    for s in tqdm(entity_relations_str, ascii=True, disable=disable):
         temp = s[s.find("(") + 1:s.find(")")].split(';')
         entity_relations.append(temp)
     return entity_relations
@@ -29,12 +29,12 @@ def strip(list_of_strings, stem=False):
 
 
 class Graph(object):
-    def __init__(self, file, stem=False, disable_progress_bar=True):
+    def __init__(self, file=None, stem=False, disable=False):
         self.adj = defaultdict(lambda: defaultdict(set))
         self.source_file = file
-        self.build(stem=stem, disable_progress_bar=disable_progress_bar)
+        if file is not None:
+            self.build(stem=stem, disable=disable)
 
-    def read(self, stem=False):
     def save(self, file):
         json.dump(self.adj, open(file, "w"))
 
@@ -42,18 +42,23 @@ class Graph(object):
         self.source_file = file
         self.adj = json.load(open(file, "r"))
 
+    def read(self, stem=False, disable=False):
         relations = open(self.source_file, "r").readlines()
-        print("Converting into list of triplets")
-        relations = process_entity_relations(relations)
-        print("Stripping")
-        relations = [strip(entity_relations, stem) for entity_relations in tqdm(relations, ascii=True)]
+        if not disable:
+            print("Converting into list of triplets")
+        relations = process_entity_relations(relations, disable=disable)
+        if not disable:
+            print("Stripping")
+        relations = [strip(entity_relations, stem) for entity_relations in tqdm(relations, ascii=True, disable=disable)]
         return relations
 
-    def build(self, stem=False, disable_progress_bar=True):
-        print("Reading and cleaning relations")
-        relations = self.read(stem)
-        print("Building Graph")
-        for entity_relation in tqdm(relations, disable=disable_progress_bar, ascii=True):
+    def build(self, stem=False, disable=True):
+        if not disable:
+            print("Reading and cleaning relations")
+        relations = self.read(stem=stem, disable=disable)
+        if not disable:
+            print("Building Graph")
+        for entity_relation in tqdm(relations, disable=disable, ascii=True):
             if(len(entity_relation) == 3):
                 subj = entity_relation[0]
                 pred = entity_relation[1]
