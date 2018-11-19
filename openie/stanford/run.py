@@ -3,11 +3,10 @@ from graph import Graph
 from operator import itemgetter
 from tqdm import tqdm
 
-import dill as pickle
 import json
 import os
 import sys
-
+import dill as pickle
 CORPUS_GRAPH_DUMP, _ = os.path.splitext(sys.argv[1])
 CORPUS_GRAPH_DUMP += ".graph"
 
@@ -22,14 +21,16 @@ stem = sys.argv[2]
 stem = True if stem == "True" else False
 print(stem)
 
+corpus_graph = Graph()
+
 if not os.path.exists(CORPUS_GRAPH_DUMP):
     print("Creating graph from corpus triples")
-    corpus_graph = Graph(sys.argv[1], stem=stem, disable_progress_bar=False)
-    # print("Dumping graph object for future use")
-    # pickle.dump(corpus_graph, open(CORPUS_GRAPH_DUMP, "wb"), protocol=pickle.HIGHEST_PROTOCOL)
+    corpus_graph = Graph(sys.argv[1], stem=stem, disable=False)
+    print("Dumping graph object for future use")
+    corpus_graph.save(CORPUS_GRAPH_DUMP)
 else:
     print("Corpus graph already exists. Loading it....")
-    corpus_graph = pickle.load(open(CORPUS_GRAPH_DUMP, "rb"))
+    corpus_graph.load(CORPUS_GRAPH_DUMP)
 
 # print(corpus_graph)
 qa_graphs = pickle.load(open(sys.argv[3], "rb"))
@@ -74,13 +75,13 @@ with open(out, "w") as f:
 
             option_scores.sort(key=itemgetter(1, 0), reverse=True)
             ranked_answers = [each[0] for each in option_scores]
-            
+
             for i in range(0, 3):
                 if correct_answer in ranked_answers[0:i + 1]:
                     p_at[i + 1] += 1
 
         points += point
-        f.write("%s\t%s\t%s\t%f\n" % (questions[question_id], correct_answer, str(possible_answers), point))
+        f.write("%s\t%s\t%s\t%s\t%f\n" % (question_id, questions[question_id], correct_answer, str(possible_answers), point))
 
 for key in p_at:
     p_at[key] = p_at[key] / len(scores)
