@@ -68,13 +68,14 @@ class Graph(object):
         del relations
 
         if not disable:
-            print("Converting sets of edges to lists\n")
+            print("Converting sets of edges to lists")
 
         for subj in tqdm(self.adj, disable=disable, ascii=True):
             for obj in self.adj[subj]:
                 self.adj[subj][obj] = list(self.adj[subj][obj])
 
-        print("Graph Building Completed")
+        if not disable:
+            print("Graph Building Completed")
 
     def dfs(self, start, visited):
         st = []

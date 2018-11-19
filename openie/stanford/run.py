@@ -97,3 +97,4 @@ print("Score: ", points / len(scores))
 print("Precisoin at: ")
 for key in p_at:
     print("\t%d: " % key, p_at[key])
+print("Exiting...")
