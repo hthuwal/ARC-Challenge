@@ -122,8 +122,6 @@ class Graph(object):
 
     def compare_edge_labels(self, e_a_list, e_b_list):
         score = 0
-        e_a_list = [each for each in e_a_list if not each.startswith('rev')]
-        e_b_list = [each for each in e_b_list if not each.startswith('rev')]
         for ea in e_a_list:
             for eb in e_b_list:
                 # score += max(0, (1 - nltk.edit_distance(ea, eb) / max(len(ea), len(eb))))
@@ -134,22 +132,29 @@ class Graph(object):
 
     def compare_edges(self, e_a, e_b):
         score = 0
+        nbrs = {}
         for nbr in e_a:
             if nbr in e_b:
-                score += self.compare_edge_labels(list(e_a[nbr]), list(e_b[nbr]))
-        return score / (1 + len(e_a))
+                e_a_list = [each for each in e_a[nbr] if not each.startswith('rev')]
+                e_b_list = [each for each in e_b[nbr] if not each.startswith('rev')]
+                nbrs[nbr] = {"hypo": e_a_list, "corpus": e_b_list}
+                score += self.compare_edge_labels(e_a_list, e_b_list)
+        return score / (1 + len(e_a)), nbrs
 
     def compare_graph(self, g):
         score = {}
         score['nodes'] = 0
         score['edges'] = 0
 
+        match = {}
         for node in g.adj:
             if node in self.adj:
                 score['nodes'] += 1
-                score['edges'] += self.compare_edges(g.adj[node], self.adj[node])
+                a, b = self.compare_edges(g.adj[node], self.adj[node])
+                score['edges'] += a
+                match[node] = b
 
-        return (score['nodes'] / (1 + len(g.adj))) + score['edges']
+        return (score['nodes'] / (1 + len(g.adj))) + score['edges'], match
         # return score
 
     def __repr__(self):
