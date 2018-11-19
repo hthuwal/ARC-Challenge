@@ -2,7 +2,7 @@ import sys
 from collections import defaultdict, Counter
 from tqdm import tqdm
 import nltk
-
+import json
 
 with open("stopwords_en.txt", "r") as f:
     stopwords = [each.strip() for each in f.readlines()]
@@ -35,6 +35,13 @@ class Graph(object):
         self.build(stem=stem, disable_progress_bar=disable_progress_bar)
 
     def read(self, stem=False):
+    def save(self, file):
+        json.dump(self.adj, open(file, "w"))
+
+    def load(self, file):
+        self.source_file = file
+        self.adj = json.load(open(file, "r"))
+
         relations = open(self.source_file, "r").readlines()
         print("Converting into list of triplets")
         relations = process_entity_relations(relations)
@@ -54,6 +61,15 @@ class Graph(object):
                 self.adj[subj][obj].add(pred)
                 self.adj[obj][subj].add("rev_" + pred)
         del relations
+
+        if not disable:
+            print("Converting sets of edges to lists\n")
+
+        for subj in tqdm(self.adj, disable=disable, ascii=True):
+            for obj in self.adj[subj]:
+                self.adj[subj][obj] = list(self.adj[subj][obj])
+
+        print("Graph Building Completed")
 
     def dfs(self, start, visited):
         st = []
