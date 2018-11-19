@@ -41,7 +41,7 @@ else:
 # print(corpus_graph)
 qa_graphs = pickle.load(open(sys.argv[3], "rb"))
 out = sys.argv[4]
-
+dumps = sys.argv[5]
 
 scores = {}
 
@@ -51,11 +51,15 @@ for question_id in tqdm(qa_graphs, ascii=True):
 
     scores[question_id]['correct_answer'] = qa_graphs[question_id]['correct_answer']
     scores[question_id]["options"] = {}
+    matches = {}
     for key in qa_graphs[question_id]['option_graphs']:
-        scores[question_id]["options"][key] = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
-        # arc = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
-        # # ncert = cg_ncert.compare_graph(qa_graphs[question_id]['option_graphs'][key])
-        # scores[question_id]["options"][key] = (arc, ncert)
+        scores[question_id]["options"][key], match = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
+        matches[key] = match
+    matches["question"] = questions[question_id]
+    json.dump(matches, open(os.path.join(dumps, question_id + ".json"), "w"), indent=4)
+    # arc = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
+    # # ncert = cg_ncert.compare_graph(qa_graphs[question_id]['option_graphs'][key])
+    # scores[question_id]["options"][key] = (arc, ncert)
 
     # print(scores[question_id])
 
