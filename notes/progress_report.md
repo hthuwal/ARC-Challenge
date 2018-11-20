@@ -15,6 +15,79 @@
     + openIE + coref on ARC
 
 ---
+### 20th November
+
+#### Preliminary Results
+
+- [Link to the sheet](https://drive.google.com/open?id=1SFGfdhZeLVZi3Ig0KNSiaEZJFSpyz4lwKqBzUCizEkE)
+- Corpus Graph does contain "important" nodes from the hypothesis graph.
+    + *important* ---> nbr_in_corpus
+    + *important* --> nbr_in_hypothesis
+    + Although the node was present in the corpus graph but the score corresponding to it was zero. Because no neighbors matched.
+- Edges corresponding to some hypothesis are more prevalent in corpus and hence get better score. 
+- These highly occurring edges overshadow the "other (probably correct) edges".**There is no inference is current scoring method.**
+- In some cases no common edge (u, v) is found as no node is common amongst the hypothesis and corpus graph.
+- Wasn't able to complete the manual analysis because of extensive TA work (PMT) and health issues.
+
+**The scoring method should somehow find a inference path (multihop) and not just match how many edges are common or not.**
+
+#### Manual Analysis
+
+- I dumped the the node pair (u, v) that matched for each hypothesis of Question.
+- The dumps can be found [here.](https://drive.google.com/open?id=1LHCM1eSYMOsETkSnp8bIGf5tz-fN7bi9)
+- Dump Format
+    + File Name: Question ID
+    + Inside its a JSON encoded graph matchings.
+    ```bash
+    {
+        // matchings for option A that matched with some edge in corpus
+        "A": { 
+            "start_node1":{
+                "end_node1":{
+                    "hypo": ["list of edges from start_node1 to end_node1 in hypothesis graph"],
+                    "corpus": ["list of edges from start_node1 to end_node1 in corpus graph"]
+                },
+                "end_node2":{
+                    "hypo": ["list of edges from start_node1 to end_node2 in hypothesis graph"],
+                    "corpus": ["list of edges from start_node1 to end_node2 in corpus graph"]
+                }
+                .
+                .
+            },
+            "start_node2":{
+                .
+                .
+                .
+            },
+            .
+            .
+        }
+        "B":{...}
+        "C":{...}
+        "D":{...}
+        "Question": Actual Question
+    }
+    ```
+- The folks from [this paper](https://arxiv.org/pdf/1806.00358.pdf) replied with the annotations. 
+    + Even after using 10 different annotators and proposing an annotation software they only provide annotations on 196/1119 Questions and that too from the training set.
+- Manual labeling
+    + Try to classify the **Knowledge type** and **Reasoning type** for each question as mentioned in the aforementioned and [original paper](https://arxiv.org/pdf/1803.05457.pdf).
+    + Try to analyze whether the question was answerable or not using the matchings that we are getting.
+
+
+#### Speeding Up code of Build Graph and Analysis Cycle
+
+- It used to take 30 minutes for each cycle.
+- Was trying to use pickle/dill package to dump the corpus graph.
+- But was facing memory errors.
+- Tried Encoding it using JSON. JSON encode was successful.
+- Created two separate dumps of the entire corpus graphs.
+    + With and Without Coref (4.29 GB and 4.14 GB respectively)
+- Reading the graph dump + predicting now takes only **3 minutes.**
+- Re dumped the predictions with the question ID included.
+
+---
+
 ### 5th November 
 
 #### Classification of Questions
