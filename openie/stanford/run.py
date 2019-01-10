@@ -61,10 +61,13 @@ else:
     corpus_graph.load(CORPUS_GRAPH_DUMP)
     et = time.time()
     print("Graph Loading Complete. Took %f minutes" % ((et - st) / 60))
-# print(corpus_graph)
+print(corpus_graph)
 qa_graphs = pickle.load(open(sys.argv[3], "rb"))
 out = sys.argv[4]
-dumps = sys.argv[5]
+if len(sys.argv) == 6:
+    dumps = sys.argv[5]
+else:
+    dumps = None
 
 scores = {}
 
@@ -80,8 +83,6 @@ for question_id in tqdm(qa_graphs, ascii=True):
         matches[key]['graph'] = match
         matches[key]['hypothesis'] = questions[question_id][1][key]
     matches["question"] = questions[question_id][0]
-    print(matches)
-    input()
     if dumps is not None:
         json.dump(matches, open(os.path.join(dumps, question_id + ".json"), "w"), indent=4)
     # arc = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
