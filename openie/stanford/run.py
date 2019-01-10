@@ -8,6 +8,8 @@ import os
 import sys
 import time
 import dill as pickle
+import utils
+
 CORPUS_GRAPH_DUMP, _ = os.path.splitext(sys.argv[1])
 CORPUS_GRAPH_DUMP += ".graph"
 
@@ -16,7 +18,28 @@ with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", 
     for line in (in_file):
         line = json.loads(line)
         question = line['question']['stem']
-        questions[line['id']] = question
+        options_text = {}
+
+        for choice in line['question']['choices']:
+            label = choice['label']
+            if label not in options_text:
+                options_text[label] = choice['text']
+
+        options = {}
+        options['A'] = options_text['A'] if 'A' in options_text else ""
+        options['B'] = options_text['B'] if 'B' in options_text else ""
+        options['C'] = options_text['C'] if 'C' in options_text else ""
+        options['D'] = options_text['D'] if 'D' in options_text else ""
+        options['E'] = options_text['E'] if 'E' in options_text else ""
+
+        hypothesis = {}
+        question = utils.replace_wh_word_with_blank(question)
+
+        for option in options:
+            if options[option] != "":
+                hypothesis[option] = utils.create_hypothesis(question, options[option])
+
+        questions[line['id']] = [question, hypothesis]
 
 stem = sys.argv[2]
 stem = True if stem == "True" else False
@@ -48,15 +71,19 @@ scores = {}
 print("Predicting and Calculating scores")
 for question_id in tqdm(qa_graphs, ascii=True):
     scores[question_id] = {}
-
     scores[question_id]['correct_answer'] = qa_graphs[question_id]['correct_answer']
     scores[question_id]["options"] = {}
     matches = {}
     for key in qa_graphs[question_id]['option_graphs']:
         scores[question_id]["options"][key], match = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
-        matches[key] = match
-    matches["question"] = questions[question_id]
-    json.dump(matches, open(os.path.join(dumps, question_id + ".json"), "w"), indent=4)
+        matches[key] = {}
+        matches[key]['graph'] = match
+        matches[key]['hypothesis'] = questions[question_id][1][key]
+    matches["question"] = questions[question_id][0]
+    print(matches)
+    input()
+    if dumps is not None:
+        json.dump(matches, open(os.path.join(dumps, question_id + ".json"), "w"), indent=4)
     # arc = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
     # # ncert = cg_ncert.compare_graph(qa_graphs[question_id]['option_graphs'][key])
     # scores[question_id]["options"][key] = (arc, ncert)
