@@ -15,6 +15,50 @@
     + openIE + coref on ARC
 
 ---
+
+### 11th Jan 2019
+
+- Link to detailed [dumps](https://drive.google.com/drive/folders/1iKK6S2j4vL_D8jqfPPX1vf8GXCKjCBJ5?usp=sharing)
+- Dump Format
+    + File Name: Question ID
+    + Inside its a JSON encoded graph matchings.
+    ```json
+    {
+        "A": {"text", "hypothesis", "matchings"}
+        "B": {"text", "hypothesis", "matchings"}
+        "C": {"text", "hypothesis", "matchings"}
+        "D": {"text", "hypothesis", "matchings"}
+        "Question": "Actual Question"
+    }
+    ```
+    + Format of matchings
+    ```json
+    "start_node1":
+    {
+            "end_node1":
+            {
+                "hypo": ["list of edges from start_node1 to end_node1 in hypothesis graph"],
+                "corpus": ["list of edges from start_node1 to end_node1 in corpus graph"]
+            },
+            "end_node2":
+            {
+                "hypo": ["list of edges from start_node1 to end_node2 in hypothesis graph"],
+                "corpus": ["list of edges from start_node1 to end_node2 in corpus graph"]
+            }
+            .
+            .
+    },
+    "start_node2":
+    {
+        .
+        .
+        .
+    },
+    .
+    .
+    ```
+
+---
 ### 20th November
 
 #### Preliminary Results
