@@ -39,7 +39,7 @@ with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", 
             if options[option] != "":
                 hypothesis[option] = utils.create_hypothesis(question, options[option])
 
-        questions[line['id']] = [question, hypothesis]
+        questions[line['id']] = [question, hypothesis, options]
 
 stem = sys.argv[2]
 stem = True if stem == "True" else False
@@ -61,7 +61,7 @@ else:
     corpus_graph.load(CORPUS_GRAPH_DUMP)
     et = time.time()
     print("Graph Loading Complete. Took %f minutes" % ((et - st) / 60))
-print(corpus_graph)
+
 qa_graphs = pickle.load(open(sys.argv[3], "rb"))
 out = sys.argv[4]
 if len(sys.argv) == 6:
@@ -82,7 +82,9 @@ for question_id in tqdm(qa_graphs, ascii=True):
         matches[key] = {}
         matches[key]['graph'] = match
         matches[key]['hypothesis'] = questions[question_id][1][key]
+        matches[key]['option'] = questions[question_id][2][key]
     matches["question"] = questions[question_id][0]
+
     if dumps is not None:
         json.dump(matches, open(os.path.join(dumps, question_id + ".json"), "w"), indent=4)
     # arc = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
