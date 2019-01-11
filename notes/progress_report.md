@@ -66,9 +66,9 @@
 - 53.84% !!.
 - No link to paper.
 - Based on:
-    + Improving Language Understanding by Generative Pre-Training
-    + BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding
-    + Improving Machine Reading Comprehension with General Reading Strategies
+    + [Improving Language Understanding by Generative Pre-Training](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf)
+    + [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805v1)
+    + [Improving Machine Reading Comprehension with General Reading Strategies](https://arxiv.org/abs/1810.13441v1)
         * This was the SOTA at 42.32 % till 14th december.
 - They seem to have just replaced the transformer network with BERT.
 
