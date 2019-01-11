@@ -22,7 +22,7 @@
 - Dump Format
     + File Name: Question ID
     + Inside its a JSON encoded graph matchings.
-    ```json
+    ```bash
     {
         "A": {"text", "hypothesis", "matchings"}
         "B": {"text", "hypothesis", "matchings"}
@@ -57,6 +57,88 @@
     .
     .
     ```
+
+---
+### 31st December 2018
+
+#### New SOTA Paper: QA Transfer 
+
+- 53.84% !!.
+- No link to paper.
+- Based on:
+    + Improving Language Understanding by Generative Pre-Training
+    + BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding
+    + Improving Machine Reading Comprehension with General Reading Strategies
+        * This was the SOTA at 42.32 % till 14th december.
+- They seem to have just replaced the transformer network with BERT.
+
+---
+
+### 30th December 2018
+
+- Reasoning type analysis of [300 Questions](https://drive.google.com/open?id=1SFGfdhZeLVZi3Ig0KNSiaEZJFSpyz4lwKqBzUCizEkE).
+- Reasoning types categories used from the [paper](https://arxiv.org/abs/1806.00358).
+
+#### Some observations
+
+- Most of the question fit into **Multi Hop, Linguistic Matching** category assuming all the necessary facts are present in the corpus.
+- Majority of the questions require reasoning of type **Hypothetical** that is they require reasoning about or applying abstract facts to a hypothetical/scenario situation that is described in the question. In some cases the hypotheticals are described in the answer options.
+    + **Hypothetical**: Proabably not mentioned in corpus as a fact.
+- Implicit Understanding:
+    + I tend to extract the essence of questions and then label the reasoning required to answer them.
+    + I found a few questions on future reading to be **Multi hop** that I had marked **Causal (one hop or deducable using one fact/definition)**.
+- Problems that require algebraic reasoning are easily identifiable.
+- There are a lot of questions that describe a hypothetical experimental setup and ask for a best course of action and reasoning in these cases is not quite clear. For e.g.
+    + A student drops a test tube, causing the glass to shatter. What is the first thing the student should do? 
+        + clean up the broken glass   
+        + replace the broken test tube    
+        + report the accident to the teacher 
+        + move to a new laboratory area
+
+    + In these scenarios there seem to be multiple correct answers as the question asks ***what should be done** and thus its difficult to determine what kind of reasoning is required in these questions. For e.g
+        + A scientist discovered a fish that looked unique. After data were collected and analyzed on the fish and its habitat, the scientist determined that the fish belonged to a new species. What should the scientist do with this new discovery? 
+            + share the discovery with the public 
+            + do additional background research    
+            + analyze the results again   
+            + create a new hypothesis
+
+#### Ideas Based on Manual Analysis
+
+- There are many questions of the form ....except.
+    + We can modify the questions to its negation. 
+    + Create hypothesis without the word **except** and return the option with lowest score.
+- Another case that we can handle seperately is where the options are partially wrong.
+    + We should verify whether the options are factually true.
+    + An option that is present in corpus is more likely to be factually correct and more likely to be the final ansewer.
+    + e.g Clear glass is translucent hence it will scatter more light
+        * Glass is translucent **WRONG**
+        * Translucent scatters more **RIGHT**
+            - This may increase the overall score of this option,
+
+- Questions contain a Lot of useless information For e.g.
+    + A student filled three beakers, each with 50 milliliters of liquid water. The student cooled Beaker 1 to form ice. The student heated Beaker 2 to form water vapor (gas). Beaker 3 remained at room temperature. **What process takes place when liquid water changes to a vapor (gas)?**
+
+---
+
+### 15th December 2018
+
+#### New SOTA Paper: BERT MRC Transfer
+
+- 44.62%.
+- From the people at Microsoft Dynamics 365 AI Research.
+- No link to paper.
+- Used a finetuned BERT MRC Model.
+- [**BERT**](https://arxiv.org/pdf/1810.04805.pdf)
+    + Stands for Bidirectional Encoder Representation from Transformers.
+    + A new SOTA language representational model by Google.
+        * Improved nearly all the Language Benchmarks.
+    + Published on 11 Oct 2018
+
+---
+
+### 30th November to 16th December
+
+IITD Placement Interviews.
 
 ---
 ### 20th November
