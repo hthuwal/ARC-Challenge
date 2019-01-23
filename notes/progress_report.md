@@ -16,23 +16,29 @@
 
 ---
 ### 24th Jan 2019
+#### TODOs
 
-#### Latest SOTA Models
+- Improve Hypothesis: Read SOTA models. How they do it?
+- Improve graphs: Use stuffIE because it extracts nested triplets?
+    + Is it feasible?
+- Try [these ideas](#ideas)
+- Run BiLSTM Max-out model.
+
+#### Can't run Latest SOTA Models
 
 - Couldn't find code for the top 6 SOTA Models.
     + Top two, 5th and 6th don't even have a proper paper.
-    + Will dig more to see if I can find it.
+    + Will dig more to see if I can find anything.
 
 - The code for BiLSTM Max-out Model is provided by the AI2 people.
     + Ran into error in `allennlp` module after setting up their environment.
     + An issue about same error already exists on their repository.
-    + Will see if the code runs by downgrading the version of `allennlp` or older version of python (will require me to setup everything again).
+    + Will see if the code runs by downgrading the version of `allennlp` or with an older version of python (will require me to setup everything again).
 
 #### GSA(Jaccard) vs DGEM Reasoning based comparison
 
-- **DGEM: 26.41**
-- **GSA(J): 28.42**  
-    + Our model is avoiding zero scores by not predicting at all (0.25) or predicting k-way ties. 
+- **DGEM: 26.41**, **GSA(J): 28.42**    
+    + Our model is avoiding zero scores by not predicting at all (0.25) or predicting k-way ties.    
     ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/All.png)  
 
 - **Algebraic**  
@@ -72,7 +78,7 @@
 - Majority of the questions simultaneously belong to the following three categories:
     + Question Logic, Linguistic Matching, Multi hop 
 
-- 62 Question which most likely require some sort of calculation.
+- 62 Question most likely require some sort of calculation.
 
 #### Few more observations about the analysis and questions
 
@@ -184,6 +190,7 @@
             + analyze the results again   
             + create a new hypothesis
 
+<a name="ideas"></a>
 #### Ideas Based on Manual Analysis
 
 - There are many questions of the form ....except.
