@@ -18,19 +18,12 @@ with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", 
     for line in (in_file):
         line = json.loads(line)
         question = line['question']['stem']
-        options_text = {}
+        options = {}
 
         for choice in line['question']['choices']:
             label = choice['label']
-            if label not in options_text:
-                options_text[label] = choice['text']
-
-        options = {}
-        options['A'] = options_text['A'] if 'A' in options_text else ""
-        options['B'] = options_text['B'] if 'B' in options_text else ""
-        options['C'] = options_text['C'] if 'C' in options_text else ""
-        options['D'] = options_text['D'] if 'D' in options_text else ""
-        options['E'] = options_text['E'] if 'E' in options_text else ""
+            if label not in options:
+                options[label] = choice['text']
 
         hypothesis = {}
         question = utils.replace_wh_word_with_blank(question)
@@ -87,11 +80,6 @@ for question_id in tqdm(qa_graphs, ascii=True):
 
     if dumps is not None:
         json.dump(matches, open(os.path.join(dumps, question_id + ".json"), "w"), indent=4)
-    # arc = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
-    # # ncert = cg_ncert.compare_graph(qa_graphs[question_id]['option_graphs'][key])
-    # scores[question_id]["options"][key] = (arc, ncert)
-
-    # print(scores[question_id])
 
 points = 0
 p_at = defaultdict(int)
@@ -105,17 +93,17 @@ with open(out, "w") as f:
         correct_answer = scores[question_id]['correct_answer']
         option_scores = list(scores[question_id]['options'].items())
         if len(option_scores) == 0:
-            point = 0.25
-            possible_answers = ['A', 'B', 'C', 'D']
+            print("This shouldn't have happened")
+            input()
         else:
             maximum = max(option_scores, key=lambda x: x[1])
             possible_answers = [each[0] for each in option_scores if each[1] == maximum[1]]
+
             if correct_answer in possible_answers:
                 point = (1 / len(possible_answers))
 
             option_scores.sort(key=itemgetter(1, 0), reverse=True)
             ranked_answers = [each[0] for each in option_scores]
-
             for i in range(0, 3):
                 if correct_answer in ranked_answers[0:i + 1]:
                     p_at[i + 1] += 1
