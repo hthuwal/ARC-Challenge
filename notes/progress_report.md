@@ -15,6 +15,88 @@
     + openIE + coref on ARC
 
 ---
+### 24th Jan 2019
+
+#### Latest SOTA Models
+
+- Couldn't find code for the top 6 SOTA Models.
+    + Top two, 5th and 6th don't even have a proper paper.
+    + Will dig more to see if I can find it.
+
+- The code for BiLSTM Max-out Model is provided by the AI2 people.
+    + Ran into error in `allennlp` module after setting up their environment.
+    + An issue about same error already exists on their repository.
+    + Will see if the code runs by downgrading the version of `allennlp` or older version of python (will require me to setup everything again).
+
+#### GSA(Jaccard) vs DGEM Reasoning based comparison
+
+- **DGEM: 26.41**
+- **GSA(J): 28.42**  
+    + Our model is avoiding zero scores by not predicting at all (0.25) or predicting k-way ties. 
+    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/All.png)  
+
+- **Algebraic**  
+    + We answered only two algebraic questions accurately.
+        * One involves finding a balanced equation (calculate and equate atomic masses).
+            + The correct equation might be present in the corpus.
+        * Second question also belongs to multi hop category.
+    + At least 3 algebraic questions out of the 9 that DGEM predicted accurately involve solving proper equations. 
+    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Algebraic.png)
+
+- **Causal + Linguistic Matching**  
+    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Causal_LM.png)
+
+- **MultiHop + Linguistic Matching**  
+    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Multihop_LM.png)
+    
+#### Bug fixes and code updates
+
+- Found out during the analysis:
+    + Was assuming that each question has four options 'A', 'B', 'C', 'D'.
+    + Because of which wasn't reading options with labels 1, 2, 3, 4
+
+- AI2 people now provide there own scoring code.
+
+- Debugged the code and re-ran the Graph Similarity Algorithm (GSA) with Jaccard based scoring of edges.
+    + Score changed from 28.38 to 28.422
+
+#### Reasoning Types 
+
+- Total Questions: **1172**
+
+    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Reasoning_Type.png)
+
+- 1015 questions depend on the options. (**Question Logic**)
+    + The questions do make sense without the options but don't have unique answers (so depend on options)
+
+- Majority of the questions simultaneously belong to the following three categories:
+    + Question Logic, Linguistic Matching, Multi hop 
+
+- 62 Question which most likely require some sort of calculation.
+
+#### Few more observations about the analysis and questions
+
+- A comprehension based question?
+    + `MCAS_2011_8_15365`
+    + Leopard's opening chant suggests that he is?
+        + A: happy, B: confused, C: confident,  D: generous
+
+- Same Questions with different Id's are same:
+    + `LEAP__8_10365` and `LEAP_2000_8_2`
+    + `Mercury_409647` and `Mercury_7168823`
+    + `Mercury_406639` and `Mercury_7116183`
+    + `Mercury_7189123` and `Mercury_410807`
+    +  This doesn't seem intentional. Should this be reported to the people at AI2?
+
+- Multiple Questions involving chemical equations.
+
+- This categorization of Question on the basis of reasoning types is biased   
+    + Subjective to interpretation.
+    + Affected by my knowledge OR lack thereof. 
+        * I tend to mark some physics questions as causal which should be multi hop.
+        * I tend to mark every biology/geography question as multi hop because I don't have enough knowledge in those cases.
+
+---
 
 ### 11th Jan 2019
 
@@ -82,11 +164,11 @@
 #### Some observations
 
 - Most of the question fit into **Multi Hop, Linguistic Matching** category assuming all the necessary facts are present in the corpus.
-- Majority of the questions require reasoning of type **Hypothetical** that is they require reasoning about or applying abstract facts to a hypothetical/scenario situation that is described in the question. In some cases the hypotheticals are described in the answer options.
-    + **Hypothetical**: Proabably not mentioned in corpus as a fact.
+- Majority of the questions require reasoning of type **Hypothetical** that is they require reasoning about or applying abstract facts to a hypothetical/scenario situation that is described in the question. In some cases the hypothetical are described in the answer options.
+    + **Hypothetical**: Probably not mentioned in corpus as a fact.
 - Implicit Understanding:
     + I tend to extract the essence of questions and then label the reasoning required to answer them.
-    + I found a few questions on future reading to be **Multi hop** that I had marked **Causal (one hop or deducable using one fact/definition)**.
+    + I found a few questions on future reading to be **Multi hop** that I had marked **Causal (one hop or deducible using one fact/definition)**.
 - Problems that require algebraic reasoning are easily identifiable.
 - There are a lot of questions that describe a hypothetical experimental setup and ask for a best course of action and reasoning in these cases is not quite clear. For e.g.
     + A student drops a test tube, causing the glass to shatter. What is the first thing the student should do? 
@@ -107,9 +189,9 @@
 - There are many questions of the form ....except.
     + We can modify the questions to its negation. 
     + Create hypothesis without the word **except** and return the option with lowest score.
-- Another case that we can handle seperately is where the options are partially wrong.
+- Another case that we can handle separately is where the options are partially wrong.
     + We should verify whether the options are factually true.
-    + An option that is present in corpus is more likely to be factually correct and more likely to be the final ansewer.
+    + An option that is present in corpus is more likely to be factually correct and more likely to be the final answer.
     + e.g Clear glass is translucent hence it will scatter more light
         * Glass is translucent **WRONG**
         * Translucent scatters more **RIGHT**
