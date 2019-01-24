@@ -13,6 +13,7 @@
     + OpenIE on ARC
         * 3GB file. Can't add this to the Google sheets
     + openIE + coref on ARC
+- [Links to Analysis](https://docs.google.com/spreadsheets/d/1SFGfdhZeLVZi3Ig0KNSiaEZJFSpyz4lwKqBzUCizEkE/edit?usp=sharing)
 
 ---
 ### 24th Jan 2019
