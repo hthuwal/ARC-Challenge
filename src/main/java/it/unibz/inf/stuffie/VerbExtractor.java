@@ -42,7 +42,7 @@ public class VerbExtractor extends PipelineStep<TreeSet<RelationInstance>, CoreM
 				RelationVerb rv = new RelationVerb(verb, sentenceNum, depAnno, depAnnoEnch);
 				RelationInstance rel = new RelationInstance(rv);
 				res.add(rel);
-				addComponent(rel, rv, verb, rel::setVerb, idToComponentMap, "v", rv.isContextDependent());
+				addComponent(rel, rv, verb, rel::setVerb, rel::removeVerb, idToComponentMap, "v", rv.isContextDependent());
 			}
 
 		}

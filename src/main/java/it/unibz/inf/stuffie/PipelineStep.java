@@ -41,20 +41,29 @@ public abstract class PipelineStep<R, P> {
 	}
 
 	protected void addComponent(RelationInstance rel, RelationComponent ra, IndexedWord iw,
-			Consumer<RelationComponent> func, TreeMultimap<String, RelationComponent> idToComponentMap, String relID,
-			boolean contextDependent) {
+			Consumer<RelationComponent> adderFunction, Consumer<RelationComponent> removalFunction,
+			TreeMultimap<String, RelationComponent> idToComponentMap, String relID, boolean contextDependent) {
 		ra.setRelativeID(rel.getId() + relID);
 		ra.setOwner(rel);
+		ra.setOwnershipRemovalFunc(removalFunction);
 		ra.setContextDependent(contextDependent);
-		func.accept(ra);
+		adderFunction.accept(ra);
 		idToComponentMap.put(ra.getSentenceID() + "." + iw.index(), ra);
 		idToComponentMap.put(ra.getRelativeID(), ra);
 	}
 
-	protected void removeComponent(RelationComponent ra, IndexedWord iw,
+	protected void removeIWFromComponent(RelationComponent ra, IndexedWord iw,
 			TreeMultimap<String, RelationComponent> idToComponentMap) {
 		ra.removeWord(iw);
 		idToComponentMap.remove(ra.getSentenceID() + "." + iw.index(), ra);
+	}
+
+	protected void removeComponentFromOwner(RelationComponent ra,
+			TreeMultimap<String, RelationComponent> idToComponentMap) {
+		for (IndexedWord iw : ra.getWords()) {
+			idToComponentMap.remove(ra.getSentenceID() + "." + iw.index(), ra);
+		}
+		ra.getOwnershipRemovalFunc().accept(ra);
 	}
 
 	protected abstract R run(P param, int iteration, TreeMultimap<String, RelationComponent> idToComponentMap);

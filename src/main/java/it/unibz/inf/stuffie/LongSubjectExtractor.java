@@ -44,7 +44,7 @@ public class LongSubjectExtractor extends SubjectExtractor {
 				return false;
 			else {
 				verbSrc = advcls.first();
-				boolean res = traverseOneStep(rel, iteration, verbSrc, depAnno,idToComponentMap);
+				boolean res = traverseOneStep(rel, iteration, verbSrc, depAnno, idToComponentMap);
 				if(res)
 					return true;
 			}

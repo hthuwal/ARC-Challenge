@@ -91,13 +91,22 @@ public class RelationArgument extends RelationComponent {
 	public void addContext(String string) {
 		contexts.add(string);
 	}
-
+	
 	public void setConnector(RelationArgumentConnector conn) {
 		this.connector = conn;
 	}
 
 	public void setConnector(RelationComponent conn) {
 		setConnector((RelationArgumentConnector) conn);
+	}
+	
+	public void removeConnector(RelationArgumentConnector connector) {
+		if(this.connector.compareTo(connector) == 0)
+			this.connector = null;
+	}
+	
+	public void removeConnector(RelationComponent connector) {
+		removeConnector((RelationArgumentConnector) connector);
 	}
 
 	public void setContextDependent(boolean contextDependent) {

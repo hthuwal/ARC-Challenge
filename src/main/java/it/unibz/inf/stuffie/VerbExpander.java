@@ -1,6 +1,7 @@
 package it.unibz.inf.stuffie;
 
 import java.util.Properties;
+import java.util.TreeSet;
 
 import com.google.common.collect.TreeMultimap;
 
@@ -8,6 +9,7 @@ import edu.stanford.nlp.ling.IndexedWord;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.semgraph.SemanticGraph;
+import edu.stanford.nlp.trees.UniversalEnglishGrammaticalRelations;
 
 public class VerbExpander extends Expander {
 
@@ -21,7 +23,19 @@ public class VerbExpander extends Expander {
 
 	@Override
 	protected Boolean run(RelationInstance par, int iteration, TreeMultimap<String, RelationComponent> idToComponentMap) {
-		return expandVerb(par.getVerb(), par.getVerb().getHeadword(), idToComponentMap);
+		
+		IndexedWord verbSrc = par.getVerb().headword;
+		SemanticGraph depAnno = par.getVerb().getDepAnno();
+		
+		TreeSet<IndexedWord> cops = new TreeSet<IndexedWord>(new IndexedWordComparator(verbSrc));
+		cops.addAll(
+				depAnno.getParentsWithReln(verbSrc, UniversalEnglishGrammaticalRelations.shortNameToGRel.get("cop")));
+		
+		if(cops.isEmpty()) {
+			return expandVerb(par.getVerb(), par.getVerb().getHeadword(), idToComponentMap);
+		} else {
+			return expandVerb(par.getVerb(), cops.first(), idToComponentMap);
+		}
 	}
 	
 	private Boolean expandVerb(RelationVerb arg, IndexedWord current, TreeMultimap<String, RelationComponent> idToComponentMap) {

@@ -59,8 +59,8 @@ public class NounExpander extends Expander {
 					ret = ret && expandObject(par, arg, iw, idToComponentMap);
 				} else {
 					if (!par.getVerb().isSynthetic() && par.getVerb().getHeadword().index() != iw.index()) {
-//						arg.setContextDependent(true);
-//						arg.addContext(arg.sentenceID + "." + iw.index());
+						arg.setContextDependent(true);
+						arg.addContext(arg.sentenceID + "." + iw.index());
 					}
 				}
 			}

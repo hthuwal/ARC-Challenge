@@ -177,6 +177,15 @@ public class RelationInstance implements Comparable<RelationInstance> {
 	public void setVerb(RelationComponent verb) {
 		setVerb((RelationVerb) verb);
 	}
+	
+	public void removeVerb(RelationVerb verb) {
+		if(this.verb.compareTo(verb) == 0)
+			this.verb = null;
+	}
+	
+	public void removeVerb(RelationComponent verb) {
+		removeVerb((RelationVerb) verb);
+	}
 
 	/**
 	 * @param object the object to set
@@ -203,4 +212,31 @@ public class RelationInstance implements Comparable<RelationInstance> {
 	public void addFacet(RelationComponent facet) {
 		facets.add((RelationArgument) facet);
 	}
+	
+	public void removeSubject(RelationArgument subject) {
+		if(this.subject.compareTo(subject) == 0)
+			this.subject = null;
+	}
+	
+	public void removeSubject(RelationComponent subject) {
+		removeSubject((RelationArgument) subject);
+	}
+	
+	public void removeObject(RelationArgument object) {
+		if(this.object.compareTo(object) == 0)
+			this.object = null;
+	}
+	
+	public void removeObject(RelationComponent object) {
+		removeObject((RelationArgument) object);
+	}
+	
+	public void removeFacet(RelationArgument facet) {
+		facets.remove(facet);
+	}
+	
+	public void removeFacet(RelationComponent facet) {
+		facets.remove((RelationArgument) facet);
+	}
+
 }

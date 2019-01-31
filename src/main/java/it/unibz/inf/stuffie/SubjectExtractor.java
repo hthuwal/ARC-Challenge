@@ -61,7 +61,7 @@ public class SubjectExtractor extends ComponentExtractor {
 			RelationArgument subj = new RelationArgument(candidates.first(), rel.getVerb().getSentenceID(), depAnno,
 					true);
 			subj.addChainFromVerb(new TraversalArc(verbSrc, arc.getRel(), subj.headword, arc.getDir()));
-			addComponent(rel, subj, candidates.first(), rel::setSubject, idToComponentMap, "s", subj.getChainFromVerb().size() > 1
+			addComponent(rel, subj, candidates.first(), rel::setSubject, rel::removeSubject, idToComponentMap, "s", subj.getChainFromVerb().size() > 1
 					|| arc.getRel().getShortName().equals("acl") || arc.getRel().getShortName().contains("xsubj"));
 			return true;
 		}

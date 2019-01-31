@@ -1,6 +1,7 @@
 package it.unibz.inf.stuffie;
 
 import java.util.TreeSet;
+import java.util.function.Consumer;
 import java.util.regex.Pattern;
 
 import edu.stanford.nlp.ling.IndexedWord;
@@ -10,6 +11,10 @@ public class RelationComponent implements Comparable<RelationComponent> {
 
 	protected static final Pattern VERB_PATTERN = Pattern.compile("VB|VBD|VBG|VBN|VBP|VBZ");
 	protected static final String NULL_CMPNT = "<_>";
+	
+	protected enum Ownership {
+		VERB, SUBJECT, OBJECT, FACET
+	}
 
 	protected IndexedWord headword;
 	protected TreeSet<IndexedWord> words;
@@ -20,6 +25,7 @@ public class RelationComponent implements Comparable<RelationComponent> {
 	protected RelationInstance owner;
 	protected boolean contextDependent = false;
 	protected String relativeID;
+	protected Consumer<RelationComponent> ownershipRemovalFunc;
 
 	public boolean isStatic() {
 		return isStatic;
@@ -131,6 +137,14 @@ public class RelationComponent implements Comparable<RelationComponent> {
 
 	public String getId() {
 		return id;
+	}
+
+	public void setOwnershipRemovalFunc(Consumer<RelationComponent> removalFunction) {
+		this.ownershipRemovalFunc = removalFunction;
+	}
+	
+	public Consumer<RelationComponent> getOwnershipRemovalFunc() {
+		return ownershipRemovalFunc;
 	}
 
 }

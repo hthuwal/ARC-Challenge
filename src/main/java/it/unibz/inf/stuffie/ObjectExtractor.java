@@ -62,7 +62,7 @@ public class ObjectExtractor extends ComponentExtractor {
 					temp.removeAll(removal);
 				}
 				
-				if (!temp.isEmpty() && arc.getRel().getShortName().equals("ccomp")) {
+				if (!temp.isEmpty() && (arc.getRel().getShortName().equals("ccomp") || arc.getRel().getShortName().equals("advcl") )) {
 					Set<IndexedWord> shiftingSet = depAnno.getChildrenWithReln(verbSrc, arc.getRel());
 					for (IndexedWord iw : shiftingSet) {
 						if (!iw.tag().startsWith("VB")) {
@@ -96,13 +96,13 @@ public class ObjectExtractor extends ComponentExtractor {
 			obj.addChainFromVerb(new TraversalArc(verbSrc, arc.getRel(), obj.headword, arc.getDir()));
 
 			if (i == 0 && rel.getObject() == null) {
-				addComponent(rel, obj, candidate, rel::setObject, idToComponentMap, "o",
+				addComponent(rel, obj, candidate, rel::setObject, rel::removeObject, idToComponentMap, "o",
 						arc.getRel().getShortName().equals("relcl"));
-				removeComponent(rel.getVerb(), candidate, idToComponentMap);
+				removeIWFromComponent(rel.getVerb(), candidate, idToComponentMap);
 			} else {
-				addComponent(rel, obj, candidate, rel::addFacet, idToComponentMap, "f" + i,
+				addComponent(rel, obj, candidate, rel::addFacet, rel::removeFacet, idToComponentMap, "f" + i,
 						arc.getRel().getShortName().equals("relcl"));
-				removeComponent(rel.getVerb(), candidate, idToComponentMap);
+				removeIWFromComponent(rel.getVerb(), candidate, idToComponentMap);
 			}
 			i++;
 		}

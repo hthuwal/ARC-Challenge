@@ -41,5 +41,18 @@ public class RelationComponentComparator {
 
 		return new StringIDComparator().compare(ra1.getId(), ra2.getId());
 	}
+	
+	public int compareByOwnerIndex(RelationComponent ra1, RelationComponent ra2) {
+		if (ra1 instanceof RelationVerb && ra2 instanceof RelationArgument)
+			return -1;
+		if (ra2 instanceof RelationVerb && ra1 instanceof RelationArgument)
+			return 1;
+		if (ra1 instanceof RelationVerb && ra2 instanceof RelationVerb)
+			return ra1.compareTo(ra2);
+		if (ra1 instanceof RelationArgument && ra2 instanceof RelationArgument)
+			return new StringIDComparator().compare(ra1.getOwner().getId(), ra2.getOwner().getId());
+		
+		return new StringIDComparator().compare(ra1.getId(), ra2.getId());
+	}
 
 }

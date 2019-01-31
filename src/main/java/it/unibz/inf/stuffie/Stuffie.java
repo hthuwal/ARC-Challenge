@@ -34,9 +34,11 @@ public class Stuffie {
 	private NounExpander nExp = new NounExpander();
 	private VerbExpander vExp = new VerbExpander();
 	private ConnectorExpander cExp = new ConnectorExpander();
+	
+	private Deduplicator dedup = new Deduplicator();
 
 	private PipelineStep<?, ?> steps[] = new PipelineStep[] { vExtr, sExtr, oExtr, esExtr, lsExtr, srExtr, nExp, vExp,
-			cExp };
+			cExp, dedup};
 
 	private Mode[] defaultModes = { Mode.Dependent.SEPARATED, Mode.DependentSubject.TRANSFER_ALL,
 			Mode.ClausalConnection.AS_FACET, Mode.FacetConnector.AS_VERB_COMPOUND,
@@ -118,7 +120,7 @@ public class Stuffie {
 		refreshPlines();
 
 		TreeMultimap<String, RelationComponent> idToComponentMap = TreeMultimap.create(Ordering.natural(),
-				new RelationComponentComparator()::compareByContextDependency);
+				new RelationComponentComparator()::compareByOwnerIndex);
 		TreeSet<RelationInstance> rels;
 		if (modes.get(Mode.RelOrdering.class) == Mode.RelOrdering.INDEX_BASED)
 			rels = new TreeSet<RelationInstance>();
@@ -132,7 +134,8 @@ public class Stuffie {
 		runPipeline(modes.get(Mode.SyntheticRelation.class) != Mode.SyntheticRelation.DISABLED, o -> true, sentences,
 				rels, idToComponentMap, srExtr);
 		runPipeline(true, o -> true, sentences, rels, idToComponentMap, nExp, cExp);
-
+		runPipeline(true, o -> true, sentences, rels, idToComponentMap, dedup);
+		
 		return rels;
 	}
 
@@ -145,7 +148,7 @@ public class Stuffie {
 		int iter = 1;
 		if (outerCond) {
 			for (PipelineStep step : steps) {
-				if (step instanceof Expander || step instanceof ComponentExtractor)
+				if (step instanceof Expander || step instanceof ComponentExtractor || step instanceof Deduplicator)
 					col = rels;
 				else
 					col = sentences;

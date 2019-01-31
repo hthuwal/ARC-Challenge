@@ -3,3 +3,4 @@ nsubjpass,OUT
 csubj,OUT
 csubjpass,OUT
 acl,IN
+expl,OUT

@@ -57,8 +57,8 @@ public class SynthRelExtractor extends PipelineStep<TreeSet<RelationInstance>, C
 					new RelationVerb("be", sentenceNum, depAnno, null, e.getTarget().index()));
 			RelationArgument subj = new RelationArgument(e.getSource(), sentenceNum, depAnno, true);
 			RelationArgument obj = new RelationArgument(e.getTarget(), sentenceNum, depAnno, false);
-			addComponent(ri, subj, e.getSource(), ri::setSubject, idToComponentMap, "s", true);
-			addComponent(ri, obj, e.getTarget(), ri::setObject, idToComponentMap, "o", true);
+			addComponent(ri, subj, e.getSource(), ri::setSubject, ri::removeSubject, idToComponentMap, "s", true);
+			addComponent(ri, obj, e.getTarget(), ri::setObject, ri::removeObject, idToComponentMap, "o", true);
 			res.add(ri);
 		}
 
@@ -109,8 +109,8 @@ public class SynthRelExtractor extends PipelineStep<TreeSet<RelationInstance>, C
 				RelationInstance ri = new RelationInstance(
 						new RelationVerb("be", sentenceNum, depAnno, null, objects.last().index()));
 
-				addComponent(ri, subj, last, ri::setSubject, idToComponentMap, "s", true);
-				addComponent(ri, obj, objects.last(), ri::setObject, idToComponentMap, "o", true);
+				addComponent(ri, subj, last, ri::setSubject, ri::removeSubject, idToComponentMap, "s", true);
+				addComponent(ri, obj, objects.last(), ri::setObject, ri::removeObject, idToComponentMap, "o", true);
 				res.add(ri);
 			}
 		}
