@@ -14,6 +14,10 @@ import utils
 CORPUS_GRAPH_DUMP, _ = os.path.splitext(sys.argv[1])
 CORPUS_GRAPH_DUMP += ".graph"
 
+stem = sys.argv[2]
+stem = True if stem == "True" else False
+print(stem)
+
 questions = {}
 with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file:
     for line in (in_file):
@@ -35,12 +39,8 @@ with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", 
 
         questions[line['id']] = [question, hypothesis, options]
 
-stem = sys.argv[2]
-stem = True if stem == "True" else False
-print(stem)
 
 corpus_graph = Graph()
-
 if not os.path.exists(CORPUS_GRAPH_DUMP):
     print("Creating graph from corpus triples")
     corpus_graph = Graph(sys.argv[1], stem=stem, disable=False)
@@ -63,27 +63,39 @@ if len(sys.argv) == 6:
 else:
     dumps = None
 
-scores = {}
 
+scores = {}
 print("Predicting and Calculating scores")
 for question_id in tqdm(qa_graphs, ascii=True):
     scores[question_id] = {}
     scores[question_id]['correct_answer'] = qa_graphs[question_id]['correct_answer']
     scores[question_id]["options"] = {}
-    matches = {}
+
+    matches, hypo_scores, option_scores = {}, {}, {}
+    matches["question"] = questions[question_id][0]
+
     for key in qa_graphs[question_id]['hypothesis_graphs']:
         hypothesis_graph = qa_graphs[question_id]['hypothesis_graphs'][key]
         option_graph = qa_graphs[question_id]['option_graphs'][key]
 
-        hypothesis_score, hypothesis_match = GSA.compare_graph(corpus_graph, hypothesis_graph)
-        option_score, option_match = GSA.compare_graph(corpus_graph, option_graph)
+        hypo_scores[key], hypothesis_match = GSA.compare_graph(corpus_graph, hypothesis_graph)
+        option_scores[key], option_match = GSA.compare_graph(corpus_graph, option_graph)
 
-        scores[question_id]["options"][key] = hypothesis_score
         matches[key] = {}
         matches[key]['graph'] = hypothesis_match
         matches[key]['hypothesis'] = questions[question_id][1][key]
         matches[key]['option'] = questions[question_id][2][key]
-    matches["question"] = questions[question_id][0]
+        
+        scores[question_id]["options"][key] = hypo_scores[key] 
+
+    # Try to incorporate correctness of the options
+
+        # check_options = min(option_scores.values()) == 0
+        # for key in hypo_scores:
+        #     if check_options:
+        #         scores[question_id]["options"][key] = hypo_scores[key] * option_scores[key]
+        #     else:
+        #         scores[question_id]["options"][key] = hypo_scores[key]
 
     if dumps is not None:
         json.dump(matches, open(os.path.join(dumps, question_id + ".json"), "w"), indent=4)
@@ -116,7 +128,8 @@ with open(out, "w") as f:
                     p_at[i + 1] += 1
 
         points += point
-        f.write("%s\t%s\t%s\t%s\t%f\n" % (question_id, questions[question_id], correct_answer, str(possible_answers), point))
+        # f.write("%s\t%s\t%s\t%s\t%f\n" % (question_id, questions[question_id], correct_answer, str(possible_answers), point))
+        f.write("%s,%s\n" % (question_id, ";".join(possible_answers)))
 
 for key in p_at:
     p_at[key] = p_at[key] / len(scores)
