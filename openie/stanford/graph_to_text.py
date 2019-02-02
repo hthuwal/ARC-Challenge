@@ -19,7 +19,7 @@ def graph_to_triplets(g):
     return triplets
 
 
-with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file, open(out_file, "w") as out:
+with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file, open(out_file, "w") as out:
     for line in in_file:
         line = json.loads(line)
         qid = line['id']
