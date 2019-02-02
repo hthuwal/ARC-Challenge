@@ -1,5 +1,6 @@
 from collections import defaultdict
 from graph import Graph
+from gsa import GSA
 from operator import itemgetter
 from tqdm import tqdm
 
@@ -70,10 +71,16 @@ for question_id in tqdm(qa_graphs, ascii=True):
     scores[question_id]['correct_answer'] = qa_graphs[question_id]['correct_answer']
     scores[question_id]["options"] = {}
     matches = {}
-    for key in qa_graphs[question_id]['option_graphs']:
-        scores[question_id]["options"][key], match = corpus_graph.compare_graph(qa_graphs[question_id]['option_graphs'][key])
+    for key in qa_graphs[question_id]['hypothesis_graphs']:
+        hypothesis_graph = qa_graphs[question_id]['hypothesis_graphs'][key]
+        option_graph = qa_graphs[question_id]['option_graphs'][key]
+
+        hypothesis_score, hypothesis_match = GSA.compare_graph(corpus_graph, hypothesis_graph)
+        option_score, option_match = GSA.compare_graph(corpus_graph, option_graph)
+
+        scores[question_id]["options"][key] = hypothesis_score
         matches[key] = {}
-        matches[key]['graph'] = match
+        matches[key]['graph'] = hypothesis_match
         matches[key]['hypothesis'] = questions[question_id][1][key]
         matches[key]['option'] = questions[question_id][2][key]
     matches["question"] = questions[question_id][0]
