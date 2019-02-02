@@ -33,12 +33,20 @@
 - [ ] Negation?
 - [x] Whether the option itself is true or not?
 - [x] qa graph should include a seperate graph for option and hypothesis.
-- [x] Parallelize the qa graph generation.
+- [x] Optimizations. 
+    - [x] Parallelize the qa graph generation.
+    - [x] Seperate GSA class.
 - [ ] Go through the analysis again make changes if necessary.
 - [ ] Create a open website where others can do the same. (For concrete analysis and remove bias.)
 - [ ] Can we use Clause IE?
 - [ ] Focus on LM + Multihop
 - [ ] Better Hypothesis?
+
+
+#### Slight Improvement: 29.0031
+
+- Slight modification in normalizing edge labels score in GSA.
+- Score changed from 28.36 to 29.0031
 
 #### Whether the option itself is true or not?
 
@@ -51,17 +59,31 @@
     - Makes sense only if option itself is a proper sentence.
         + Assumption: Option with less than 3 words will rarely form complete sentence.
         + So do this only if all options have more than 3 words.
+        + Otherwise GSA will give zero score.
 
     - Stanford openIE might return no triplets i.e no graph.
         + So do this only if all options have non null graphs.
+        + Otherwise GSA will give zero score.
 
+    **So proceed only if none of the options get 0 GSA scores.**
 
+- How to use the option scores?   
+    + Multiply them with the hypothesis scores: Options with less probability(score) of being correct will reduce the score for corresponding hypothesis.
 
-#### Parallelize Code
+- ***This apparently had a negative impact reducing overall score from 28.36 to 26.477***
+
+#### Optimizations
+
+##### Parallelize Option graph generation Code
 
 - Parallely create graphs for question hypothesis.
 - Reduced time from 1 hour 21 minutes to 5 minutes.
 - Generate graph for each option as well.
+
+##### Seperate GSA from graph
+
+- Seperate GSA class 
+- Allow modification of GSA without reloading graph.
 
 ### 24th Jan 2019
 #### TODOs
