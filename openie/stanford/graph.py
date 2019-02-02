@@ -110,51 +110,6 @@ class Graph(object):
         for node in self.adj:
             edge += len(self.adj[node])
         return edge / 2
-
-    def compare_strings(self, a, b):
-        a = a.lower().split()
-        b = b.lower().split()
-        score = 0
-        for each in a:
-            if each in b:
-                score += 1
-        return score / (1 + len(a))
-
-    def compare_edge_labels(self, e_a_list, e_b_list):
-        score = 0
-        for ea in e_a_list:
-            for eb in e_b_list:
-                # score += max(0, (1 - nltk.edit_distance(ea, eb) / max(len(ea), len(eb))))
-                score += max(0, (1 - nltk.jaccard_distance(set(ea), set(eb))))  # jaccard_distance based on each character as element
-                # score += max(0, (1 - nltk.jaccard_distance(set(ea.split()), set(eb.split()))))  # jaccard_distance based on each character as element
-                # score += self.compare_strings(ea, eb)
-        return score / (1 + len(e_a_list) * len(e_b_list))
-
-    def compare_edges(self, e_a, e_b):
-        score = 0
-        nbrs = {}
-        for nbr in e_a:
-            if nbr in e_b:
-                e_a_list = [each for each in e_a[nbr] if not each.startswith('rev')]
-                e_b_list = [each for each in e_b[nbr] if not each.startswith('rev')]
-                nbrs[nbr] = {"hypo": e_a_list, "corpus": e_b_list}
-                score += self.compare_edge_labels(e_a_list, e_b_list)
-        return score / (1 + len(e_a)), nbrs
-
-    def compare_graph(self, g):
-        score = {}
-        score['nodes'] = 0
-        score['edges'] = 0
-
-        match = {}
-        for node in g.adj:
-            if node in self.adj:
-                score['nodes'] += 1
-                a, b = self.compare_edges(g.adj[node], self.adj[node])
-                score['edges'] += a
-                match[node] = b
-
-        return (score['nodes'] / (1 + len(g.adj))) + score['edges'], match
         # return score
 
     def __repr__(self):
