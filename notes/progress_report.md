@@ -27,25 +27,34 @@
 - [ ] Try the approach on other QA datasets?
 - [ ] Look for other Scientific corpora.
 - [ ] Synonyms?
-- [ ] Entity Recognition and scraping the webpages?
-- [ ] Embeddings: Wordnet, Bert?
-- [ ] Try the stuff mentioned in report?
-- [ ] Negation?
-- [x] Whether the option itself is true or not?
-- [x] qa graph should include a seperate graph for option and hypothesis.
+- [ ] Entity Recognition and scraping the web pages?
+- [ ] Embeddings: Word net, Bert?
+- [ ] Can we use Clause IE?
+- [x] Try the stuff mentioned in report?   
+    - [x] Negation   
+    - [x] Whether the option itself is true or not?
+- [x] qa graph should include a separate graph for option and hypothesis.
 - [x] Optimizations. 
     - [x] Parallelize the qa graph generation.
-    - [x] Seperate GSA class.
+    - [x] Separate GSA class.
 - [ ] Go through the analysis again make changes if necessary.
 - [ ] Create a open website where others can do the same. (For concrete analysis and remove bias.)
-- [ ] Can we use Clause IE?
-- [ ] Focus on LM + Multihop
+- [ ] Can we use POS, Dependency Parsing?
+- [ ] Focus on LM + Multi hop
 - [ ] Better Hypothesis?
 
+#### Negation
+
+- Negation by adding "is not" after every option in the hypothesis. Doesn't seem to make any difference?
+    + No effect on graph? 
+        * "Glass is transparent" -> Yield Triplet
+        * "Glass is not transparent" -> No Triplet
+
+- Better way to negate questions?
 
 #### Slight Improvement: 29.0031
 
-- Slight modification in normalizing edge labels score in GSA.
+- Modification in normalizing edge labels score in GSA.
 - Score changed from 28.36 to 29.0031
 
 #### Whether the option itself is true or not?
