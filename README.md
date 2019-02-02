@@ -113,8 +113,7 @@ python arc_solvers/run.py train \
 {
     "id":"Mercury_SC_415702",
     "question": {
-       "stem":"George wants to warm his hands quickly by rubbing them. Which skin surface will
-               produce the most heat?",
+       "stem":"George wants to warm his hands quickly by rubbing them. Which skin surface will produce the most heat?",
        "choices":[
                   {"text":"dry palms","label":"A"},
                   {"text":"wet palms","label":"B"},
