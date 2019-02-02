@@ -16,6 +16,53 @@
 - [Links to Analysis](https://docs.google.com/spreadsheets/d/1SFGfdhZeLVZi3Ig0KNSiaEZJFSpyz4lwKqBzUCizEkE/edit?usp=sharing)
 
 ---
+
+## Tasks
+
+- [ ] Training Questions  
+- [ ] Annotate with entities (Entity Match is more important)
+- [ ] Extract Entities from the textbook
+- [ ] Form Better Hypothesis (Wh)
+- [ ] Fact checks
+- [ ] Try the approach on other QA datasets?
+- [ ] Look for other Scientific corpora.
+- [ ] Synonyms?
+- [ ] Entity Recognition and scraping the webpages?
+- [ ] Embeddings: Wordnet, Bert?
+- [ ] Try the stuff mentioned in report?
+- [ ] Negation?
+- [x] Whether the option itself is true or not?
+- [x] qa graph should include a seperate graph for option and hypothesis.
+- [x] Parallelize the qa graph generation.
+- [ ] Go through the analysis again make changes if necessary.
+- [ ] Create a open website where others can do the same. (For concrete analysis and remove bias.)
+- [ ] Can we use Clause IE?
+- [ ] Focus on LM + Multihop
+- [ ] Better Hypothesis?
+
+#### Whether the option itself is true or not?
+
+- How to check this?
+    + Generate Graph for the option statement alone.
+    + Run the GSA to see how much this graph matches with the corpus graph.
+    + Higher GSA score --> More in common with corpus --> Higher Probability of the option to be true.
+
+- Issues and corresponding approach:
+    - Makes sense only if option itself is a proper sentence.
+        + Assumption: Option with less than 3 words will rarely form complete sentence.
+        + So do this only if all options have more than 3 words.
+
+    - Stanford openIE might return no triplets i.e no graph.
+        + So do this only if all options have non null graphs.
+
+
+
+#### Parallelize Code
+
+- Parallely create graphs for question hypothesis.
+- Reduced time from 1 hour 21 minutes to 5 minutes.
+- Generate graph for each option as well.
+
 ### 24th Jan 2019
 #### TODOs
 
