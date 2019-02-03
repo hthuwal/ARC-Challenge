@@ -5,6 +5,7 @@ nltk_stopwords = nltk.corpus.stopwords.words('english')
 # nlp = spacy.load('en_core_web_sm')
 nlp = spacy.load('en_core_web_lg')
 
+
 class GSA(object):
 
     @staticmethod

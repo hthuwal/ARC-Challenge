@@ -85,8 +85,8 @@ for question_id in tqdm(qa_graphs, ascii=True):
         matches[key]['graph'] = hypothesis_match
         matches[key]['hypothesis'] = questions[question_id][1][key]
         matches[key]['option'] = questions[question_id][2][key]
-        
-        scores[question_id]["options"][key] = hypo_scores[key] 
+
+        scores[question_id]["options"][key] = hypo_scores[key]
 
     # Try to incorporate correctness of the options
 
