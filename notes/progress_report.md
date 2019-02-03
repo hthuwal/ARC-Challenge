@@ -42,6 +42,28 @@
 - [ ] Can we use POS, Dependency Parsing?
 - [ ] Focus on LM + Multi hop
 - [ ] Better Hypothesis?
+#### Glove Embeddings
+
+- Use embedding similarity as an alternative to Jaccard similarity.
+    + Smaller Glove Model
+        * Took around 2 minutes
+        * **score reduces to 27.72%.**
+
+    + Larger Glove Model
+        - Increases the prediction time drastically from mere seconds to 12-13 hours.
+        - **Model is Running.**
+
+- Use embedding similarity to look for similar nodes instead of just exact match of nodes?
+    + Smaller Glove Model
+        + For every node in hypothesis graph we have to find similarity with every node in corpus graph (`2 x 10`<sup>`7`</sup>) nodes.
+            + Approx time: 1.1 hour for each node in hypothesis graph.  
+
+    This approach doesn't seem to be feasible. 
+
+        + Possible solution:
+            * Preprocess the graph to collapse nodes with high similarity.
+            * Hope to bring down the number of nodes in corpus by some orders of magnitude.
+
 
 #### Negation
 
@@ -85,13 +107,13 @@
 
 ##### Parallelize Option graph generation Code
 
-- Parallely create graphs for question hypothesis.
+- Multiprocessing: create graphs for question hypothesis.
 - Reduced time from 1 hour 21 minutes to 5 minutes.
 - Generate graph for each option as well.
 
-##### Seperate GSA from graph
+##### Separate GSA from graph
 
-- Seperate GSA class 
+- Separate GSA class. 
 - Allow modification of GSA without reloading graph.
 
 ### 24th Jan 2019
