@@ -19,29 +19,29 @@
 
 ## Tasks
 
-- [ ] Training Questions  
-- [ ] Annotate with entities (Entity Match is more important)
-- [ ] Extract Entities from the textbook
-- [ ] Form Better Hypothesis (Wh)
-- [ ] Fact checks
-- [ ] Try the approach on other QA datasets?
 - [ ] Look for other Scientific corpora.
-- [ ] Synonyms?
 - [ ] Entity Recognition and scraping the web pages?
-- [ ] Embeddings: Word net, Bert?
-- [ ] Can we use Clause IE?
+- [x] Embeddings: Glove
+- [x] Something other than Stanford openIE?
+    - [x] StuffIE?   
+    - [x] clausIE?
+    - [x] openIE (Not feasible) 
 - [x] Try the stuff mentioned in report?   
     - [x] Negation   
     - [x] Whether the option itself is true or not?
-- [x] qa graph should include a separate graph for option and hypothesis.
+- [x] QA graph should include a separate graph for option and hypothesis.
 - [x] Optimizations. 
-    - [x] Parallelize the qa graph generation.
+    - [x] Parallelize the QA graph generation.
     - [x] Separate GSA class.
+- [ ] Try GSA on other QA datasets?
+    - Squad: Paragraph based QA
 - [ ] Go through the analysis again make changes if necessary.
-- [ ] Create a open website where others can do the same. (For concrete analysis and remove bias.)
-- [ ] Can we use POS, Dependency Parsing?
+    - [ ] Create a open website where others can do the same. (For concrete analysis and to remove bias.)
 - [ ] Focus on LM + Multi hop
 - [ ] Better Hypothesis?
+- [ ] Training Questions  
+
+
 #### Glove Embeddings
 
 - Use embedding similarity as an alternative to Jaccard similarity.
