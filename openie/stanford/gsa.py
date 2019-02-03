@@ -22,7 +22,7 @@ class GSA(object):
                 score += max(0, (1 - nltk.jaccard_distance(set(ea), set(eb))))  # jaccard_distance based on each character as element
                 # score += max(0, (1 - nltk.jaccard_distance(set(ea.split()), set(eb.split()))))  # jaccard_distance based on each character as element
                 # score += GSA.compare_strings(ea, eb)
-        return score / (1 + len(e_a_list) * len(e_b_list))
+        return score / (1 + len(e_a_list))
 
     @staticmethod
     def compare_edges(e_a, e_b):
