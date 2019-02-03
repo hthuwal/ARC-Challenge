@@ -8,6 +8,8 @@ import dill as pickle
 
 qa_graphs = pickle.load(open(sys.argv[1], "rb"))
 out_file = sys.argv[2]
+seperator = "#" * 79
+
 
 def graph_to_triplets(g):
     triplets = []
@@ -19,26 +21,19 @@ def graph_to_triplets(g):
     return triplets
 
 
+questions = {}
 with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file, open(out_file, "w") as out:
     for line in in_file:
         line = json.loads(line)
         qid = line['id']
         question = line['question']['stem']
         org_ques = question
-        correct_answer = line['answerKey']
-        options_text = {}
+        options = {}
 
         for choice in line['question']['choices']:
             label = choice['label']
-            if label not in options_text:
-                options_text[label] = choice['text']
-
-        options = {}
-        options['A'] = options_text['A'] if 'A' in options_text else ""
-        options['B'] = options_text['B'] if 'B' in options_text else ""
-        options['C'] = options_text['C'] if 'C' in options_text else ""
-        options['D'] = options_text['D'] if 'D' in options_text else ""
-        options['E'] = options_text['E'] if 'E' in options_text else ""
+            if label not in options:
+                options[label] = choice['text']
 
         hypothesis = {}
         question = utils.replace_wh_word_with_blank(question)
@@ -47,10 +42,19 @@ with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", 
             if options[option] != "":
                 hypothesis[option] = utils.create_hypothesis(question, options[option])
 
+        questions[line['id']] = [question, hypothesis, options]
+
+        print(seperator)
+        print(" " * 28, qid)
+        print(seperator)
         print("\nQuestion: ", org_ques)
-        triplets = {key: graph_to_triplets(value) for key, value in qa_graphs[qid]['option_graphs'].items()}
+
+        row = qid + "\t"
+        row += org_ques + "\t"
+        triplets = {key: graph_to_triplets(value) for key, value in qa_graphs[qid]['hypothesis_graphs'].items()}
         trips = {}
-        row = org_ques + "\t"
+
+        count = 0
         for key in hypothesis:
             row += options[key] + "\t"
             print("\n", key, ":", options[key], "\n")
@@ -62,5 +66,10 @@ with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", 
                 print(subj, "---", pred, "-->", obj)
                 trips += ("%s --- %s --> %s || " % (subj, pred, obj))
             row += trips + "\t"
+            print("")
+            count += 1
+
+        for i in range(5 - count):
+            row += "NA\tNA\tNA\t"
+
         out.write(row + "\n")
-        # input()
