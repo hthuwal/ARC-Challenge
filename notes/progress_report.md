@@ -17,10 +17,13 @@
 
 ---
 
-## Tasks
+### 3rd Feb 2019
+
+#### Tasks
 
 - [ ] Look for other Scientific corpora.
 - [ ] Entity Recognition and scraping the web pages?
+- [x] Analyze "wh" replacement method.
 - [x] Embeddings: Glove
 - [x] Something other than Stanford openIE?
     - [x] StuffIE?   
@@ -42,6 +45,24 @@
 - [ ] Training Questions  
 
 
+#### Wikipedia Scraper
+
+- In progress...
+
+#### Current hypothesis generation method
+
+- If a wh-word is found:
+    + Replace it with option.
+    + Replace the last question mark with "."
+    + Remove the key word "of the following" if present immediately after the wh-word.
+    + e.g Which of the following force ..." -> "**option** force ..."
+
+- If no wh-word is found and the question ends without a period/question, introduce the option at the end. 
+    - e.g. The gravitational force exerted by an object depends on its **option**
+
+- If all else fails, assume "this ?" indicates the place for option.
+    - e.g. Virtually every task performed by living organisms requires this?
+
 #### Glove Embeddings
 
 - Use embedding similarity as an alternative to Jaccard similarity.
@@ -60,9 +81,9 @@
 
     This approach doesn't seem to be feasible. 
 
-        + Possible solution:
-            * Preprocess the graph to collapse nodes with high similarity.
-            * Hope to bring down the number of nodes in corpus by some orders of magnitude.
+    + Possible solution:
+        * Preprocess the graph to collapse nodes with high similarity.
+        * Hope to bring down the number of nodes in corpus by some orders of magnitude.
 
 #### StuffIE and clauseIE
 
@@ -130,6 +151,8 @@
 
 - Separate GSA class. 
 - Allow modification of GSA without reloading graph.
+
+---
 
 ### 24th Jan 2019
 #### TODOs
