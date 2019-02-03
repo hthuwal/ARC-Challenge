@@ -64,6 +64,21 @@
             * Preprocess the graph to collapse nodes with high similarity.
             * Hope to bring down the number of nodes in corpus by some orders of magnitude.
 
+#### StuffIE and clauseIE
+
+- StuffIE
+    + [Link to Repo](https://gitlab.inf.unibz.it/rprasojo/stuffie)
+    + They do not provide a compiled jar file.
+    + Have to run maven to build the target file. 
+        * ~~Currently facing some connectivity issues.~~ 
+        * Connectivity issues have been resolved.
+    + Issues in building the project.
+
+- ClauseIE
+    + Their code gets stuck on some sentences. So can't run on the entire file.
+        * Stayed stuck on a line for about 10 hours.
+    + So running on each line of the corpus individually with a timeout of 5 seconds.
+    + **Status: Still Running.**
 
 #### Negation
 
