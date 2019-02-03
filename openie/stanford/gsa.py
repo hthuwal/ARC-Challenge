@@ -1,5 +1,9 @@
 import nltk
+import spacy
 
+nltk_stopwords = nltk.corpus.stopwords.words('english')
+# nlp = spacy.load('en_core_web_sm')
+nlp = spacy.load('en_core_web_lg')
 
 class GSA(object):
 
@@ -14,12 +18,27 @@ class GSA(object):
         return score / (1 + len(a))
 
     @staticmethod
+    def compare_strings_glove(a, b):
+        # tokens = nltk.tokenize.word_tokenize(a)
+        # tokens = [token for token in tokens if not token in nltk_stopwords]
+        # a = " ".join(tokens)
+
+        # tokens = nltk.tokenize.word_tokenize(b)
+        # tokens = [token for token in tokens if not token in nltk_stopwords]
+        # b = " ".join(tokens)
+
+        doc1 = nlp(a)
+        doc2 = nlp(b)
+        return doc1.similarity(doc2)
+
+    @staticmethod
     def compare_edge_labels(e_a_list, e_b_list):
         score = 0
         for ea in e_a_list:
             for eb in e_b_list:
+                score += GSA.compare_strings_glove(ea, eb)
                 # score += max(0, (1 - nltk.edit_distance(ea, eb) / max(len(ea), len(eb))))
-                score += max(0, (1 - nltk.jaccard_distance(set(ea), set(eb))))  # jaccard_distance based on each character as element
+                # score += max(0, (1 - nltk.jaccard_distance(set(ea), set(eb))))  # jaccard_distance based on each character as element
                 # score += max(0, (1 - nltk.jaccard_distance(set(ea.split()), set(eb.split()))))  # jaccard_distance based on each character as element
                 # score += GSA.compare_strings(ea, eb)
         return score / (1 + len(e_a_list))
