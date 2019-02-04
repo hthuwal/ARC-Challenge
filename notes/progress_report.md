@@ -16,6 +16,7 @@
 - [Links to Analysis](https://docs.google.com/spreadsheets/d/1SFGfdhZeLVZi3Ig0KNSiaEZJFSpyz4lwKqBzUCizEkE/edit?usp=sharing)
 - [Hypothesis-Graph.tsv](https://docs.google.com/spreadsheets/d/1qjjMSt8lsrKikZxatZhXPdUzi_dvqjhuPmzKaOmUc6M/edit?usp=sharing)
 - [Hypothesis-Graph.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
+- [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 ---
 
 ### 3rd Feb 2019
@@ -69,11 +70,13 @@
 - Use embedding similarity as an alternative to Jaccard similarity.
     + Smaller Glove Model
         * Took around 2 minutes
-        * **score reduces to 27.72%.**
+        * **score reduces to 27.72.**
 
     + Larger Glove Model
         - Increases the prediction time drastically from mere seconds to 12-13 hours.
-        - **Model is Running.**
+        - ~~**Model is Running.**~~
+        - **Update: Score: 28.32**
+        - Took: 14 Hours 3 minutes
 
 - Use embedding similarity to look for similar nodes instead of just exact match of nodes?
     + Smaller Glove Model
