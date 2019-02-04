@@ -14,7 +14,8 @@
         * 3GB file. Can't add this to the Google sheets
     + openIE + coref on ARC
 - [Links to Analysis](https://docs.google.com/spreadsheets/d/1SFGfdhZeLVZi3Ig0KNSiaEZJFSpyz4lwKqBzUCizEkE/edit?usp=sharing)
-
+- [Hypothesis-Graph.tsv](https://docs.google.com/spreadsheets/d/1qjjMSt8lsrKikZxatZhXPdUzi_dvqjhuPmzKaOmUc6M/edit?usp=sharing)
+- [Hypothesis-Graph.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
 ---
 
 ### 3rd Feb 2019
