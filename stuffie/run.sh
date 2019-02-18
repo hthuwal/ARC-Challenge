@@ -1,7 +1,11 @@
 echo "Compiling.."
 
 mvn compile
-
+cstatus=$?
 echo "Running"
 
-mvn exec:java -Dexec.mainClass=it.unibz.inf.stuffie.StuffieConsoleRunner
+if [ $cstatus -eq 0 ]; then
+    mvn exec:java -Dexec.mainClass=it.unibz.inf.stuffie.StuffieConsoleRunner
+else
+    echo "Compilation Failed.."
+fi
