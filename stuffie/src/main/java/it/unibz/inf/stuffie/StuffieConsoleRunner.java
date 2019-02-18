@@ -9,7 +9,9 @@ import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class StuffieConsoleRunner {
@@ -93,42 +95,51 @@ public class StuffieConsoleRunner {
 		System.out.println(str);
 	}
 
-	private static void run_on_file(String file, Stuffie stuffie)
+	private static void run_on_file(String corpus, String out_file, Stuffie stuffie)
 	{
 		BufferedReader reader;
+		BufferedWriter writer;
 		int num_of_exceptions = 0;
+		int num_of_lines= 0;
 		Mode m = getValidMode("PrintDependenyTree=DISABLED");
 		stuffie.setMode(m);
 		
 		try 
 		{
-			reader = new BufferedReader(new FileReader(file));
+			reader = new BufferedReader(new FileReader(corpus));
+			writer = new BufferedWriter(new FileWriter(out_file));
 			String line = reader.readLine().trim();
 			if(line.charAt(line.length() - 1) != '.')
 				line = line + ".";
 
 			while (line != null) 
 			{	
+				num_of_lines ++;
+
 				line = line.trim();
 				if(line.charAt(line.length() - 1) != '.')
 					line = line + ".";
-				
+	
 				try
 				{
 					if(!line.isEmpty())
-						System.out.println(stuffie.parseRelation(line));
+					{
+						String repr = stuffie.parseRelation(line);
+						if(!repr.isEmpty())
+							writer.write("###\n" + repr + "\n");
+					}
 				}
 				catch (Exception e)
 				{
 					num_of_exceptions ++;
 				}
 				line = reader.readLine();
+				System.out.printf("\rLines Parsed: " + Integer.toString(num_of_lines) + ", Number of Exceptions: " + Integer.toString(num_of_exceptions));
 			}
 			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		print("Number of Exceptions: " + Integer.toString(num_of_exceptions));
 	}
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException,
@@ -146,10 +157,11 @@ public class StuffieConsoleRunner {
 			if(text.isEmpty()) {
 				System.out.println("Empty line. Please try again.");
 			}
-			else if(text.substring(0, 3).equals("<f>")){
+			else if(text.substring(0, 3).equals("<f>"))
+			{
 				print("Reading text from file and Running stuffIE over lines..");
-				String file = text.substring(3).trim();
-				run_on_file(file, stuffie);
+				String[] arr = text.split(" ");
+				run_on_file(arr[1], arr[2], stuffie);
 			}
 			else if(text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') {
 				text = text.substring(1, text.length() - 1);
