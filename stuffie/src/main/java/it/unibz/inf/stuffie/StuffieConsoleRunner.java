@@ -8,6 +8,10 @@ import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
 public class StuffieConsoleRunner {
 
 	private static LinkedHashMap<String, String> commands = new LinkedHashMap<>();
@@ -84,6 +88,42 @@ public class StuffieConsoleRunner {
 		return null;
 	}
 
+	private static void print(String str)
+	{
+		System.out.println(str);
+	}
+
+	private static void run_on_file(String file, Stuffie stuffie)
+	{
+		BufferedReader reader;
+		int num_of_exceptions = 0;
+		try 
+		{
+			reader = new BufferedReader(new FileReader(file));
+			String line = reader.readLine().trim();
+			if(line.charAt(line.length() - 1) != '.')
+				line = line + ".";
+
+			while (line != null) 
+			{
+				try
+				{
+					line = reader.readLine().trim();
+					System.out.println(stuffie.parseRelation(line));
+				}
+				catch (Exception e)
+				{
+					print(line);
+					num_of_exceptions ++;
+				}
+			}
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		print("Number of Exceptions: " + Integer.toString(num_of_exceptions));
+	}
+
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException {
 
@@ -98,6 +138,11 @@ public class StuffieConsoleRunner {
 			text = reader.nextLine();
 			if(text.isEmpty()) {
 				System.out.println("Empty line. Please try again.");
+			}
+			else if(text.substring(0, 3).equals("<f>")){
+				print("Reading text from file and Running stuffIE over lines..");
+				String file = text.substring(3).trim();
+				run_on_file(file, stuffie);
 			}
 			else if(text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') {
 				text = text.substring(1, text.length() - 1);
