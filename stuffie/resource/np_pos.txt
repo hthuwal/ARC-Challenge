@@ -1,0 +1,10 @@
+NN
+NNP
+NNS
+NNPS
+JJ
+JJR
+CD
+PRP
+DT
+IN

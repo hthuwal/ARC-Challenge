@@ -1,0 +1,223 @@
+aboard (place)
+about
+	<_> <TIME> (time)
+	<_> <NN> (general details)
+above
+	<V ranking> <_> (ranking)
+	<V placement> <_> (place)
+	<_> <PLACE|tangible object> (place)
+	<_> <untangible object> (situation)
+across
+	<_> <PLACE> (place)
+	<_> <TIME> (time)
+after
+	<_> <TIME|EVENT> (time)
+	<_> <PLACE> (place)
+	<V SYN run|go; WO obj> <_> (purpose)
+	<_> all (opposition)
+	<_> <PERSON> (ambiguous) (time|place|purpose|ranking)
+against
+	<V placement> <_> (place)
+	<V otherwise> <_> (opposition)
+along (place)
+alongside (place)
+although, though (opposition)
+amid, amids
+	<_> <PLACE> (place)
+	<_> <NN> (situation)
+among, amongst
+	<_> <PLACE> (place)
+	<_> <NN> (group)
+apropos (general details)
+around (place)
+as
+	<_> <EVENT> (ambiguous) (time|reason)
+	<JJ> <_> <NN> (comparison)
+	<_> <NN> (group)
+astride (manner)
+at
+	<_> <TIME> (time)
+	<_> <PLACE> (place)
+	<_> <NN> (ambiguous) (place|reason|situation|number|direction)
+atop, ontop (place)
+bar (exception)
+because (reason)
+before
+	<_> <TIME|EVENT> (time)
+	<V placement|V performance> <_> (place)
+	<_> <untangible object> (ranking)
+	<_> (ambiguous) (time|place|ranking)
+behind
+	<_> <PLACE|tangible object> (place)
+below, beneath, underneath
+	<_> <PLACE|tangible object> (place)
+	<_> <intangible object> (situation)
+beside
+	<_> <PLACE|tangible object> (place)
+	<_> <NN> (conjunction)
+besides (ambiguous) (exception|conjunction) 
+between
+	<_> <PLACE> and <PLACE> (place)
+	<_> (ambiguous) (group|place|manner|situation)
+beyond
+	<_> <PLACE> and <PLACE> (place)
+	<_> (ambiguous) (place|situation|time|manner|conjunction)
+but
+	<_> <NN> (exception)
+	<_> <phrase> (opposition)
+by
+	<_> <PLACE> (place)
+	<_> <TIME> (time)
+	<_> <VBG> (manner)
+circa (time)
+come (time)
+despite (opposition)
+down (place)
+during (time)
+except, apart from (exception)
+for
+	<V placement> <_> (place)
+	<V making|V gifting> <_> (recipient)
+	<_> <TIME> (time)
+	<_> <VBG> (purpose)
+	<_> <NN> (reason)
+from
+	<V receiving> <_> (source)
+	<V placement> <_> (place)
+if (condition)
+in
+	<_> <PLACE> (place)
+	<_> <TIME> (time)
+	<V placement> <_> <ORGANIZATION> (place)
+	<_> <ORGANIZATION|noun indicating group> (group)
+	<_> <NN> (ambiguous) (situation|manner)
+inside (place)
+into
+	<_> <PLACE> (place)
+	<_> <tangible object> (ambiguous) (place|opposition)
+	<TIME> <_> <intangible object> (time)
+	<_> <intangible object> (general details) 
+less (ambiguous)
+like (ambiguous) (general details|example)
+minus (exclusion)
+near, close to
+	<_> <PLACE> (place)
+notwithstanding (ambiguous)
+of (ambiguous)
+off
+	<_> <PLACE> (location)
+	<_> (ambiguous)
+on
+	<_> <PLACE> (place)
+	<_> <TIME> (time)
+onto (place)
+opposite (never as facet)
+out (never as facet)
+outside (place)
+over
+	<_> <PLACE|tangible object> (place)
+	<_> ambiguous
+past
+	<_> <PLACE|tangible object> (place)
+	<_> <TIME> (time)
+per (ambiguous)
+plus (ambiguous)
+post (time)
+pre (time)
+pro (never as facet)
+short (never as facet)
+since
+	<_> <TIME> (time)
+	<_> ambiguous
+so (consequence)
+than (comparison)
+through
+	<_> <PLACE|tangible object> (place)
+	<_> <intangible object> (manner)
+throughout (manner)
+till (time)
+to
+	<_> <V> (purpose)
+toward, towards
+	<V placement> <_> (place)
+	<_> <PERSON> (situation)
+	<_> <intangible object> (purpose)
+under (see below)
+	<_> ambiguous
+underneath
+	<_> <Place|tangible object> (place)
+	<_> <intangible object> (ambiguous)
+unless (exception)
+unlike (opposition)
+until
+	<_> <TIME> (time)
+	<_> <PLACE|tangible object> (place)
+unto
+	<_> <PLACE|tangible object> (place)
+	<_> <PERSON> (ambiguous)
+up (never as facet)
+upon
+	<_> <TIME|EVENT> (time)
+	<_> <PLACE|tangible object> (place)
+upside (ambiguous)
+versus (opposition)
+via
+	<_> <PLACE> (place)
+	<_> <NN> (manners)
+whenever (ambiguous) (time/comparison)
+whereas (opposition)
+while (ambiguous)
+with (ambiguous)
+within
+	<_> <PLACE> (place)
+	<_> <TIME> (time)
+	<_> <NN> (manner)
+without (exclusion)
+worth (ambiguous)
+yet (opposition)
+according to (attribution)
+across from (place)
+adjacent to (place)
+ahead of
+	<_> <TIME|EVENT> (time)
+	<_> <PLACE|tangible object> (place)
+apart from, aside from, except for, other than (exception)
+as for, as regards (general details)
+as if, as though, just as, rather than (comparison)
+as of (time)
+as per (attribution)
+back to
+	<_> <TIME|EVENT> (time)
+	<_> <PLACE|tangible object> (place)
+because of, due to, owing to, thanks to (reason)
+even if, only if (condition)
+far from
+	<_> <PLACE|tangible object> (place)
+	<_> <NN> (situation)
+inside of
+	<_> <PLACE|tangible object> (place)
+	<_> <NN> (group)
+instead of, irrespective of, regardless of, without regard for, without considering (opposition)
+left of (place)
+near to (place)
+next to (place)
+opposite of (opposition)
+opposite to (place) 
+out from
+	<_> <PLACE|tangible object> (place)
+	<_> <NN> (group)
+out of
+	<_> <PLACE|tangible object> (place)
+	<_> (ambiguous)
+outside of
+	<_> <PLACE|tangible object> (place)
+	<_> (ambiguous)
+prior to (time)
+pursuant to (attribution)
+right of (place)
+subsequent to (time)
+such as (example)
+up to
+	<_> <TIME|EVENT> (time)
+	<_> <PLACE|tangible object> (place)
+so that (ambiguous) (reason|purpose)

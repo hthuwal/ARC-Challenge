@@ -1,0 +1,4 @@
+Help-h-List all commands
+Quit-q-Exit StuffIE
+Show modes-sm-Show current active modes
+Mode=VALUE-Change a mode value

@@ -1,0 +1,5 @@
+aux,C,
+auxpass,C,
+advmod,C,R,RB
+neg,C
+compound:prt,C

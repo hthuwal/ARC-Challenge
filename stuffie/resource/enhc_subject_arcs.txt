@@ -1,0 +1,4 @@
+nsubj:xsubj,OUT
+nsubjpass:xsubj,OUT
+csubj:xsubj,OUT
+csubjpass:xsubj,OUT
