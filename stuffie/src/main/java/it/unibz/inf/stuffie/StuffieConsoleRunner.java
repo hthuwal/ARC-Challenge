@@ -105,17 +105,21 @@ public class StuffieConsoleRunner {
 				line = line + ".";
 
 			while (line != null) 
-			{
+			{	
+				line = line.trim();
+				if(line.charAt(line.length() - 1) != '.')
+					line = line + ".";
+				
 				try
 				{
-					line = reader.readLine().trim();
-					System.out.println(stuffie.parseRelation(line));
+					if(!line.isEmpty())
+						System.out.println(stuffie.parseRelation(line));
 				}
 				catch (Exception e)
 				{
-					print(line);
 					num_of_exceptions ++;
 				}
+				line = reader.readLine();
 			}
 			reader.close();
 		} catch (IOException e) {
