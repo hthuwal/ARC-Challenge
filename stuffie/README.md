@@ -26,6 +26,19 @@ StuffIE extracts:
 
 StuffIE uses the [Stanford CoreNLP tools](https://github.com/stanfordnlp/CoreNLP) and licensed under the GNU General Public License (v3 or later).
 
+### How to run?
+
+#### Compile
+
+```bash
+mvn compile
+```
+
+#### Run
+
+```bash
+ mvn exec:java -Dexec.mainClass=it.unibz.inf.stuffie.StuffieConsoleRunner
+```
 ### Quick start
 You need to have Java 1.8 and a compatible Maven installed. Clone a copy of StuffIE's repo and run Maven to build the artifacts. You can do this in your IDE or from your terminal. See `StuffIEConsoleRunner.java` to see an example of how to run StuffIE.
 
