@@ -97,6 +97,9 @@ public class StuffieConsoleRunner {
 	{
 		BufferedReader reader;
 		int num_of_exceptions = 0;
+		Mode m = getValidMode("PrintDependenyTree=DISABLED");
+		stuffie.setMode(m);
+		
 		try 
 		{
 			reader = new BufferedReader(new FileReader(file));
