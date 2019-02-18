@@ -75,7 +75,7 @@ public class StuffieConsoleRunner {
 
 		Class<Enum> cls;
 		try {
-			cls = (Class<Enum>) Class.forName("it.inf.unibz.stuffie.Mode$" + mode[0]);
+			cls = (Class<Enum>) Class.forName("it.unibz.inf.stuffie.Mode$" + mode[0]);
 			System.out.println("Succesfully changed " + mode[0] + " to " + mode[1]);
 			return (Mode) Enum.valueOf(cls, mode[1]);
 		} catch (ClassNotFoundException e) {
