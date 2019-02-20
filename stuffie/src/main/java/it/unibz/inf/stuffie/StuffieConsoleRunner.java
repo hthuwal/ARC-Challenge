@@ -201,10 +201,13 @@ public class StuffieConsoleRunner {
 
 		Scanner reader = new Scanner(System.in);
 		String text = "";
-		while (!text.equals("q")) {
+		while (!text.equals("q")) 
+		{
 			System.out.println("Enter text to extract, or <h> for help: ");
 			text = reader.nextLine();
-			if(text.isEmpty()) {
+		
+			if(text.isEmpty()) 
+			{
 				System.out.println("Empty line. Please try again.");
 			}
 			else if(text.substring(0, 3).equals("<f>"))
@@ -213,31 +216,46 @@ public class StuffieConsoleRunner {
 				String[] arr = text.split(" ");
 				run_on_file(arr[1], args);
 			}
-			else if(text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') {
+			else if(text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') 
+			{
 				text = text.substring(1, text.length() - 1);
-				if (text.contains("=")) {
+				if (text.contains("=")) 
+				{
 					Mode m = getValidMode(text);
 					if (m != null)
 						stuffie.setMode(m);
-				} else {
+				} 
+				else 
+				{
 					String textLower = text.toLowerCase();
-					if (!loweredKeyCommands.containsKey(textLower) && !shorthandCommands.containsKey(textLower)) {
+					if (!loweredKeyCommands.containsKey(textLower) && !shorthandCommands.containsKey(textLower)) 
+					{
 						System.out.println("Invalid command: " + text + ". Enter <h> to list all valid commands.\n");
-					} else if (textLower.equals("help") || textLower.equals("h")) {
-						for (String command : commands.keySet()) {
-							if (shorthandCommands.containsKey(commands.get(command))) {
+					} 
+					else if (textLower.equals("help") || textLower.equals("h")) 
+					{
+						for (String command : commands.keySet()) 
+						{
+							if (shorthandCommands.containsKey(commands.get(command))) 
+							{
 								System.out.println("\t<" + command + "> <" + commands.get(command) + ">\t"
 										+ shorthandCommands.get(commands.get(command)) + "\n");
-							} else {
+							} 
+							else 
+							{
 								System.out.println("\t<" + command + ">\t" + commands.get(command) + "\n");
 							}
 						}
 						System.out.println(validModesAndVals.toString() + "\n");
-					} else if (textLower.equals("show modes") || textLower.equals("sm")) {
+					} 
+					else if (textLower.equals("show modes") || textLower.equals("sm")) 
+					{
 						System.out.println("Current active modes: " + stuffie.currentModesInString() + ".\n");
 					}
 				}
-			} else {
+			} 
+			else 
+			{
 				System.out.println(stuffie.parseRelation(text));
 			}
 		}
