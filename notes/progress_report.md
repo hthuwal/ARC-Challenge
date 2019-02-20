@@ -20,6 +20,31 @@
 ---
 
 ### 20th Feb 2019
+### StuffIE Format Explained.
+
+- A relation `r = <i, $\mu$, F>
+
+
+### StuffIE Format Explained.
+- A relation `r = <i, mr, F>`
+- **mr**: Main relation is a triple of main fact.
+  - Form: `<s, p, o>`
+    - subject, predicate and object
+- **F**: F is a facet
+  - a set of extra details of the main facts
+  - Form: <c<sub>j</sub>, f<sub>j</sub>>
+    - c<sub>j</sub>: A facet connector
+      - E.g: of, at, on, in case of...
+- **s**, **o** and **f<sub>j</sub>** are either noun phrases or reference to other relations.
+- **s**, **o** and **f<sub>j</sub>** can also be reference qualifier whenever it is a dependent clause.
+  -  i.e. that the piece of information represented by r is dependent towards s<sup>1</sup> , o<sup>1</sup> , or f<sub>j</sub><sup>1</sup> of some other relation r<sup>1</sup> . 
+  - Form: `<ref#it>`, where i is the id of the referred relation and t is the referral target.
+- **p**
+  - Either a verb phrase.
+  - or clause connector if **s** or **p** is a reference to other relations.
+- A verb/connector can be synthesized if the explicit one cannot be found.
+  - Represented by `<word>`
+- Whenever a verb or a connector is expected to be there but can neither be found or synthesized, `<_>` is used to represent an empty placeholder for them.
 
 ### StuffIE (Java)
 
