@@ -167,50 +167,23 @@ public class StuffieConsoleRunner {
 		System.out.println(str);
 	}
 
-	private static void run_on_file(String corpus, String out_file, Stuffie stuffie)
+	private static void run_on_file(String source_dir, Stuffie stuffie)
 	{
-		BufferedReader reader;
-		BufferedWriter writer;
-		int num_of_exceptions = 0;
-		int num_of_lines= 0;
 		Mode m = getValidMode("PrintDependenyTree=DISABLED");
 		stuffie.setMode(m);
-		
-		try 
+		File f = new File(source_dir);
+		ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
+		ArrayList<MyThread> threads = new ArrayList<MyThread>();
+		for (int i=0; i<files.size(); i++) {
+			String file = files.get(i).getPath();
+			threads.add(new MyThread(i, file, stuffie));
+		}
+		while(true)
 		{
-			reader = new BufferedReader(new FileReader(corpus));
-			writer = new BufferedWriter(new FileWriter(out_file));
-			String line = reader.readLine().trim();
-			if(line.charAt(line.length() - 1) != '.')
-				line = line + ".";
-
-			while (line != null) 
-			{	
-				num_of_lines ++;
-
-				line = line.trim();
-				if(line.charAt(line.length() - 1) != '.')
-					line = line + ".";
-	
-				try
-				{
-					if(!line.isEmpty())
-					{
-						String repr = stuffie.parseRelation(line);
-						if(!repr.isEmpty())
-							writer.write("###\n" + repr + "\n");
-					}
-				}
-				catch (Exception e)
-				{
-					num_of_exceptions ++;
-				}
-				line = reader.readLine();
-				System.out.printf("\rLines Parsed: " + Integer.toString(num_of_lines) + ", Number of Exceptions: " + Integer.toString(num_of_exceptions));
-			}
-			reader.close();
-		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.print("\r");
+			System.out.flush();
+			String line = Integer.toString(MyThread.num_of_exceptions.get()) + "," + Integer.toString(MyThread.num_of_lines.get());
+			System.out.print(line);
 		}
 	}
 
