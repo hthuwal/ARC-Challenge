@@ -8,8 +8,6 @@ import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 import java.io.File;
-import java.nio.file.Path;
-import java.util.stream.Stream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.BufferedReader;
@@ -27,12 +25,14 @@ class MyThread implements Runnable{
 	Thread t;
 	String source_file;
 	String out_file;
+	String exceptions_file;
 	
 	MyThread (int id, String file, Stuffie stuffie)
 	{
 		this.id = id;
 		this.source_file = file;
 		this.out_file = file + ".openie";
+		this.exceptions_file = file + ".exceptions";
 		this.stuffie = stuffie;
 	    t = new Thread(this, Integer.toString(id));
 		System.out.println("New thread: " + t);
@@ -43,11 +43,13 @@ class MyThread implements Runnable{
 	{
 		BufferedReader reader;
 		BufferedWriter writer;
+		BufferedWriter errors;
 		
 		try 
 		{
 			reader = new BufferedReader(new FileReader(source_file));
 			writer = new BufferedWriter(new FileWriter(out_file));
+			errors = new BufferedWriter(new FileWriter(exceptions_file));
 			String line = reader.readLine();
 
 			while (line != null) 
@@ -72,8 +74,9 @@ class MyThread implements Runnable{
 				}
 				catch (Exception e)
 				{
-					System.out.println(line);
 					num_of_exceptions.incrementAndGet();
+					errors.write(line+"\n");
+					errors.flush();
 				}
 				line = reader.readLine();
 			}
