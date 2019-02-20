@@ -1,3 +1,6 @@
+rm parts/*.openie
+rm parts/*.exceptions
+
 echo "Compiling.."
 
 mvn compile
