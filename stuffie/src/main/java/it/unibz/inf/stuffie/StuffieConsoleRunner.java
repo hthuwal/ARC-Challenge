@@ -8,11 +8,87 @@ import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import java.util.concurrent.atomic.AtomicInteger;
+
+class MyThread implements Runnable{
+	int id;
+	static AtomicInteger num_of_exceptions = new AtomicInteger(0);
+	static AtomicInteger num_of_lines = new AtomicInteger(0);
+	Stuffie stuffie;
+	Thread t;
+	String source_file;
+	String out_file;
+	
+	MyThread (int id, String file, Stuffie stuffie)
+	{
+		this.id = id;
+		this.source_file = file;
+		this.out_file = file + ".openie";
+		this.stuffie = stuffie;
+	    t = new Thread(this, Integer.toString(id));
+		System.out.println("New thread: " + t);
+		t.start();
+	}
+
+	public void run()
+	{
+		BufferedReader reader;
+		BufferedWriter writer;
+		
+		try 
+		{
+			reader = new BufferedReader(new FileReader(source_file));
+			writer = new BufferedWriter(new FileWriter(out_file));
+			String line = reader.readLine();
+
+			while (line != null) 
+			{	
+				num_of_lines.incrementAndGet();
+
+				line = line.replaceAll("[^A-Za-z0-9]", " ");
+				line = line.trim();
+				if(line.charAt(line.length() - 1) != '.')
+					line = line + ".";
+	
+				try
+				{
+					if(!line.isEmpty())
+					{
+						String repr = stuffie.parseRelation(line);
+						if(!repr.isEmpty())
+						{
+							writer.write("###\n" + repr + "\n");
+							writer.flush();
+						}
+					}
+				}
+				catch (Exception e)
+				{
+					System.out.println(line);
+					num_of_exceptions.incrementAndGet();
+				}
+				line = reader.readLine();
+			}
+			reader.close();
+		} 
+		catch (IOException e) {
+			e.printStackTrace();
+		} 
+	}
+}
 
 public class StuffieConsoleRunner {
 
