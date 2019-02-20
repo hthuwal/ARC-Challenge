@@ -21,9 +21,7 @@
 
 ### 20th Feb 2019
 
-### Graphical Representation
-
-#### A Recursive definition
+#### A Recursive Graphical Representation
 - **Graph**
   1. A noun phrase Node
   2. or and edge of the form
@@ -33,8 +31,10 @@
 
 - Graph Matching might become complicated?   
   - TODO: Figureout the matching algorithm.
- 
-### StuffIE Format Explained.
+
+---
+
+#### StuffIE Output Format Explained.
 - A relation `r = <i, mr, F>`
 
 - **mr**: Main relation is a triple of main fact.   
@@ -63,9 +63,8 @@
 
 - Whenever a verb or a connector is expected to be there but can neither be found or synthesized, `<_>` is used to represent an empty placeholder for them.
 
-### StuffIE (Java)
-
-#### Multithreading in Java
+---
+#### StuffIE: Multithreading in Java
 
 - Learnt how to do multithreading in java.
 - `Runnable` class that runs as thread on a single file.
@@ -83,7 +82,7 @@
     - Status: Not Resolved.
 ---
 
-#### Problem 2
+#### StuffIE: Problem 2
 
 - Throws an exception even on some simple sentences.
 - **Sentence**: It was more grey than white. 
@@ -101,13 +100,13 @@
 - Ran the code on the corpus line by line.
 - The code didn't complete even after running for 28 hours.
 - Try to parallelize the code.
----
+
 ### 15th Feb 2019
 
 - Mid term Presentation.
   
 ---
-#### Problem 1
+#### Stuffie: Problem 1
 
 - The code by default prints the dependency tree.   
 - There is a functionality to disable to it but this doesn't seem to work.  
@@ -130,7 +129,7 @@
 - Only a console application is provided that takes a line as input one at a time.
 
 ---
-### ClausIE 
+#### ClausIE 
 
 + Their code gets stuck on some sentences. So can't run on the entire file.
     * Stayed stuck on a line for about 10 hours.
@@ -223,7 +222,7 @@
     + Their code gets stuck on some sentences. So can't run on the entire file.
         * Stayed stuck on a line for about 10 hours.
     + So running on each line of the corpus individually with a timeout of 5 seconds.
-    + **Status: Still Running.**
+    + ~~**Status: Still Running.**~~
 
 #### Negation
 
