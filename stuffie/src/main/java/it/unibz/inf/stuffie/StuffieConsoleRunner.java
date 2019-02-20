@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 class MyThread implements Runnable{
 	int id;
+	static int count = 0;
 	static AtomicInteger num_of_exceptions = new AtomicInteger(0);
 	static AtomicInteger num_of_lines = new AtomicInteger(0);
 	Stuffie stuffie;
@@ -29,6 +30,7 @@ class MyThread implements Runnable{
 	
 	MyThread (int id, String file, Stuffie stuffie)
 	{
+		count ++;
 		this.id = id;
 		this.source_file = file;
 		this.out_file = file + ".openie";
@@ -85,6 +87,7 @@ class MyThread implements Runnable{
 		catch (IOException e) {
 			e.printStackTrace();
 		} 
+		MyThread.count --;
 	}
 }
 
@@ -183,7 +186,7 @@ public class StuffieConsoleRunner {
 			String file = files.get(i).getPath();
 			threads.add(new MyThread(i, file, stuffie));
 		}
-		while (true) {
+		while (MyThread.count > 0) {
 			String line = Integer.toString(MyThread.num_of_lines.get()) + ","
 					+ Integer.toString(MyThread.num_of_exceptions.get());
 			System.out.print("\r" + line);
@@ -213,6 +216,8 @@ public class StuffieConsoleRunner {
 				print("Reading text from file and Running stuffIE over lines..");
 				String[] arr = text.split(" ");
 				run_on_file(arr[1], args);
+				print("");
+				text = "q";
 			}
 			else if(text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') 
 			{
