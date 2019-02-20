@@ -19,6 +19,78 @@
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 ---
 
+### 20th Feb 2019
+
+### StuffIE (Java)
+
+#### Multithreading in Java
+
+- Learnt how to do multithreading in java.
+- `Runnable` class that runs as thread on a single file.
+- Split the corpus into 28 smaller files.
+  - Spawn 28 threads on each file.
+- **Status**: Running.
+- At this point there are still several execptions.
+  - **2.5k** out **44k** lines parsed caused exceptions.
+
+---
+
+#### Problem 2
+
+- Throws an exception even on some simple sentences.
+- **Sentence**: It was more grey than white. 
+- **StanfordNLP**:
+  ```
+  It --> was --> more grey
+  It --> was --> white
+  ```
+- **StuffIE**: 
+  - Throws an exception
+    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-bug2.png)
+  - **Status**: `Not Solved`.
+
+---
+- Ran the code on the corpus line by line.
+- The code didn't complete even after running for 28 hours.
+- Try to parallelize the code.
+---
+### 15th Feb 2019
+
+- Mid term Presentation.
+  
+---
+#### Problem 1
+
+- The code by default prints the dependency tree.   
+- There is a functionality to disable to it but this doesn't seem to work.  
+  - It just says mode doesn't exist.   
+    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-bug1.png)
+- **Bug**:  
+  - Wrong class Path: `it.inf.unibz.stuffie.Mode`.
+- **Solution**:  
+  - Changed it to: `it.unibz.inf.stuffie.Mode`.
+
+---
+- Added a functionality in java to read from a file and run stuffie on each line.
+- Bugs:
+  - Raised an exception on some sentences without full stop.
+    - Explicitly added full stop at the end of those sentences.
+  - Raised an exception on several other sentences.
+
+---
+- Built the stuffIE project using maven.
+- Only a console application is provided that takes a line as input one at a time.
+
+---
+### ClausIE 
+
++ Their code gets stuck on some sentences. So can't run on the entire file.
+    * Stayed stuck on a line for about 10 hours.
++ So was running on each line of the corpus individually with a timeout of 5 seconds.
++ Didn't complete even after 12 days.
++ So I Stopped the process.
+
+---
 ### 3rd Feb 2019
 
 #### Tasks
