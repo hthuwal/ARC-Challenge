@@ -169,23 +169,26 @@ public class StuffieConsoleRunner {
 		System.out.println(str);
 	}
 
-	private static void run_on_file(String source_dir, Stuffie stuffie)
+	private static void run_on_file(String source_dir, String[] args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException
 	{
-		Mode m = getValidMode("PrintDependenyTree=DISABLED");
-		stuffie.setMode(m);
 		File f = new File(source_dir);
 		ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
 		ArrayList<MyThread> threads = new ArrayList<MyThread>();
+		Mode[] modes = getCustomModes(args);
+		Mode m = getValidMode("PrintDependenyTree=DISABLED");
+		
 		for (int i=0; i<files.size(); i++) {
+			Stuffie stuffie = new Stuffie(modes);
+			stuffie.setMode(m);
 			String file = files.get(i).getPath();
 			threads.add(new MyThread(i, file, stuffie));
 		}
-		while(true)
-		{
-			System.out.print("\r");
-			System.out.flush();
-			String line = Integer.toString(MyThread.num_of_exceptions.get()) + "," + Integer.toString(MyThread.num_of_lines.get());
-			System.out.print(line);
+		try{
+			while(true)
+			{
+				String line = Integer.toString(MyThread.num_of_lines.get()) + "," + Integer.toString(MyThread.num_of_exceptions.get());
+				System.out.print("\r"+line);
+			}
 		}
 	}
 
@@ -208,7 +211,7 @@ public class StuffieConsoleRunner {
 			{
 				print("Reading text from file and Running stuffIE over lines..");
 				String[] arr = text.split(" ");
-				run_on_file(arr[1], arr[2], stuffie);
+				run_on_file(arr[1], args);
 			}
 			else if(text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') {
 				text = text.substring(1, text.length() - 1);
