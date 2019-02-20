@@ -54,9 +54,8 @@ class MyThread implements Runnable{
 			{	
 				num_of_lines.incrementAndGet();
 
-				line = line.replaceAll("[^A-Za-z0-9]", " ");
 				line = line.trim();
-				if(line.charAt(line.length() - 1) != '.')
+				if(!line.isEmpty() && line.charAt(line.length() - 1) != '.')
 					line = line + ".";
 	
 				try
