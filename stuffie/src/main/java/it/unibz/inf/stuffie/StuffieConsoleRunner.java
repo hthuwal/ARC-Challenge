@@ -87,6 +87,7 @@ class MyThread implements Runnable{
 		catch (IOException e) {
 			e.printStackTrace();
 		} 
+		System.out.println("Completed thread " + Integer.toString(id));
 		MyThread.count --;
 	}
 }
@@ -187,8 +188,9 @@ public class StuffieConsoleRunner {
 			threads.add(new MyThread(i, file, stuffie));
 		}
 		while (MyThread.count > 0) {
-			String line = Integer.toString(MyThread.num_of_lines.get()) + ","
-					+ Integer.toString(MyThread.num_of_exceptions.get());
+			String line = Integer.toString(MyThread.num_of_lines.get()) + ", "
+					+ Integer.toString(MyThread.num_of_exceptions.get()) + ", "
+					+ Integer.toString(MyThread.count) + " threads Running";
 			System.out.print("\r" + line);
 		}
 	}
