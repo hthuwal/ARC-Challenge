@@ -37,12 +37,25 @@ mvn compile
 #### Run
 
 ```bash
- mvn exec:java -Dexec.mainClass=it.unibz.inf.stuffie.StuffieConsoleRunner
+mvn exec:java -Dexec.mainClass=it.unibz.inf.stuffie.StuffieConsoleRunner
 ```
 
 ### Run on File
 
-<f> "../data/ARC-V1-Feb2018-2/ARC_Corpus_dair.txt" "out.txt"
+#### Split the source file into 32 parts
+
+```bash
+time split -n 32 --numeric-suffixes "../data/ARC-V1-Feb2018-2/ARC_Corpus.txt" parts/part_
+```
+#### Run
+
+```bash
+./run.sh
+```
+
+Give the following in the resulting interface
+
+`<f> parts`
 
 ### Quick start
 You need to have Java 1.8 and a compatible Maven installed. Clone a copy of StuffIE's repo and run Maven to build the artifacts. You can do this in your IDE or from your terminal. See `StuffIEConsoleRunner.java` to see an example of how to run StuffIE.
