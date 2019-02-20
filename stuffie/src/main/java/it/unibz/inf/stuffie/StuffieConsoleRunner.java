@@ -183,12 +183,10 @@ public class StuffieConsoleRunner {
 			String file = files.get(i).getPath();
 			threads.add(new MyThread(i, file, stuffie));
 		}
-		try{
-			while(true)
-			{
-				String line = Integer.toString(MyThread.num_of_lines.get()) + "," + Integer.toString(MyThread.num_of_exceptions.get());
-				System.out.print("\r"+line);
-			}
+		while (true) {
+			String line = Integer.toString(MyThread.num_of_lines.get()) + ","
+					+ Integer.toString(MyThread.num_of_exceptions.get());
+			System.out.print("\r" + line);
 		}
 	}
 
