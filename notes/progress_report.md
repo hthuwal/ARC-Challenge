@@ -20,6 +20,12 @@
 ---
 
 ### 20th Feb 2019
+#### TODO
+- [ ] Resolve `outofHeapMemory` Error in the multithreaded code.
+  - [ ] Look for memory leakage in the code.
+- [ ] Finalize the Graphical Representation.
+- [ ] Then decide the comparsion algorithm for it.
+
 #### Recursive Graphical Representation 2 (Seems Bettter)
 - subject, predicate, object, facet_connector, and facet are all represented as a node.
 - Facet are edges from the predicate of the main fact.
