@@ -20,8 +20,24 @@
 ---
 
 ### 20th Feb 2019
+#### Recursive Graphical Representation 2 (Seems Bettter)
+- subject, predicate, object, facet_connector, and facet are all represented as a node.
+- Facet are edges from the predicate of the main fact.
+- **Node**: Consist of two things
+  1. Node Name (Noun phrase or verbphrase or clause connector)
+     -  Say **a**
+  2. List of edges: [(p<sub>1</sub>,o<sub>1</sub>), (p<sub>2</sub>,o<sub>2</sub>), (p<sub>3</sub>,o<sub>3</sub>) ..... ]
+     -  p<sub>i</sub> and o<sub>i</sub> are nodes themselves. 
+- E.g. Consider a relation
+  ``` 
+  1.12: "A"; "B"; #1.15  
+          "C": "F"  (Facet Associated with 1.12)
 
-#### A Recursive Graphical Representation
+  1.15: "D"; "E"; "G"
+  ```
+![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-graph-representation-2.png)
+
+#### Recursive Graphical Representation 1
 - **Graph**
   1. A noun phrase Node
   2. or and edge of the form
