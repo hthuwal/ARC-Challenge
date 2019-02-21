@@ -35,16 +35,16 @@
 ---
 
 #### StuffIE Output Format Explained.
-- A relation `r = <i, mr, F>`
+- A relation `r = < i, mr, F >`
 
 - **mr**: Main relation is a triple of main fact.   
-  - Form: `<s, p, o>`
+  - Form: `< s, p, o >`
     - subject, predicate and object
 
 - **F**: F is a facet
-  - a set of extra details of the main facts
-  - Form: <c<sub>j</sub>, f<sub>j</sub>>
-    - c<sub>j</sub>: A facet connector
+  - a set of extra details of the main fact.
+  - Form: < c<sub>j</sub>, f<sub>j</sub> >
+    - c<sub>j</sub> : A facet connector
       - E.g: of, at, on, in case of...
 
 - **s**, **o** and **f<sub>j</sub>** are either noun phrases or reference to other relations.
@@ -74,12 +74,14 @@
 - At this point there are still several execptions.
   - **2.5k** out **44k** lines parsed caused exceptions.
 
-- Got an out of memory error:
+- Got an out of memory error after parsing 55k lines:
   - java.lang.OutOfMemoryError: Java heap space
     - Try with 30Gigs JVM.
-  - All threads reach "S": Interruptible sleep after parsing near 65k lines.
+      - No effect
     - Reason: Unknown
     - Status: Not Resolved.
+  - **TODO:** Look for memory leakage in the multithreading code.
+
 ---
 
 #### StuffIE: Problem 2
