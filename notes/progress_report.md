@@ -17,7 +17,59 @@
 - [Hypothesis-Graph.tsv](https://docs.google.com/spreadsheets/d/1qjjMSt8lsrKikZxatZhXPdUzi_dvqjhuPmzKaOmUc6M/edit?usp=sharing)
 - [Hypothesis-Graph.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
+
 ---
+### 14th March 2019
+
+#### Wikipedia Scraper
+
+**Global Problems**
+-  References pointing to non textual websites have almost no benefit in scraping.
+   -  Google Books
+   -  PDFs
+      -  Need to be handled seperately -> convert it to text?
+         -  PDF containing Scanned pages cannot be parsed into text.
+
+- The actual material being referenced is not always accessible.
+  - For e.g. a reference to a paper on springer, or a google book. (Paid)
+
+- In the cased where it is freely accessible it is at an unknown number of hops.
+  - For e.g. a reference link to a paper on arxiv. 
+    - The reference points to an arxiv page -> 1 or 2 more hops to go to the actual pdf. 
+
+
+**Using Wikipidia python package**.
+
+- Wrote a code that given a word:
+    - Search's that word to get multiple wikipedia pages.
+  - Extract References from these wiki pages.
+  - Download the textual content from each of the pages.
+- **Problems**
+  - Hit the wikipedia rate limit during the testing phase itself.
+  - Therefore Had to drop it as it is not scalable as we want to run the code on all the named entities in the questions and answers.
+
+- **Possible Solutions**
+  1. Use `scrapy` or `beautifulSoup3` to create a webpage scraper?
+     1. Might run into same rate limit problems and IP being blocked?
+  2. Create a python script that uses wikimedia API.
+     1. Will have to go throught the wikimedia API.
+     2. Will need to ensure their is no problem of rate limit with it.
+  3. Create a bot using `pywikibot`.
+
+The primary focus is on the pywikibot as it is used by most, however option 2 if works might be easier to code.
+
+---
+
+### Mid Semester Break (2nd March - 10th March)
+
+---
+
+### 25th Feb to 28th Feb 2019
+- 90% of the time went in TA: Project 1
+  - Setup
+  - Piazza Queries
+  - Debugging server side errors.
+  - Resolving Permission Issues.
 
 ### 22th Feb 2019
 
