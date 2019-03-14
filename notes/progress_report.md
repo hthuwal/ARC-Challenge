@@ -6,20 +6,21 @@
 - [ARC Leader board](https://leaderboard.allenai.org/arc)
 - [WebChild](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/webchild/)
 - [Links to Open IE triplets](https://owncloud.iitd.ac.in/owncloud/index.php/s/M8dLaNwBWDWyrPq/download)
-    + OpenIE on Questions
-        * You might find this cleaner than the sheet.
-    + OpenIE on NCERT
-    + OpenIE + coref on NCERT
-    + OpenIE on ARC
-        * 3GB file. Can't add this to the Google sheets
-    + openIE + coref on ARC
+	+ OpenIE on Questions
+		* You might find this cleaner than the sheet.
+	+ OpenIE on NCERT
+	+ OpenIE + coref on NCERT
+	+ OpenIE on ARC
+		* 3GB file. Can't add this to the Google sheets
+	+ openIE + coref on ARC
 - [Links to Analysis](https://docs.google.com/spreadsheets/d/1SFGfdhZeLVZi3Ig0KNSiaEZJFSpyz4lwKqBzUCizEkE/edit?usp=sharing)
 - [Hypothesis-Graph.tsv](https://docs.google.com/spreadsheets/d/1qjjMSt8lsrKikZxatZhXPdUzi_dvqjhuPmzKaOmUc6M/edit?usp=sharing)
 - [Hypothesis-Graph.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 ---
 
-### 20th Feb 2019
+### 22th Feb 2019
+
 #### TODO
 - [ ] Resolve `outofHeapMemory` Error in the multithreaded code.
   - [ ] Look for memory leakage in the code.
@@ -31,13 +32,13 @@
 - Facet are edges from the predicate of the main fact.
 - **Node**: Consist of two things
   1. Node Name (Noun phrase or verbphrase or clause connector)
-     -  Say **a**
+	 -  Say **a**
   2. List of edges: [(p<sub>1</sub>,o<sub>1</sub>), (p<sub>2</sub>,o<sub>2</sub>), (p<sub>3</sub>,o<sub>3</sub>) ..... ]
-     -  p<sub>i</sub> and o<sub>i</sub> are nodes themselves. 
+	 -  p<sub>i</sub> and o<sub>i</sub> are nodes themselves. 
 - E.g. Consider a relation
   ``` 
   1.12: "A"; "B"; #1.15  
-          "C": "F"  (Facet Associated with 1.12)
+		  "C": "F"  (Facet Associated with 1.12)
 
   1.15: "D"; "E"; "G"
   ```
@@ -47,12 +48,9 @@
 - **Graph**
   1. A noun phrase Node
   2. or and edge of the form
-     - G<sub>1</sub> -> G<sub>2</sub> with an edge label **p**.
-       - G<sub>1</sub> and G<sub>2</sub> are Graphs.
-       - **p** is verb phrase or clause connector.
-
-- Graph Matching might become complicated?   
-  - TODO: Figureout the matching algorithm.
+	 - G<sub>1</sub> -> G<sub>2</sub> with an edge label **p**.
+	   - G<sub>1</sub> and G<sub>2</sub> are Graphs.
+	   - **p** is verb phrase or clause connector.
 
 ---
 
@@ -61,20 +59,20 @@
 
 - **mr**: Main relation is a triple of main fact.   
   - Form: `< s, p, o >`
-    - subject, predicate and object
+	- subject, predicate and object
 
 - **F**: F is a facet
   - a set of extra details of the main fact.
   - Form: < c<sub>j</sub>, f<sub>j</sub> >
-    - c<sub>j</sub> : A facet connector
-      - E.g: of, at, on, in case of...
+	- c<sub>j</sub> : A facet connector
+	  - E.g: of, at, on, in case of...
 
 - **s**, **o** and **f<sub>j</sub>** are either noun phrases or reference to other relations.
 
 - **Doubt!**
   - **s**, **o** and **f<sub>j</sub>** can also be reference qualifier whenever it is a dependent clause.
-    -  i.e. that the piece of information represented by r is dependent towards s<sup>1</sup> , o<sup>1</sup> , or f<sub>j</sub><sup>1</sup> of some other relation r<sup>1</sup> . 
-    - Form: `<ref#it>`, where i is the id of the referred relation and t is the referral target.
+	-  i.e. that the piece of information represented by r is dependent towards s<sup>1</sup> , o<sup>1</sup> , or f<sub>j</sub><sup>1</sup> of some other relation r<sup>1</sup> . 
+	- Form: `<ref#it>`, where i is the id of the referred relation and t is the referral target.
 
 - **p**
   - Either a verb phrase.
@@ -98,10 +96,10 @@
 
 - Got an out of memory error after parsing 55k lines:
   - java.lang.OutOfMemoryError: Java heap space
-    - Try with 30Gigs JVM.
-      - No effect
-    - Reason: Unknown
-    - Status: Not Resolved.
+	- Try with 30Gigs JVM.
+	  - No effect
+	- Reason: Unknown
+	- Status: Not Resolved.
   - **TODO:** Look for memory leakage in the multithreading code.
 
 ---
@@ -117,7 +115,7 @@
   ```
 - **StuffIE**: 
   - Throws an exception
-    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-bug2.png)
+	![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-bug2.png)
   - **Status**: `Not Solved`.
 
 ---
@@ -135,7 +133,7 @@
 - The code by default prints the dependency tree.   
 - There is a functionality to disable to it but this doesn't seem to work.  
   - It just says mode doesn't exist.   
-    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-bug1.png)
+	![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-bug1.png)
 - **Bug**:  
   - Wrong class Path: `it.inf.unibz.stuffie.Mode`.
 - **Solution**:  
@@ -145,7 +143,7 @@
 - Added a functionality in java to read from a file and run stuffie on each line.
 - Bugs:
   - Raised an exception on some sentences without full stop.
-    - Explicitly added full stop at the end of those sentences.
+	- Explicitly added full stop at the end of those sentences.
   - Raised an exception on several other sentences.
 
 ---
@@ -156,7 +154,7 @@
 #### ClausIE 
 
 + Their code gets stuck on some sentences. So can't run on the entire file.
-    * Stayed stuck on a line for about 10 hours.
+	* Stayed stuck on a line for about 10 hours.
 + So was running on each line of the corpus individually with a timeout of 5 seconds.
 + Didn't complete even after 12 days.
 + So I Stopped the process.
@@ -171,20 +169,20 @@
 - [x] Analyze "wh" replacement method.
 - [x] Embeddings: Glove
 - [x] Something other than Stanford openIE?
-    - [x] StuffIE?   
-    - [x] clausIE?
-    - [x] openIE (Not feasible) 
+	- [x] StuffIE?   
+	- [x] clausIE?
+	- [x] openIE (Not feasible) 
 - [x] Try the stuff mentioned in report?   
-    - [x] Negation   
-    - [x] Whether the option itself is true or not?
+	- [x] Negation   
+	- [x] Whether the option itself is true or not?
 - [x] QA graph should include a separate graph for option and hypothesis.
 - [x] Optimizations. 
-    - [x] Parallelize the QA graph generation.
-    - [x] Separate GSA class.
+	- [x] Parallelize the QA graph generation.
+	- [x] Separate GSA class.
 - [ ] Try GSA on other QA datasets?
-    - Squad: Paragraph based QA
+	- Squad: Paragraph based QA
 - [ ] Go through the analysis again make changes if necessary.
-    - [ ] Create a open website where others can do the same. (For concrete analysis and to remove bias.)
+	- [ ] Create a open website where others can do the same. (For concrete analysis and to remove bias.)
 - [ ] Focus on LM + Multi hop
 - [ ] Better Hypothesis?
 - [ ] Training Questions  
@@ -197,63 +195,63 @@
 #### Current hypothesis generation method
 
 - If a wh-word is found:
-    + Replace it with option.
-    + Replace the last question mark with "."
-    + Remove the key word "of the following" if present immediately after the wh-word.
-    + e.g Which of the following force ..." -> "**option** force ..."
+	+ Replace it with option.
+	+ Replace the last question mark with "."
+	+ Remove the key word "of the following" if present immediately after the wh-word.
+	+ e.g Which of the following force ..." -> "**option** force ..."
 
 - If no wh-word is found and the question ends without a period/question, introduce the option at the end. 
-    - e.g. The gravitational force exerted by an object depends on its **option**
+	- e.g. The gravitational force exerted by an object depends on its **option**
 
 - If all else fails, assume "this ?" indicates the place for option.
-    - e.g. Virtually every task performed by living organisms requires this?
+	- e.g. Virtually every task performed by living organisms requires this?
 
 #### Glove Embeddings
 
 - Use embedding similarity as an alternative to Jaccard similarity.
-    + Smaller Glove Model
-        * Took around 2 minutes
-        * **score reduces to 27.72.**
+	+ Smaller Glove Model
+		* Took around 2 minutes
+		* **score reduces to 27.72.**
 
-    + Larger Glove Model
-        - Increases the prediction time drastically from mere seconds to 12-13 hours.
-        - ~~**Model is Running.**~~
-        - **Update: Score: 28.32**
-        - Took: 14 Hours 3 minutes
+	+ Larger Glove Model
+		- Increases the prediction time drastically from mere seconds to 12-13 hours.
+		- ~~**Model is Running.**~~
+		- **Update: Score: 28.32**
+		- Took: 14 Hours 3 minutes
 
 - Use embedding similarity to look for similar nodes instead of just exact match of nodes?
-    + Smaller Glove Model
-        + For every node in hypothesis graph we have to find similarity with every node in corpus graph (`2 x 10`<sup>`7`</sup>) nodes.
-            + Approx time: 1.1 hour for each node in hypothesis graph.  
+	+ Smaller Glove Model
+		+ For every node in hypothesis graph we have to find similarity with every node in corpus graph (`2 x 10`<sup>`7`</sup>) nodes.
+			+ Approx time: 1.1 hour for each node in hypothesis graph.  
 
-    This approach doesn't seem to be feasible. 
+	This approach doesn't seem to be feasible. 
 
-    + Possible solution:
-        * Preprocess the graph to collapse nodes with high similarity.
-        * Hope to bring down the number of nodes in corpus by some orders of magnitude.
+	+ Possible solution:
+		* Preprocess the graph to collapse nodes with high similarity.
+		* Hope to bring down the number of nodes in corpus by some orders of magnitude.
 
 #### StuffIE and clauseIE
 
 - StuffIE
-    + [Link to Repo](https://gitlab.inf.unibz.it/rprasojo/stuffie)
-    + They do not provide a compiled jar file.
-    + Have to run maven to build the target file. 
-        * ~~Currently facing some connectivity issues.~~ 
-        * Connectivity issues have been resolved.
-    + Issues in building the project.
+	+ [Link to Repo](https://gitlab.inf.unibz.it/rprasojo/stuffie)
+	+ They do not provide a compiled jar file.
+	+ Have to run maven to build the target file. 
+		* ~~Currently facing some connectivity issues.~~ 
+		* Connectivity issues have been resolved.
+	+ Issues in building the project.
 
 - ClauseIE
-    + Their code gets stuck on some sentences. So can't run on the entire file.
-        * Stayed stuck on a line for about 10 hours.
-    + So running on each line of the corpus individually with a timeout of 5 seconds.
-    + ~~**Status: Still Running.**~~
+	+ Their code gets stuck on some sentences. So can't run on the entire file.
+		* Stayed stuck on a line for about 10 hours.
+	+ So running on each line of the corpus individually with a timeout of 5 seconds.
+	+ ~~**Status: Still Running.**~~
 
 #### Negation
 
 - Negation by adding "is not" after every option in the hypothesis. Doesn't seem to make any difference?
-    + No effect on graph? 
-        * "Glass is transparent" -> Yield Triplet
-        * "Glass is not transparent" -> No Triplet
+	+ No effect on graph? 
+		* "Glass is transparent" -> Yield Triplet
+		* "Glass is not transparent" -> No Triplet
 
 - Better way to negate questions?
 
@@ -265,24 +263,24 @@
 #### Whether the option itself is true or not?
 
 - How to check this?
-    + Generate Graph for the option statement alone.
-    + Run the GSA to see how much this graph matches with the corpus graph.
-    + Higher GSA score --> More in common with corpus --> Higher Probability of the option to be true.
+	+ Generate Graph for the option statement alone.
+	+ Run the GSA to see how much this graph matches with the corpus graph.
+	+ Higher GSA score --> More in common with corpus --> Higher Probability of the option to be true.
 
 - Issues and corresponding approach:
-    - Makes sense only if option itself is a proper sentence.
-        + Assumption: Option with less than 3 words will rarely form complete sentence.
-        + So do this only if all options have more than 3 words.
-        + Otherwise GSA will give zero score.
+	- Makes sense only if option itself is a proper sentence.
+		+ Assumption: Option with less than 3 words will rarely form complete sentence.
+		+ So do this only if all options have more than 3 words.
+		+ Otherwise GSA will give zero score.
 
-    - Stanford openIE might return no triplets i.e no graph.
-        + So do this only if all options have non null graphs.
-        + Otherwise GSA will give zero score.
+	- Stanford openIE might return no triplets i.e no graph.
+		+ So do this only if all options have non null graphs.
+		+ Otherwise GSA will give zero score.
 
-    **So proceed only if none of the options get 0 GSA scores.**
+	**So proceed only if none of the options get 0 GSA scores.**
 
 - How to use the option scores?   
-    + Multiply them with the hypothesis scores: Options with less probability(score) of being correct will reduce the score for corresponding hypothesis.
+	+ Multiply them with the hypothesis scores: Options with less probability(score) of being correct will reduce the score for corresponding hypothesis.
 
 - ***This apparently had a negative impact reducing overall score from 28.36 to 26.477***
 
@@ -306,87 +304,87 @@
 
 - Improve Hypothesis: Read SOTA models. How they do it?
 - Improve graphs: Use stuffIE because it extracts nested triplets?
-    + Is it feasible?
+	+ Is it feasible?
 - Try [these ideas](#ideas)
 - Run BiLSTM Max-out model.
 
 #### Can't run Latest SOTA Models
 
 - Couldn't find code for the top 6 SOTA Models.
-    + Top two, 5th and 6th don't even have a proper paper.
-    + Will dig more to see if I can find anything.
+	+ Top two, 5th and 6th don't even have a proper paper.
+	+ Will dig more to see if I can find anything.
 
 - The code for BiLSTM Max-out Model is provided by the AI2 people.
-    + Ran into error in `allennlp` module after setting up their environment.
-    + An issue about same error already exists on their repository.
-    + Will see if the code runs by downgrading the version of `allennlp` or with an older version of python (will require me to setup everything again).
+	+ Ran into error in `allennlp` module after setting up their environment.
+	+ An issue about same error already exists on their repository.
+	+ Will see if the code runs by downgrading the version of `allennlp` or with an older version of python (will require me to setup everything again).
 
 #### GSA(Jaccard) vs DGEM Reasoning based comparison
 
 - **DGEM: 26.41**, **GSA(J): 28.42**    
-    + Our model is avoiding zero scores by not predicting at all (0.25) or predicting k-way ties.    
-    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/All.png)  
+	+ Our model is avoiding zero scores by not predicting at all (0.25) or predicting k-way ties.    
+	![](http://www.cse.iitd.ac.in/~mcs172074/mtp/All.png)  
 
 - **Algebraic**  
-    + We answered only two algebraic questions accurately.
-        * One involves finding a balanced equation (calculate and equate atomic masses).
-            + The correct equation might be present in the corpus.
-        * Second question also belongs to multi hop category.
-    + At least 3 algebraic questions out of the 9 that DGEM predicted accurately involve solving proper equations. 
-    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Algebraic.png)
+	+ We answered only two algebraic questions accurately.
+		* One involves finding a balanced equation (calculate and equate atomic masses).
+			+ The correct equation might be present in the corpus.
+		* Second question also belongs to multi hop category.
+	+ At least 3 algebraic questions out of the 9 that DGEM predicted accurately involve solving proper equations. 
+	![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Algebraic.png)
 
 - **Causal + Linguistic Matching**  
-    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Causal_LM.png)
+	![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Causal_LM.png)
 
 - **MultiHop + Linguistic Matching**  
-    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Multihop_LM.png)
-    
+	![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Multihop_LM.png)
+	
 #### Bug fixes and code updates
 
 - Found out during the analysis:
-    + Was assuming that each question has four options 'A', 'B', 'C', 'D'.
-    + Because of which wasn't reading options with labels 1, 2, 3, 4
+	+ Was assuming that each question has four options 'A', 'B', 'C', 'D'.
+	+ Because of which wasn't reading options with labels 1, 2, 3, 4
 
 - AI2 people now provide there own scoring code.
 
 - Debugged the code and re-ran the Graph Similarity Algorithm (GSA) with Jaccard based scoring of edges.
-    + Score changed from 28.38 to 28.422
+	+ Score changed from 28.38 to 28.422
 
 #### Reasoning Types 
 
 - Total Questions: **1172**
 
-    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Reasoning_Type.png)
+	![](http://www.cse.iitd.ac.in/~mcs172074/mtp/Reasoning_Type.png)
 
 - 1015 questions depend on the options. (**Question Logic**)
-    + The questions do make sense without the options but don't have unique answers (so depend on options)
+	+ The questions do make sense without the options but don't have unique answers (so depend on options)
 
 - Majority of the questions simultaneously belong to the following three categories:
-    + Question Logic, Linguistic Matching, Multi hop 
+	+ Question Logic, Linguistic Matching, Multi hop 
 
 - 62 Question most likely require some sort of calculation.
 
 #### Few more observations about the analysis and questions
 
 - A comprehension based question?
-    + `MCAS_2011_8_15365`
-    + Leopard's opening chant suggests that he is?
-        + A: happy, B: confused, C: confident,  D: generous
+	+ `MCAS_2011_8_15365`
+	+ Leopard's opening chant suggests that he is?
+		+ A: happy, B: confused, C: confident,  D: generous
 
 - Same Questions with different Id's are same:
-    + `LEAP__8_10365` and `LEAP_2000_8_2`
-    + `Mercury_409647` and `Mercury_7168823`
-    + `Mercury_406639` and `Mercury_7116183`
-    + `Mercury_7189123` and `Mercury_410807`
-    +  This doesn't seem intentional. Should this be reported to the people at AI2?
+	+ `LEAP__8_10365` and `LEAP_2000_8_2`
+	+ `Mercury_409647` and `Mercury_7168823`
+	+ `Mercury_406639` and `Mercury_7116183`
+	+ `Mercury_7189123` and `Mercury_410807`
+	+  This doesn't seem intentional. Should this be reported to the people at AI2?
 
 - Multiple Questions involving chemical equations.
 
 - This categorization of Question on the basis of reasoning types is biased   
-    + Subjective to interpretation.
-    + Affected by my knowledge OR lack thereof. 
-        * I tend to mark some physics questions as causal which should be multi hop.
-        * I tend to mark every biology/geography question as multi hop because I don't have enough knowledge in those cases.
+	+ Subjective to interpretation.
+	+ Affected by my knowledge OR lack thereof. 
+		* I tend to mark some physics questions as causal which should be multi hop.
+		* I tend to mark every biology/geography question as multi hop because I don't have enough knowledge in those cases.
 
 ---
 
@@ -394,43 +392,43 @@
 
 - Link to detailed [dumps](https://drive.google.com/drive/folders/1iKK6S2j4vL_D8jqfPPX1vf8GXCKjCBJ5?usp=sharing)
 - Dump Format
-    + File Name: Question ID
-    + Inside its a JSON encoded graph matchings.
-    ```bash
-    {
-        "A": {"text", "hypothesis", "matchings"}
-        "B": {"text", "hypothesis", "matchings"}
-        "C": {"text", "hypothesis", "matchings"}
-        "D": {"text", "hypothesis", "matchings"}
-        "Question": "Actual Question"
-    }
-    ```
-    + Format of matchings
-    ```json
-    "start_node1":
-    {
-            "end_node1":
-            {
-                "hypo": ["list of edges from start_node1 to end_node1 in hypothesis graph"],
-                "corpus": ["list of edges from start_node1 to end_node1 in corpus graph"]
-            },
-            "end_node2":
-            {
-                "hypo": ["list of edges from start_node1 to end_node2 in hypothesis graph"],
-                "corpus": ["list of edges from start_node1 to end_node2 in corpus graph"]
-            }
-            .
-            .
-    },
-    "start_node2":
-    {
-        .
-        .
-        .
-    },
-    .
-    .
-    ```
+	+ File Name: Question ID
+	+ Inside its a JSON encoded graph matchings.
+	```bash
+	{
+		"A": {"text", "hypothesis", "matchings"}
+		"B": {"text", "hypothesis", "matchings"}
+		"C": {"text", "hypothesis", "matchings"}
+		"D": {"text", "hypothesis", "matchings"}
+		"Question": "Actual Question"
+	}
+	```
+	+ Format of matchings
+	```json
+	"start_node1":
+	{
+			"end_node1":
+			{
+				"hypo": ["list of edges from start_node1 to end_node1 in hypothesis graph"],
+				"corpus": ["list of edges from start_node1 to end_node1 in corpus graph"]
+			},
+			"end_node2":
+			{
+				"hypo": ["list of edges from start_node1 to end_node2 in hypothesis graph"],
+				"corpus": ["list of edges from start_node1 to end_node2 in corpus graph"]
+			}
+			.
+			.
+	},
+	"start_node2":
+	{
+		.
+		.
+		.
+	},
+	.
+	.
+	```
 
 ---
 ### 31st December 2018
@@ -440,10 +438,10 @@
 - 53.84% !!.
 - No link to paper.
 - Based on:
-    + [Improving Language Understanding by Generative Pre-Training](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf)
-    + [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805v1)
-    + [Improving Machine Reading Comprehension with General Reading Strategies](https://arxiv.org/abs/1810.13441v1)
-        * This was the SOTA at 42.32 % till 14th december.
+	+ [Improving Language Understanding by Generative Pre-Training](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf)
+	+ [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805v1)
+	+ [Improving Machine Reading Comprehension with General Reading Strategies](https://arxiv.org/abs/1810.13441v1)
+		* This was the SOTA at 42.32 % till 14th december.
 - They seem to have just replaced the transformer network with BERT.
 
 ---
@@ -457,41 +455,41 @@
 
 - Most of the question fit into **Multi Hop, Linguistic Matching** category assuming all the necessary facts are present in the corpus.
 - Majority of the questions require reasoning of type **Hypothetical** that is they require reasoning about or applying abstract facts to a hypothetical/scenario situation that is described in the question. In some cases the hypothetical are described in the answer options.
-    + **Hypothetical**: Probably not mentioned in corpus as a fact.
+	+ **Hypothetical**: Probably not mentioned in corpus as a fact.
 - Implicit Understanding:
-    + I tend to extract the essence of questions and then label the reasoning required to answer them.
-    + I found a few questions on future reading to be **Multi hop** that I had marked **Causal (one hop or deducible using one fact/definition)**.
+	+ I tend to extract the essence of questions and then label the reasoning required to answer them.
+	+ I found a few questions on future reading to be **Multi hop** that I had marked **Causal (one hop or deducible using one fact/definition)**.
 - Problems that require algebraic reasoning are easily identifiable.
 - There are a lot of questions that describe a hypothetical experimental setup and ask for a best course of action and reasoning in these cases is not quite clear. For e.g.
-    + A student drops a test tube, causing the glass to shatter. What is the first thing the student should do? 
-        + clean up the broken glass   
-        + replace the broken test tube    
-        + report the accident to the teacher 
-        + move to a new laboratory area
+	+ A student drops a test tube, causing the glass to shatter. What is the first thing the student should do? 
+		+ clean up the broken glass   
+		+ replace the broken test tube    
+		+ report the accident to the teacher 
+		+ move to a new laboratory area
 
-    + In these scenarios there seem to be multiple correct answers as the question asks ***what should be done** and thus its difficult to determine what kind of reasoning is required in these questions. For e.g
-        + A scientist discovered a fish that looked unique. After data were collected and analyzed on the fish and its habitat, the scientist determined that the fish belonged to a new species. What should the scientist do with this new discovery? 
-            + share the discovery with the public 
-            + do additional background research    
-            + analyze the results again   
-            + create a new hypothesis
+	+ In these scenarios there seem to be multiple correct answers as the question asks ***what should be done** and thus its difficult to determine what kind of reasoning is required in these questions. For e.g
+		+ A scientist discovered a fish that looked unique. After data were collected and analyzed on the fish and its habitat, the scientist determined that the fish belonged to a new species. What should the scientist do with this new discovery? 
+			+ share the discovery with the public 
+			+ do additional background research    
+			+ analyze the results again   
+			+ create a new hypothesis
 
 <a name="ideas"></a>
 #### Ideas Based on Manual Analysis
 
 - There are many questions of the form ....except.
-    + We can modify the questions to its negation. 
-    + Create hypothesis without the word **except** and return the option with lowest score.
+	+ We can modify the questions to its negation. 
+	+ Create hypothesis without the word **except** and return the option with lowest score.
 - Another case that we can handle separately is where the options are partially wrong.
-    + We should verify whether the options are factually true.
-    + An option that is present in corpus is more likely to be factually correct and more likely to be the final answer.
-    + e.g Clear glass is translucent hence it will scatter more light
-        * Glass is translucent **WRONG**
-        * Translucent scatters more **RIGHT**
-            - This may increase the overall score of this option,
+	+ We should verify whether the options are factually true.
+	+ An option that is present in corpus is more likely to be factually correct and more likely to be the final answer.
+	+ e.g Clear glass is translucent hence it will scatter more light
+		* Glass is translucent **WRONG**
+		* Translucent scatters more **RIGHT**
+			- This may increase the overall score of this option,
 
 - Questions contain a Lot of useless information For e.g.
-    + A student filled three beakers, each with 50 milliliters of liquid water. The student cooled Beaker 1 to form ice. The student heated Beaker 2 to form water vapor (gas). Beaker 3 remained at room temperature. **What process takes place when liquid water changes to a vapor (gas)?**
+	+ A student filled three beakers, each with 50 milliliters of liquid water. The student cooled Beaker 1 to form ice. The student heated Beaker 2 to form water vapor (gas). Beaker 3 remained at room temperature. **What process takes place when liquid water changes to a vapor (gas)?**
 
 ---
 
@@ -504,10 +502,10 @@
 - No link to paper.
 - Used a finetuned BERT MRC Model.
 - [**BERT**](https://arxiv.org/pdf/1810.04805.pdf)
-    + Stands for Bidirectional Encoder Representation from Transformers.
-    + A new SOTA language representational model by Google.
-        * Improved nearly all the Language Benchmarks.
-    + Published on 11 Oct 2018
+	+ Stands for Bidirectional Encoder Representation from Transformers.
+	+ A new SOTA language representational model by Google.
+		* Improved nearly all the Language Benchmarks.
+	+ Published on 11 Oct 2018
 
 ---
 
@@ -522,9 +520,9 @@ IITD Placement Interviews.
 
 - [Link to the sheet](https://drive.google.com/open?id=1SFGfdhZeLVZi3Ig0KNSiaEZJFSpyz4lwKqBzUCizEkE)
 - Corpus Graph does contain "important" nodes from the hypothesis graph.
-    + *important* ---> nbr_in_corpus
-    + *important* --> nbr_in_hypothesis
-    + Although the node was present in the corpus graph but the score corresponding to it was zero. Because no neighbors matched.
+	+ *important* ---> nbr_in_corpus
+	+ *important* --> nbr_in_hypothesis
+	+ Although the node was present in the corpus graph but the score corresponding to it was zero. Because no neighbors matched.
 - Edges corresponding to some hypothesis are more prevalent in corpus and hence get better score. 
 - These highly occurring edges overshadow the "other (probably correct) edges".**There is no inference is current scoring method.**
 - In some cases no common edge (u, v) is found as no node is common amongst the hypothesis and corpus graph.
@@ -537,43 +535,43 @@ IITD Placement Interviews.
 - I dumped the the node pair (u, v) that matched for each hypothesis of Question.
 - The dumps can be found [here.](https://drive.google.com/open?id=1LHCM1eSYMOsETkSnp8bIGf5tz-fN7bi9)
 - Dump Format
-    + File Name: Question ID
-    + Inside its a JSON encoded graph matchings.
-    ```bash
-    {
-        // matchings for option A that matched with some edge in corpus
-        "A": { 
-            "start_node1":{
-                "end_node1":{
-                    "hypo": ["list of edges from start_node1 to end_node1 in hypothesis graph"],
-                    "corpus": ["list of edges from start_node1 to end_node1 in corpus graph"]
-                },
-                "end_node2":{
-                    "hypo": ["list of edges from start_node1 to end_node2 in hypothesis graph"],
-                    "corpus": ["list of edges from start_node1 to end_node2 in corpus graph"]
-                }
-                .
-                .
-            },
-            "start_node2":{
-                .
-                .
-                .
-            },
-            .
-            .
-        }
-        "B":{...}
-        "C":{...}
-        "D":{...}
-        "Question": Actual Question
-    }
-    ```
+	+ File Name: Question ID
+	+ Inside its a JSON encoded graph matchings.
+	```bash
+	{
+		// matchings for option A that matched with some edge in corpus
+		"A": { 
+			"start_node1":{
+				"end_node1":{
+					"hypo": ["list of edges from start_node1 to end_node1 in hypothesis graph"],
+					"corpus": ["list of edges from start_node1 to end_node1 in corpus graph"]
+				},
+				"end_node2":{
+					"hypo": ["list of edges from start_node1 to end_node2 in hypothesis graph"],
+					"corpus": ["list of edges from start_node1 to end_node2 in corpus graph"]
+				}
+				.
+				.
+			},
+			"start_node2":{
+				.
+				.
+				.
+			},
+			.
+			.
+		}
+		"B":{...}
+		"C":{...}
+		"D":{...}
+		"Question": Actual Question
+	}
+	```
 - The folks from [this paper](https://arxiv.org/pdf/1806.00358.pdf) replied with the annotations. 
-    + Even after using 10 different annotators and proposing an annotation software they only provide annotations on 196/1119 Questions and that too from the training set.
+	+ Even after using 10 different annotators and proposing an annotation software they only provide annotations on 196/1119 Questions and that too from the training set.
 - Manual labeling
-    + Try to classify the **Knowledge type** and **Reasoning type** for each question as mentioned in the aforementioned and [original paper](https://arxiv.org/pdf/1803.05457.pdf).
-    + Try to analyze whether the question was answerable or not using the matchings that we are getting.
+	+ Try to classify the **Knowledge type** and **Reasoning type** for each question as mentioned in the aforementioned and [original paper](https://arxiv.org/pdf/1803.05457.pdf).
+	+ Try to analyze whether the question was answerable or not using the matchings that we are getting.
 
 
 #### Speeding Up code of Build Graph and Analysis Cycle
@@ -583,7 +581,7 @@ IITD Placement Interviews.
 - But was facing memory errors.
 - Tried Encoding it using JSON. JSON encode was successful.
 - Created two separate dumps of the entire corpus graphs.
-    + With and Without Coref (4.29 GB and 4.14 GB respectively)
+	+ With and Without Coref (4.29 GB and 4.14 GB respectively)
 - Reading the graph dump + predicting now takes only **3 minutes.**
 - Re dumped the predictions with the question ID included.
 
@@ -603,11 +601,11 @@ IITD Placement Interviews.
 - 42.32%.
 - Strategies + [OFT](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf) (Fine Tuned Transformer Network)
 - Stategies
-    + Back and Forth Reading: Train two OFT networks one reading forward and backward.
-    + Highlight:
-        * [Special Embeddings for Noun and adjectives.](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf)
-    + Self-Assessment:
-        * Generate Questions and Answers and practice on them.
+	+ Back and Forth Reading: Train two OFT networks one reading forward and backward.
+	+ Highlight:
+		* [Special Embeddings for Noun and adjectives.](https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf)
+	+ Self-Assessment:
+		* Generate Questions and Answers and practice on them.
 - [Tranformer Network](https://arxiv.org/abs/1706.03762)
 
 #### Problem of compute resources
@@ -616,12 +614,12 @@ IITD Placement Interviews.
 
 - HPC cpu/gpu is a timesharing system.
 - Submitted jobs are allocated compute resources on a time sharing bases. This increases the running time of the processes.
-    + Time Taken by the code to read the stanford openie triplets, create graph and answer question
-        * AryaBhatta Server: ~20/25 Minutes
-        * HPC (Running on standard Queue)
-            - 1cpu node with 4 cores
-            - Time for which my process ran: 50 Minutes
-            - Real time: ~3 hours.
+	+ Time Taken by the code to read the stanford openie triplets, create graph and answer question
+		* AryaBhatta Server: ~20/25 Minutes
+		* HPC (Running on standard Queue)
+			- 1cpu node with 4 cores
+			- Time for which my process ran: 50 Minutes
+			- Real time: ~3 hours.
 - Tried Running the Mausam's openIE on HPC as a job. 
 - HPC kills the process after exceeds the wall time. Maximum wall time is of 7 days. So no point in running it.
 - Processes get killed randomly. (Probably if load is high).
@@ -655,21 +653,21 @@ Next immediate step is to download and study the ConceptNet knowledge base and u
 #### New Additions to the Leader Board
 
 - [Improving Question Answering by Commonsense-Based Pre-Training](https://arxiv.org/pdf/1809.03568.pdf)
-    - Score: 33.39
-    - Have Used **ConceptNet** alongside TriAN model
-    - [**ConceptNet**](http://conceptnet.io/)
-        + A semantic network or multilingual knowledge base
-        + Knowledge is the accumulation of knowledge from
-            * Crowd sourced resources: Wiktionary and openMind
-            * Expert Created resources: WordNet and JDict
-        + Available in both neural (embeddings) and traditional (node, edge) formats.
-    - They've shown that the embeddings learned over ConceptNet can somewhat remove the limitations of the SOTA Neural approaches which lack commonsense knowledge.
+	- Score: 33.39
+	- Have Used **ConceptNet** alongside TriAN model
+	- [**ConceptNet**](http://conceptnet.io/)
+		+ A semantic network or multilingual knowledge base
+		+ Knowledge is the accumulation of knowledge from
+			* Crowd sourced resources: Wiktionary and openMind
+			* Expert Created resources: WordNet and JDict
+		+ Available in both neural (embeddings) and traditional (node, edge) formats.
+	- They've shown that the embeddings learned over ConceptNet can somewhat remove the limitations of the SOTA Neural approaches which lack commonsense knowledge.
 
 - [Sanity Check](https://arxiv.org/pdf/1807.01836.pdf)
-    + Score: 26.56
-    + Claim: True gain of Neural Network approaches is inflated with respect to the long training time because they are not compared to proper baseline.
-    + They are that proper baseline.
-    + Better Scores on other datasets. but no significant effect in case of ARC.
+	+ Score: 26.56
+	+ Claim: True gain of Neural Network approaches is inflated with respect to the long training time because they are not compared to proper baseline.
+	+ They are that proper baseline.
+	+ Better Scores on other datasets. but no significant effect in case of ARC.
 
 ---
 
@@ -678,35 +676,35 @@ Next immediate step is to download and study the ConceptNet knowledge base and u
 - Precision @ 1: How often is the highest ranked option is correct.
 - Precision @ 2: How often is any of the top two ranked option is correct.
 - Ranking is defined by the score obtained by the graph comparison algorithm
-    + In case of same score. Sort Lexicographically.
+	+ In case of same score. Sort Lexicographically.
 
 **Results**
 
 - **Without Co-reference Resolution**
 
-    Model's are Running will update result by tomorrow.
+	Model's are Running will update result by tomorrow.
 
-    | Method | Score | Precision @ 1 |  Precision @ 2 |  Precision @ 3 |
-    |--------|:-----:|:-------------:|:--------------:|:--------------:|
-    |ARC + Naive| 27.41|0.2628|0.50256|0.7645|
-    |ARC + J2| 27.6834|0.2662|0.5060|0.7636|
-    |ARC + J1 + J2| 27.868|0.2705|0.5102|0.7705|
-    |ARC + E| 28.124|0.2730|0.5179|0.7670|
-    |ARC + E + J1| 28.252|0.2756|0.5085|0.7730|
-    |ARC + J1| 28.380|0.2747|0.5119|0.7696|
+	| Method | Score | Precision @ 1 |  Precision @ 2 |  Precision @ 3 |
+	|--------|:-----:|:-------------:|:--------------:|:--------------:|
+	|ARC + Naive| 27.41|0.2628|0.50256|0.7645|
+	|ARC + J2| 27.6834|0.2662|0.5060|0.7636|
+	|ARC + J1 + J2| 27.868|0.2705|0.5102|0.7705|
+	|ARC + E| 28.124|0.2730|0.5179|0.7670|
+	|ARC + E + J1| 28.252|0.2756|0.5085|0.7730|
+	|ARC + J1| 28.380|0.2747|0.5119|0.7696|
 
 - **With Co-reference Resolution**
 
-    | Method | Score | Precision @ 1 |  Precision @ 2 |  Precision @ 3 |
-    |--------|:-----:|:-------------:|:--------------:|:--------------:|
-    |ARC + coref + E + J1| 27.569 | 0.2677 | 0.5085 | 0.7662 |
-    |ARC + coref + J1 + J2| 27.7617 | 0.2687 | 0.5059 | 0.7687 |
-    |ARC + coref + Naive| 27.8256 |0.2671|0.5043|0.7654|
-    |ARC + coref + J2| 27.9109 | 0.2688 | 0.5051 | 0.7635 |
-    |ARC + coref + J1| 27.9892 | 0.2705 | 0.5051 | 0.7679 |
-    |ARC + coref + E| 28.2949 | 0.2739 | 0.5111 | 0.7679 |
+	| Method | Score | Precision @ 1 |  Precision @ 2 |  Precision @ 3 |
+	|--------|:-----:|:-------------:|:--------------:|:--------------:|
+	|ARC + coref + E + J1| 27.569 | 0.2677 | 0.5085 | 0.7662 |
+	|ARC + coref + J1 + J2| 27.7617 | 0.2687 | 0.5059 | 0.7687 |
+	|ARC + coref + Naive| 27.8256 |0.2671|0.5043|0.7654|
+	|ARC + coref + J2| 27.9109 | 0.2688 | 0.5051 | 0.7635 |
+	|ARC + coref + J1| 27.9892 | 0.2705 | 0.5051 | 0.7679 |
+	|ARC + coref + E| 28.2949 | 0.2739 | 0.5111 | 0.7679 |
 
-    -  As expected the increase in accuracy is due to the increase in Precision @ 1.
+	-  As expected the increase in accuracy is due to the increase in Precision @ 1.
 
 --- 
 
@@ -715,35 +713,35 @@ Next immediate step is to download and study the ConceptNet knowledge base and u
 Scoring two edges with different labels between same nodes. All scores are on the ARC dataset using the Stanford openIE.
 
 - Simple: Fraction of words that match
-    + Without Co-reference Resolution: 27.41
-    + With Co-reference Resolution: 27.8256
+	+ Without Co-reference Resolution: 27.41
+	+ With Co-reference Resolution: 27.8256
 
 - ~~Edit Distance is the score~~ 
-    + Without Co-reference Resolution: 26.75
-    + Mistake: Wrong metric. Large distance should mean less score
+	+ Without Co-reference Resolution: 26.75
+	+ Mistake: Wrong metric. Large distance should mean less score
 
 - 1 - Normalized edit distance (E)
-    + Without Co-reference Resolution: 28.124288
-    + With Co-reference Resolution: 28.2949
+	+ Without Co-reference Resolution: 28.124288
+	+ With Co-reference Resolution: 28.2949
 
 - Jaccard Similarity 1 (J1)
-    + Each edge label converted to set of characters
-    + Without Co-reference Resolution: 28.38026
-    + With Co-reference Resolution: 27.9892
+	+ Each edge label converted to set of characters
+	+ Without Co-reference Resolution: 28.38026
+	+ With Co-reference Resolution: 27.9892
 
 - Jaccard Similarity 2 (J2)
-    + Each edge label converted to set of words
-    + Without Co-reference Resolution: 27.68344
-    + With Co-reference Resolution: 27.9109
+	+ Each edge label converted to set of words
+	+ Without Co-reference Resolution: 27.68344
+	+ With Co-reference Resolution: 27.9109
 
 - J1 + J2
-    + Without Co-reference Resolution: 27.868
-    + With Co-reference Resolution: 27.762
-    + This I was sure would increase the score but it didn't.
-    
+	+ Without Co-reference Resolution: 27.868
+	+ With Co-reference Resolution: 27.762
+	+ This I was sure would increase the score but it didn't.
+	
 - E + J1
-    + Without Co-reference Resolution: 28.252
-    + With Co-reference Resolution: 27.569
+	+ Without Co-reference Resolution: 28.252
+	+ With Co-reference Resolution: 27.569
 
 Doing Co-reference Resolution seems to have a negative impact on the total score except for the naive edge comparison and Edit distance approach.
 
@@ -783,19 +781,19 @@ Converted the preprocessing code to multi thread to reduce time.
 - Cannot Run more than 3 parallel instances as each process requires 10GB to jus be loaded. 
 - During processing the memory usage exceeds well over 70 GB for just 3 processes.
 - NCERT:
-    + Time: 30 minutes
+	+ Time: 30 minutes
 
 #### The owner of the repo replied
 
 - He gave a solution: Passing **a flag** `--ignore-errors` should apparently solve this issue. ~~Will try that tomorrow.~~
 - Mausam's openIE on NCERT
-    + Time: 63 minutes
+	+ Time: 63 minutes
 - ** Output Format is different than the stanfords. Will write a script to convert it.**
 - Along with confidence, it returns a Context sometimes. Can we use it somehow?
 - Mausam's openIE on ARC dataset
-    + Was Running on single core :/
-    + Its been 28 hours its still running.
-    + Need to find a way to parallelize this.
+	+ Was Running on single core :/
+	+ Its been 28 hours its still running.
+	+ Need to find a way to parallelize this.
 - Created an Issue regarding this on their repository.
 - If no inbuilt support might try running it 32 times on 32 splits of the file.
 
@@ -803,8 +801,8 @@ Converted the preprocessing code to multi thread to reduce time.
 
 - I ran several sample sentence on their model to figure out a way to run it.
 - I found the following pattern.
-    + The model ran into an exception only when the input sentences does not have a terminating punctuation mark i.e `. ? !`
-    + So for all such sentences I explicitly placed a Full stop at the end.
+	+ The model ran into an exception only when the input sentences does not have a terminating punctuation mark i.e `. ? !`
+	+ So for all such sentences I explicitly placed a Full stop at the end.
 - **The Java process only uses a single core.!!!**
 - Ran on ncert dataset. After running for an hour got a new exception.
 
@@ -816,14 +814,14 @@ Exception in thread "main" java.util.regex.PatternSyntaxException: Dangling meta
 
 #### Issues with Mausam's OpenIE
 - Fails on sentences with only one word.
-    + e.g. `Harish.`
-    + Java Null Pointer Exception
-    + Removed all single word sentences from the corpus to solve this.
+	+ e.g. `Harish.`
+	+ Java Null Pointer Exception
+	+ Removed all single word sentences from the corpus to solve this.
 - Fails on some sentences with no binary relation of the form relation(subject, object)
-    + e.g. `Chemical Reactions and Equations`
-        * Java Null Pointer Exception
-    + e.g. `Barack Obama, The U.S. President`
-        * 0.88 (Barack Obama; `[is]` The President `[of]`; United States)
+	+ e.g. `Chemical Reactions and Equations`
+		* Java Null Pointer Exception
+	+ e.g. `Barack Obama, The U.S. President`
+		* 0.88 (Barack Obama; `[is]` The President `[of]`; United States)
 - ~~Because of these "weird errors" Unable to run it on any corpus. After running for several hours the Java process core dumps and raises a Null Pointer Exception.~~
 - I am using the compiled Java file provided in their repository.
 - I can look into these issues by digging in their Scala code (I have no experience in Scala). But that would deviate the effort to debugging their openIE.
@@ -876,8 +874,8 @@ The scores per question have been added to the spreadsheet.
 Graph Details:
 
 - Analysis of the resultant graph:
-    - Number of Nodes: 22123223             
-    - Number of Edges: 41976390             
+	- Number of Nodes: 22123223             
+	- Number of Edges: 41976390             
 
 |Nodes|Number_of_components|
 |:---:|:------------------:|
@@ -901,9 +899,9 @@ Graph Details:
 
 - The model is avoiding 0 scores by not predicting at all or predicting k-way ties (thereby getting 1/k score).
 - The next aim should be to increase the percentage of correctly answered questions ( single prediction)
-    + Do question by question analysis.
-    + Try changing the scoring function.
-    + Incorporate the confidence score returned by openIE into scoring function? (Probably the edge labels?)
+	+ Do question by question analysis.
+	+ Try changing the scoring function.
+	+ Incorporate the confidence score returned by openIE into scoring function? (Probably the edge labels?)
 
 ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_analysis.png)
 
@@ -956,8 +954,8 @@ The scores per question have been added to the spreadsheet.
 Graph Details:
 
 - Analysis of the resultant graph:
-    - Number of Nodes: 21317833             
-    - Number of Edges: 40606342             
+	- Number of Nodes: 21317833             
+	- Number of Edges: 40606342             
 
 |Nodes   |Number of components|
 |:------:|:------------------:|
@@ -984,56 +982,56 @@ Graph Details:
 ##### Sentence: Earth.
 
 - **Stanford OpenIE:**
-    + No tuples extracted.
+	+ No tuples extracted.
 - **Stanford OpenIE with coreference resolution:**
-    + No tuples extracted.
+	+ No tuples extracted.
 - **OpenIE**
-    + Raises Exception (and shuts down the entire process.)
+	+ Raises Exception (and shuts down the entire process.)
 
 ##### Sentence: The U.S. president Barack Obama gave his speech on Tuesday and Wednesday to thousands of people.
 
 In this case openIE performs bettter as it is able to extract time information for the relation **gave(subject, object)**
 
 - **Stanford OpenIE:**
-    + 1.000: (U.S. president Barack Obama; gave; his speech)
+	+ 1.000: (U.S. president Barack Obama; gave; his speech)
 - **Stanford OpenIE with coreference resolution:**
-    + 1.000: (Barack Obama; is; president)
-    + 1.000: (Barack Obama; is; U.S.)
-    + 1.000: (U.S. president Barack Obama; gave; U.S. president Barack Obama speech)
+	+ 1.000: (Barack Obama; is; president)
+	+ 1.000: (Barack Obama; is; U.S.)
+	+ 1.000: (U.S. president Barack Obama; gave; U.S. president Barack Obama speech)
 - **OpenIE**
-    + 0.92 (The U.S. president Barack Obama; gave; his speech; `T`:on Wednesday; to thousands of people)
-    + 0.38 (Barack Obama; `[is]` president `[of]`; United States)
-    + 0.92 (The U.S. president Barack Obama; gave; his speech; `T`:on Tuesday; to thousands of people)
+	+ 0.92 (The U.S. president Barack Obama; gave; his speech; `T`:on Wednesday; to thousands of people)
+	+ 0.38 (Barack Obama; `[is]` president `[of]`; United States)
+	+ 0.92 (The U.S. president Barack Obama; gave; his speech; `T`:on Tuesday; to thousands of people)
 
 ##### Sentence: Jack and Jill visited India, Japan and South Korea.
 
 Both the StanfordNLP and the openIE perform similar on this sentence. **Both are able to do n-ary extraction**
 
 - **Stanford OpenIE**
-    + 1.000: (Jill; visited; South Korea)
-    + 1.000: (Jack; visited; India)
-    + 1.000: (Jill; visited; India)
-    + 1.000: (Jill; visited; Japan)
-    + 1.000: (Jack; visited; Japan)
-    + 1.000: (Jack; visited; South Korea)
+	+ 1.000: (Jill; visited; South Korea)
+	+ 1.000: (Jack; visited; India)
+	+ 1.000: (Jill; visited; India)
+	+ 1.000: (Jill; visited; Japan)
+	+ 1.000: (Jack; visited; Japan)
+	+ 1.000: (Jack; visited; South Korea)
 - **Stanford OpenIE with coreference resolution**
-    + Same as Stanford OpenIE
+	+ Same as Stanford OpenIE
 - **OpenIE**
-    + 0.88 (Jill; visited; South Korea)
-    + 0.88 (Jill; visited; Japan)
-    + 0.88 (Jill; visited; India)
-    + 0.88 (Jack; visited; South Korea)
-    + 0.88 (Jack; visited; Japan)
-    + 0.88 (Jack; visited; India
+	+ 0.88 (Jill; visited; South Korea)
+	+ 0.88 (Jill; visited; Japan)
+	+ 0.88 (Jill; visited; India)
+	+ 0.88 (Jack; visited; South Korea)
+	+ 0.88 (Jack; visited; Japan)
+	+ 0.88 (Jack; visited; India
 ---
 
 - Added the triplets generated by the openIE in the [spreadsheet](https://docs.google.com/spreadsheets/d/1BgyFyzLrojTdp14Msg0WW2u-FU9rdBp6-hvgmqye8Ac/edit#gid=0).
 - Moved all the openIE results to this new spreadsheet (google sheets was raising a warning that number of cells in the sheet is exceeding a threshold)
 - Link to the text files:
 	+ [OpenIE on Questions](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
-        * You might find this cleaner than the sheet.
-    + [OpenIE on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert.txt)
-    + [OpenIE + coref on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert-coref.txt).
+		* You might find this cleaner than the sheet.
+	+ [OpenIE on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert.txt)
+	+ [OpenIE + coref on NCERT](http://www.cse.iitd.ac.in/~mcs172074/mtp/stanford-openie-ncert-coref.txt).
 
 ## 11th Sep 2018
 #### Misc
@@ -1159,7 +1157,7 @@ Results though improved are still below the random baseline.
 - Reasons
 	+ Was using a python script to create a seperate child process.
 	+ Each child process used Stanford openIE parser seperately for each file.
- 	+ Each call and return involved "running a seperate java program" causing huge overhead
+	 + Each call and return involved "running a seperate java program" causing huge overhead
  
 - Solution
 	+ The OpenIE annotator can accept multiple files as arguments
@@ -1246,8 +1244,8 @@ Faced: Mmemory Error for just a 2.3MB file
 
 	- Before adding this tag , think about whether this is the best option .
 	- But I doubt that you’ll find that view among the regulars in this forum.
-    - Perhaps for her separate property she may, with her husband, appoint an agent or attorney; Cro.
-    - Trust you to auto-ship toner as needed, monitored by software installed in their printers.
+	- Perhaps for her separate property she may, with her husband, appoint an agent or attorney; Cro.
+	- Trust you to auto-ship toner as needed, monitored by software installed in their printers.
 	- Locomotives of the London and North Eastern Railway .
 
 **Support Sentence:** Dams alter the flow, temperature and sediment in river systems.
@@ -1334,17 +1332,17 @@ It just all seems random that some questions were answered correctly!!
 {
   "id": "Mercury_7175875",
   "question": {
-    "stem": "An astronomer observes that a planet rotates faster after a meteorite impact. Which is the most likely effect of this increase in rotation?",
-    "choice": {
-      "text": "Planetary density will decrease.",
-      "label": "A"
-    },
-    "support": {
-      "text": "As latitude increases and the speed of the earth's rotation decreases, Coriolis effect increases.",
-      "type": "sentence",
-      "ir_pos": 0,
-      "ir_score": 33.626408
-    }
+	"stem": "An astronomer observes that a planet rotates faster after a meteorite impact. Which is the most likely effect of this increase in rotation?",
+	"choice": {
+	  "text": "Planetary density will decrease.",
+	  "label": "A"
+	},
+	"support": {
+	  "text": "As latitude increases and the speed of the earth's rotation decreases, Coriolis effect increases.",
+	  "type": "sentence",
+	  "ir_pos": 0,
+	  "ir_score": 33.626408
+	}
   },
   "answerKey": "C",
   "premise": "As latitude increases and the speed of the earth's rotation decreases, Coriolis effect increases.",
