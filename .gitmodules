@@ -1,0 +1,3 @@
+[submodule "wikipedia-references-downloader"]
+	path = wikipedia-references-downloader
+	url = https://github.com/hthuwal/wikipedia-references-downloader
