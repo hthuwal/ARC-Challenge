@@ -19,6 +19,81 @@
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 
 ---
+### 22nd March 2019
+
+Tried pywikibot and scrapy but both felt too complicated for the task in hand.
+
+#### Wikipedia Library
+
+- Used [python wikipedia](https://pypi.org/project/wikipedia/) libray instead.
+
+- The library should handle the rate at which the servers are queried avoiding blocking of IP Addresses.
+
+- The implementaion can be found @ [wikipedia-references-downloader](https://github.com/hthuwal/wikipedia-references-downloader)
+
+- Incase no single page exists for the corresponding keyword.
+    + keyword is searched on wikipedia.
+    + references from the wikipedia pages of top 5 results are used.
+
+#### Page Handling
+
+- References which point to a html page are downloaded and cleaned.
+    + Since the references point to different kinds of websites. Its impossible to completely clean the data.
+        * Each site requires its own cleaner.
+    + However, basic cleaning is performed and only the raw textual data is kept.
+        * All HTML, CSS and JS is removed.
+
+- References which point to a pdf are downloaded as binary pdf files.
+    + No Need to do HTML, CSS cleaning here.
+
+- References pointing to **arxiv website are converted to direct pdf links** and are then downloaded as pdfs.
+
+#### Output Format
+
+- Suppose the input file (words.txt) contains the following lines.
+  ```  
+  Velocity
+  Speed
+  ```
+
+- Running the command `python wiki_references.py words.txt` will create a folder `wikipedia` in the root directory. Its directory structure is as follows:
+  ```
+  wikipedia/
+  ├── Speed
+  │   └── Speed
+  │       ├── 0001.txt
+  │       ├── 0002.txt
+  │       ├── 0003.txt
+  │       ├── 0004.txt
+  │       ├── 0005.txt
+  │       ├── 0006.txt
+  │       ├── 0008.txt
+  │       ├── 0009.txt
+  │       ├── 0010.txt
+  │       ├── 0012.txt
+  │       ├── 0013.txt
+  │       ├── 0014.txt
+  │       └── log.txt
+  └── Velocity
+      └── Velocity
+          ├── 0000.txt
+          ├── 0001.txt
+          ├── 0002.txt
+          ├── 0003.txt
+          ├── 0004.txt
+          ├── 0005.txt
+          ├── 0006.txt
+          ├── 0007.txt
+          ├── 0008.txt
+          ├── 0009.txt
+          └── log.txt
+
+  ```
+
+- `log.txt` contains the information about which file corresponds to which link.
+
+---
+
 ### 14th March 2019
 
 #### Wikipedia Scraper
@@ -33,7 +108,7 @@
 - The actual material being referenced is not always accessible.
   - For e.g. a reference to a paper on springer, or a google book. (Paid)
 
-- In the cased where it is freely accessible it is at an unknown number of hops.
+- In the case where it is freely accessible it is at an unknown number of hops.
   - For e.g. a reference link to a paper on arxiv. 
     - The reference points to an arxiv page -> 1 or 2 more hops to go to the actual pdf. 
 
