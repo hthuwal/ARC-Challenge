@@ -56,25 +56,34 @@ def get_sentences():
 
 def ner_using_spacy(sentences):
     entities = []
-    ignore = ['PERCENT', 'MONEY', 'ORDINAL', 'CARDINAL']
+    ignore = ['TIME', 'DATE', 'QUANTITY', 'PERCENT', 'MONEY', 'ORDINAL', 'CARDINAL']
     for sentence in tqdm(sentences, ascii=True):
         ent = list(nlp(sentence).ents)
         ent = [each.text for each in ent if each.label_ not in ignore]
         entities.extend(ent)
+
+    entities = list(set(entities))
     return entities
 
 
 def ner_using_nltk_stanford(sentences):
-    entities = []
+    all_tokens = []
     for sentence in tqdm(sentences, ascii=True):
         tokens = word_tokenize(sentence)
         tokens = [regex.sub('', token) for token in tokens]
         tokens = [token for token in tokens if token not in stop_words]
-        ent = stanford_tagger.tag(tokens)
-        ent = [each[0].strip() for each in ent if each[1] != 'O']
-        entities.extend(ent)
+        all_tokens.extend(tokens)
 
+    entities = stanford_tagger.tag(all_tokens)
+    entities = [each[0].strip() for each in entities if each[1] != 'O']
+
+    entities = list(set(entities))
     return entities
+
+
+def save_to_file(entities, file):
+    with open(file, "w") as f:
+        f.write("\n".join(entities) + "\n")
 
 
 print("Collecting Sentences...")
@@ -82,11 +91,8 @@ sentences = get_sentences()
 
 print("NER Using Spacy...")
 entities_spacy = ner_using_spacy(sentences)
+save_to_file(entities_spacy, "results/entities-spacy.txt")
 
 print("NER Using StanfordNERTagger and NLTK")
-entities_stanford = ner_using_nltk_stanford(sentences[:5])
-
-# entities = set(entities_spacy + entities_stanford)
-
-print(entities_spacy)
-print(len(entities_spacy))
+entities_stanford = ner_using_nltk_stanford(sentences)
+save_to_file(entities_stanford, "results/entities-stanford.txt")
