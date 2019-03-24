@@ -19,11 +19,82 @@
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 
 ---
+### 24th March 2019
+
+#### TODOs
+- stuffIE
+    - My stuffIE representation vs Event Extraction team's representation. Which one to use?
+        * Which representation allows implementing GSA?
+    - Finish debuggging stuffIE multiprocessing code.
+
+- wikipedia scraper.
+    + NER failed. So use POS to extract keywords.
+    + Run scraper on those keywords.
+
+#### Observation regarding Named Entity Extraction:
+
+- Either of the two methods used for NER do not extract any scienitfic (physics, chemistry, biology, math) terms.
+
+- The NER approach more or less extracts only the words indicative of person, place or organzation.
+
+- For example, running the [Stanford Core NLP](http://corenlp.run/) on the following sentences:
+    + `Donald Trump is the president of USA.`  
+        ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/ner-normal.png)
+    + `The speed of light is faster than the speed of sound. proton is heavier than an electron.`
+        ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/ner-science.png)
+
+- As one can see NER fails to extract anything in case of science related sentences.
+
+- **An Important thing to notice is that most of the scientific words are tagged as 'NN' by the POS**
+
+- So, I'll be using POS tagging instead of NER to extract key words.
+
+#### Extracting Named Entities 
+
+- From 1172 Questions and options.
+- These will be used by the wikipedia reference scraper.
+
+##### Using Spacy python NLP library
+
+- Ignored entities recognized as:
+    + `'TIME', 'DATE', 'QUANTITY', 'PERCENT', 'MONEY', 'ORDINAL', 'CARDINAL'`
+
+- A total of 49 entities were recognized.
+    ```
+    jenny, roberta, washington, florida, canada, john, australia, wyoming, india,
+    washington, d.c., the mount st, ddt, michael, massachusetts, alaska, m_{1},
+    scott, america, newton, earth, -2°c, arizona, van allen, georgia, jefferson,
+    kentucky, fernandez, 100x, boston, g/cm^3, california, arkansas, martin,
+    arturo, michigan, greece, charles, anderson, maryland, mid-ocean, roy, jerry,
+    mexico, the moon, the moon every day, buisson, jeremy, garcia, u.s
+    ```
+
+- Wikipedia scraper on these entities is running at the moment.
+
+##### Stanford NLP based NER extractor
+
+- Available models: 
+    + 3 class:    Location, Person, Organization
+    + 4 class:    Location, Person, Organization, Misc
+    + 7 class:    Location, Person, Organization, Money, Percent, Date, Time
+
+- Used 3 class Model.
+    - Only 7 entities were extracted.
+    ```
+    moon, west, america, coast, africa, equator, south
+    ```
+
+- This seemed sketchy. So I went through the entire process but couldn't find any bugs that might have caused this behaviour.
+
+---
+
 ### 22nd March 2019
+
+#### Wikipedia Reference Scraper.
 
 Tried pywikibot and scrapy but both felt too complicated for the task in hand.
 
-#### Wikipedia Library
+##### Wikipedia Library
 
 - Used [python wikipedia](https://pypi.org/project/wikipedia/) libray instead.
 
@@ -35,7 +106,7 @@ Tried pywikibot and scrapy but both felt too complicated for the task in hand.
     + keyword is searched on wikipedia.
     + references from the wikipedia pages of top 5 results are used.
 
-#### Page Handling
+##### Page Handling
 
 - References which point to a html page are downloaded and cleaned.
     + Since the references point to different kinds of websites. Its impossible to completely clean the data.
@@ -48,7 +119,7 @@ Tried pywikibot and scrapy but both felt too complicated for the task in hand.
 
 - References pointing to **arxiv website are converted to direct pdf links** and are then downloaded as pdfs.
 
-#### Output Format
+##### Output Format
 
 - Suppose the input file (words.txt) contains the following lines.
   ```  
@@ -147,12 +218,6 @@ The primary focus is on the pywikibot as it is used by most, however option 2 if
   - Resolving Permission Issues.
 
 ### 22th Feb 2019
-
-#### TODO
-- [ ] Resolve `outofHeapMemory` Error in the multithreaded code.
-  - [ ] Look for memory leakage in the code.
-- [ ] Finalize the Graphical Representation.
-- [ ] Then decide the comparsion algorithm for it.
 
 #### Recursive Graphical Representation 2 (Seems Bettter)
 - subject, predicate, object, facet_connector, and facet are all represented as a node.
