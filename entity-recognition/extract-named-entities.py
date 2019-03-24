@@ -37,14 +37,17 @@ def get_sentences():
         options = list(questions[qid][1].values())
         sentences.append(ques_state)
         sentences.extend(options)
+
+    sentences = [sentence.lower() for sentence in sentences]
     return sentences
 
 
 def ner_using_spacy(sentences):
     entities = []
+    ignore = ['PERCENT', 'MONEY', 'ORDINAL', 'CARDINAL']
     for sentence in tqdm(sentences, ascii=True):
-        ent = list(nlp(sentence.lower()).ents)
-        ent = [ent.text for ent in entities]
+        ent = list(nlp(sentence).ents)
+        ent = [each.text for each in ent if each.label_ not in ignore]
         if ent:
             entities.append(ent)
     return entities
