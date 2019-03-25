@@ -1,4 +1,5 @@
 import json
+import os
 import re
 import spacy
 
@@ -24,6 +25,7 @@ nlp = spacy.load('en_core_web_lg')
 
 
 def load_questions(file=QUESTIONS_FILE):
+    print(os.path.basename(file))
     questions = {}
     with open(file, "r") as in_file:
         for line in (in_file):
@@ -40,8 +42,8 @@ def load_questions(file=QUESTIONS_FILE):
     return questions
 
 
-def get_sentences():
-    questions = load_questions()
+def get_sentences(file):
+    questions = load_questions(file)
 
     sentences = []
     for qid in tqdm(questions, ascii=True):
@@ -72,9 +74,10 @@ def pos_using_spacy(sentences):
         for token in nlp(sentence):
             hc.append(token.tag_)
             if token.tag_.startswith("NN"):
-                entities.append(token.text)
+                entities.append(token.lemma_)
 
     entities = list(set(entities))
+    entities.sort()
     return entities
 
 def ner_using_nltk_stanford(sentences):
@@ -98,7 +101,12 @@ def save_to_file(entities, file):
 
 
 print("Collecting Sentences...")
-sentences = get_sentences()
+sentences = get_sentences(file="../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl")
+sentences += get_sentences(file="../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Train.jsonl")
+sentences += get_sentences(file="../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Dev.jsonl")
+sentences += get_sentences(file="../data/ARC-V1-Feb2018-2/ARC-Easy/ARC-Easy-Test.jsonl")
+sentences += get_sentences(file="../data/ARC-V1-Feb2018-2/ARC-Easy/ARC-Easy-Train.jsonl")
+sentences += get_sentences(file="../data/ARC-V1-Feb2018-2/ARC-Easy/ARC-Easy-Dev.jsonl")
 
 # print("NER Using Spacy...")
 # entities_spacy = ner_using_spacy(sentences)
