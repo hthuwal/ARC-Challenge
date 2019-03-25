@@ -19,6 +19,10 @@
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 
 ---
+### Extracting the first 10 references per page:
+- [You can view the pages dynamically as they are being extracted.](http://aryabhata.cse.iitd.ac.in:9312)
+    + Note: Link works only inside iitd
+
 ### 25th March 2019
 
 #### Extracting Entitites using POS
