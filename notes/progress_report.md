@@ -19,6 +19,35 @@
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 
 ---
+### 25th March 2019
+
+#### Extracting Entitites using POS
+
+- Perform POS Tagging on the questions and options.
+
+- Keep entities whith tags starting with "NN" (Nouns).
+
+- **2872** words were extracted.
+
+- Intended type of words were extracted.
+
+- Some of them are:
+  ```
+  metamorphosis, development, alleles, conductor, chain, tide, periods,
+  diseases, evidence, athlete, ovule, weight, granules, backbones, source,
+  transpiration, carriers, river, notice, shellfish, layer, data, frog,
+  submarines, hearing, experiment, moves, screen, scents, erosion, ammonia,
+  aphid, bison, jobs, street, candy, jupiter, turtle, contracts
+
+  ```
+
+- More Questions:
+    - Train, Test and Dev Questions of Challenge and Easy Set.
+
+- Remove words with same lexemes.
+- After some manual cleaning [4892 entities remained](http://www.cse.iitd.ac.in/~mcs172074/mtp/entities-spacy-pos.txt).
+  + These are being used for scraping wikipedia references.
+
 ### 24th March 2019
 
 #### TODOs
@@ -28,8 +57,8 @@
     - Finish debuggging stuffIE multiprocessing code.
 
 - wikipedia scraper.
-    + NER failed. So use POS to extract keywords.
-    + Run scraper on those keywords.
+    [x] NER failed. So use POS to extract keywords.
+    [ ] Run scraper on those keywords.
 
 #### Observation regarding Named Entity Extraction:
 
