@@ -65,6 +65,17 @@ def ner_using_spacy(sentences):
     entities = list(set(entities))
     return entities
 
+def pos_using_spacy(sentences):
+    entities = []
+    hc = []
+    for sentence in tqdm(sentences, ascii=True):
+        for token in nlp(sentence):
+            hc.append(token.tag_)
+            if token.tag_.startswith("NN"):
+                entities.append(token.text)
+
+    entities = list(set(entities))
+    return entities
 
 def ner_using_nltk_stanford(sentences):
     all_tokens = []
@@ -89,10 +100,14 @@ def save_to_file(entities, file):
 print("Collecting Sentences...")
 sentences = get_sentences()
 
-print("NER Using Spacy...")
-entities_spacy = ner_using_spacy(sentences)
-save_to_file(entities_spacy, "results/entities-spacy.txt")
+# print("NER Using Spacy...")
+# entities_spacy = ner_using_spacy(sentences)
+# save_to_file(entities_spacy, "results/entities-spacy.txt")
 
-print("NER Using StanfordNERTagger and NLTK")
-entities_stanford = ner_using_nltk_stanford(sentences)
-save_to_file(entities_stanford, "results/entities-stanford.txt")
+# print("NER Using StanfordNERTagger and NLTK")
+# entities_stanford = ner_using_nltk_stanford(sentences)
+# save_to_file(entities_stanford, "results/entities-stanford.txt")
+
+print("POS Using Spacy...")
+entities_spacy_pos = pos_using_spacy(sentences)
+save_to_file(entities_spacy_pos, "results/entities-spacy-pos.txt")
