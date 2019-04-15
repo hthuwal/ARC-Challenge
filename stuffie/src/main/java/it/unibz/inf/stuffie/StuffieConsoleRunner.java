@@ -8,16 +8,17 @@ import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
-class MyThread implements Runnable{
+class MyThread implements Runnable {
 	int id;
 	static int count = 0;
 	static AtomicInteger num_of_exceptions = new AtomicInteger(0);
@@ -27,68 +28,75 @@ class MyThread implements Runnable{
 	String source_file;
 	String out_file;
 	String exceptions_file;
-	
-	MyThread (int id, String file, Stuffie stuffie)
-	{
-		count ++;
+
+	MyThread(int id, String file, Stuffie stuffie) {
+		count++;
 		this.id = id;
 		this.source_file = file;
 		this.out_file = file + ".openie";
 		this.exceptions_file = file + ".exceptions";
 		this.stuffie = stuffie;
-	    t = new Thread(this, Integer.toString(id));
+		t = new Thread(this, Integer.toString(id));
 		System.out.println("New thread: " + t);
 		t.start();
 	}
 
-	public void run()
-	{
+	public void run() {
 		BufferedReader reader;
 		BufferedWriter writer;
 		BufferedWriter errors;
-		
-		try 
-		{
-			reader = new BufferedReader(new FileReader(source_file));
-			writer = new BufferedWriter(new FileWriter(out_file));
-			errors = new BufferedWriter(new FileWriter(exceptions_file));
-			String line = reader.readLine();
 
-			while (line != null) 
-			{	
+		try {
+
+			/* ------------------------ Read Entire File at once ------------------------ */
+
+			File file = new File(this.source_file);
+			FileInputStream fis = new FileInputStream(file);
+			byte[] data = new byte[(int) file.length()];
+			fis.read(data);
+			fis.close();
+
+			String str = new String(data, "UTF-8");
+			String lines[] = str.split("\\r?\\n");
+
+			/* ------------------------ Run stuffie on each line ------------------------ */
+
+			String parsed_lines = "";
+			String error_lines = "";
+			for (String line : lines) {
 				num_of_lines.incrementAndGet();
 
 				line = line.trim();
-				if(!line.isEmpty() && line.charAt(line.length() - 1) != '.')
+				if (!line.isEmpty() && line.charAt(line.length() - 1) != '.')
 					line = line + ".";
-	
-				try
-				{
-					if(!line.isEmpty())
-					{
+				try {
+					if (!line.isEmpty()) {
 						String repr = stuffie.parseRelation(line);
-						if(!repr.isEmpty())
-						{
-							writer.write("###\n" + repr + "\n");
-							writer.flush();
+						if (!repr.isEmpty()) {
+							parsed_lines += "###\n" + repr + "\n";
 						}
 					}
-				}
-				catch (Exception e)
-				{
+				} catch (Exception e) {
 					num_of_exceptions.incrementAndGet();
-					errors.write(line+"\n");
-					errors.flush();
+					error_lines += line + "\n";
 				}
-				line = reader.readLine();
 			}
-			reader.close();
-		} 
-		catch (IOException e) {
+
+			/* -------------------------- Save Results to file -------------------------- */
+
+			writer = new BufferedWriter(new FileWriter(out_file));
+			errors = new BufferedWriter(new FileWriter(exceptions_file));
+
+			errors.write(error_lines);
+			errors.flush();
+
+			writer.write(parsed_lines);
+			writer.flush();
+		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 		System.out.println("Completed thread " + Integer.toString(id));
-		MyThread.count --;
+		MyThread.count--;
 	}
 }
 
@@ -102,7 +110,7 @@ public class StuffieConsoleRunner {
 	private static LinkedHashMap<String, String> validVals = new LinkedHashMap<>();
 
 	private static void initCommands() throws IOException {
-		
+
 		try (BufferedReader br = Files.newBufferedReader(Paths.get("resource/console_commands.txt"))) {
 			String line;
 			while ((line = br.readLine()) != null) {
@@ -127,7 +135,7 @@ public class StuffieConsoleRunner {
 			validModesAndVals.deleteCharAt(validModesAndVals.length() - 1).append("]\n");
 		}
 		validModes.deleteCharAt(validModes.length() - 1).deleteCharAt(validModes.length() - 1).append(".");
-		validModesAndVals.deleteCharAt(validModesAndVals.length()-1);
+		validModesAndVals.deleteCharAt(validModesAndVals.length() - 1);
 	}
 
 	private static Mode[] getCustomModes(String[] args) {
@@ -159,7 +167,8 @@ public class StuffieConsoleRunner {
 			System.out.println("Succesfully changed " + mode[0] + " to " + mode[1]);
 			return (Mode) Enum.valueOf(cls, mode[1]);
 		} catch (ClassNotFoundException e) {
-			System.out.println("Mode not found: " + mode[0] + ". The accepted modes are: " + validModes.toString() + "\n");
+			System.out.println(
+					"Mode not found: " + mode[0] + ". The accepted modes are: " + validModes.toString() + "\n");
 		} catch (IllegalArgumentException e) {
 			System.out.println("Failed to change mode: " + mode[0] + ". Value not found: " + mode[1]
 					+ ". The valid values are: " + validVals.get(mode[0]) + "\n");
@@ -168,35 +177,37 @@ public class StuffieConsoleRunner {
 		return null;
 	}
 
-	private static void print(String str)
-	{
+	private static void print(String str) {
 		System.out.println(str);
 	}
 
-	private static void run_on_file(String source_dir, String[] args) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException
-	{
+	private static void run_on_file(String source_dir, String[] args)
+			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException, IOException, InterruptedException {
 		File f = new File(source_dir);
 		ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
 		ArrayList<MyThread> threads = new ArrayList<MyThread>();
 		Mode[] modes = getCustomModes(args);
 		Mode m = getValidMode("PrintDependenyTree=DISABLED");
-		
-		for (int i=0; i<files.size(); i++) {
+
+		for (int i = 0; i < files.size(); i++) {
 			Stuffie stuffie = new Stuffie(modes);
 			stuffie.setMode(m);
 			String file = files.get(i).getPath();
 			threads.add(new MyThread(i, file, stuffie));
 		}
 		while (MyThread.count > 0) {
-			String line = Integer.toString(MyThread.num_of_lines.get()) + ", "
-					+ Integer.toString(MyThread.num_of_exceptions.get()) + ", "
-					+ Integer.toString(MyThread.count) + " threads Running";
+			String line = Integer.toString(MyThread.num_of_lines.get()) + " / 14621856, "
+					+ Integer.toString(MyThread.num_of_exceptions.get()) + ", " + Integer.toString(MyThread.count)
+					+ " threads Running";
 			System.out.print("\r" + line);
+			TimeUnit.SECONDS.sleep(2);
 		}
 	}
 
-	public static void main(String[] args) throws InstantiationException, IllegalAccessException,
-			IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, IOException {
+	public static void main(String[] args)
+			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
+			NoSuchMethodException, SecurityException, IOException, InterruptedException {
 
 		initCommands();
 		Mode[] modes = getCustomModes(args);
@@ -204,63 +215,43 @@ public class StuffieConsoleRunner {
 
 		Scanner reader = new Scanner(System.in);
 		String text = "";
-		while (!text.equals("q")) 
-		{
+		while (!text.equals("q")) {
 			System.out.println("Enter text to extract, or <h> for help: ");
 			text = reader.nextLine();
-		
-			if(text.isEmpty()) 
-			{
+
+			if (text.isEmpty()) {
 				System.out.println("Empty line. Please try again.");
-			}
-			else if(text.substring(0, 3).equals("<f>"))
-			{
+			} else if (text.substring(0, 3).equals("<f>")) {
 				print("Reading text from file and Running stuffIE over lines..");
 				String[] arr = text.split(" ");
 				run_on_file(arr[1], args);
 				print("");
 				text = "q";
-			}
-			else if(text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') 
-			{
+			} else if (text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') {
 				text = text.substring(1, text.length() - 1);
-				if (text.contains("=")) 
-				{
+				if (text.contains("=")) {
 					Mode m = getValidMode(text);
 					if (m != null)
 						stuffie.setMode(m);
-				} 
-				else 
-				{
+				} else {
 					String textLower = text.toLowerCase();
-					if (!loweredKeyCommands.containsKey(textLower) && !shorthandCommands.containsKey(textLower)) 
-					{
+					if (!loweredKeyCommands.containsKey(textLower) && !shorthandCommands.containsKey(textLower)) {
 						System.out.println("Invalid command: " + text + ". Enter <h> to list all valid commands.\n");
-					} 
-					else if (textLower.equals("help") || textLower.equals("h")) 
-					{
-						for (String command : commands.keySet()) 
-						{
-							if (shorthandCommands.containsKey(commands.get(command))) 
-							{
+					} else if (textLower.equals("help") || textLower.equals("h")) {
+						for (String command : commands.keySet()) {
+							if (shorthandCommands.containsKey(commands.get(command))) {
 								System.out.println("\t<" + command + "> <" + commands.get(command) + ">\t"
 										+ shorthandCommands.get(commands.get(command)) + "\n");
-							} 
-							else 
-							{
+							} else {
 								System.out.println("\t<" + command + ">\t" + commands.get(command) + "\n");
 							}
 						}
 						System.out.println(validModesAndVals.toString() + "\n");
-					} 
-					else if (textLower.equals("show modes") || textLower.equals("sm")) 
-					{
+					} else if (textLower.equals("show modes") || textLower.equals("sm")) {
 						System.out.println("Current active modes: " + stuffie.currentModesInString() + ".\n");
 					}
 				}
-			} 
-			else 
-			{
+			} else {
 				System.out.println(stuffie.parseRelation(text));
 			}
 		}
