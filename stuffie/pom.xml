@@ -38,7 +38,7 @@
 		        <configuration> 
 		            <executable>java</executable>
 		            <arguments>
-		            	<argument>-Xmx60g</argument>
+		            	<argument>-Xmx100g</argument>
 		                <argument>-classpath</argument> 
 		                <classpath />
 		                <argument>it.unibz.inf.stuffie.StuffieConsoleRunner</argument>  

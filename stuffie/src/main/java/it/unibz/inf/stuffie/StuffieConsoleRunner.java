@@ -17,6 +17,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Stream;
 
 class MyThread implements Runnable {
 	int id;
@@ -41,30 +42,42 @@ class MyThread implements Runnable {
 		t.start();
 	}
 
-	public void run() {
-		BufferedReader reader;
-		BufferedWriter writer;
-		BufferedWriter errors;
+	private void print(String str) {
+		System.out.printf("Thread %d: %s", id, str);
+	}
 
+	public void flush(BufferedWriter bw, BufferedWriter ew, StringBuilder sb, StringBuilder eb) {
+		try {
+			bw.write(sb.toString());
+			bw.flush();
+
+			ew.write(eb.toString());
+			ew.flush();
+
+			sb.setLength(0);
+			eb.setLength(0);
+		} catch (IOException e) {
+			print("IOException Occurred");
+		}
+	}
+
+	public void run() {
 		try {
 
-			/* ------------------------ Read Entire File at once ------------------------ */
+			/* ------------------------- Reading File as Stream ------------------------- */
+			Stream<String> lines = Files.lines(Paths.get(this.source_file));
+			StringBuilder sb = new StringBuilder();
+			StringBuilder eb = new StringBuilder();
+			BufferedWriter bw = new BufferedWriter(new FileWriter(this.out_file));
+			BufferedWriter ew = new BufferedWriter(new FileWriter(this.exceptions_file));
 
-			File file = new File(this.source_file);
-			FileInputStream fis = new FileInputStream(file);
-			byte[] data = new byte[(int) file.length()];
-			fis.read(data);
-			fis.close();
+			print("Running Stuffie on each line\n");
 
-			String str = new String(data, "UTF-8");
-			String lines[] = str.split("\\r?\\n");
+			lines.forEach(line -> {
 
-			/* ------------------------ Run stuffie on each line ------------------------ */
-
-			String parsed_lines = "";
-			String error_lines = "";
-			for (String line : lines) {
-				num_of_lines.incrementAndGet();
+				if (sb.length() > 10000 || eb.length() > 10000) {
+					flush(bw, ew, sb, eb);
+				}
 
 				line = line.trim();
 				if (!line.isEmpty() && line.charAt(line.length() - 1) != '.')
@@ -73,26 +86,24 @@ class MyThread implements Runnable {
 					if (!line.isEmpty()) {
 						String repr = stuffie.parseRelation(line);
 						if (!repr.isEmpty()) {
-							parsed_lines += "###\n" + repr + "\n";
+							num_of_lines.incrementAndGet();
+							sb.append("## ").append(line).append("\n");
+							sb.append("\n" + repr + "\n");
 						}
 					}
 				} catch (Exception e) {
 					num_of_exceptions.incrementAndGet();
-					error_lines += line + "\n";
+					eb.append(line + "\n");
 				}
-			}
+			});
+			lines.close();
+			flush(bw, ew, sb, eb);
+			bw.close();
+			ew.close();
 
-			/* -------------------------- Save Results to file -------------------------- */
+		} catch (
 
-			writer = new BufferedWriter(new FileWriter(out_file));
-			errors = new BufferedWriter(new FileWriter(exceptions_file));
-
-			errors.write(error_lines);
-			errors.flush();
-
-			writer.write(parsed_lines);
-			writer.flush();
-		} catch (IOException e) {
+		IOException e) {
 			e.printStackTrace();
 		}
 		System.out.println("Completed thread " + Integer.toString(id));
@@ -121,6 +132,7 @@ public class StuffieConsoleRunner {
 					shorthandCommands.put(command[1], command[2]);
 			}
 		}
+		Mode m = getValidMode("PrintDependenyTree=DISABLED");
 
 		for (Class<?> x : Mode.class.getClasses()) {
 			validModesAndVals.append("\t\t" + x.getSimpleName() + "=[");
