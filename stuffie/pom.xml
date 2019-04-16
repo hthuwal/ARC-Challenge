@@ -18,12 +18,35 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.5</version> <!-- or whatever current version -->
 				<configuration>
-					<argLine>-Xmx30g</argLine>
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+		
+
+			<plugin>
+		        <groupId>org.codehaus.mojo</groupId>
+		        <artifactId>exec-maven-plugin</artifactId>
+		        <version>1.3.2</version>
+		        <executions>
+		            <execution>
+		                <goals>
+		                    <goal>exec</goal>
+		                </goals>
+		            </execution>
+		        </executions>
+		        <configuration> 
+		            <executable>java</executable>
+		            <arguments>
+		            	<argument>-Xmx60g</argument>
+		                <argument>-classpath</argument> 
+		                <classpath />
+		                <argument>it.unibz.inf.stuffie.StuffieConsoleRunner</argument>  
+		            </arguments>
+		        </configuration>
+		  </plugin>
 		</plugins>
+
 	</build>
 
 	<repositories>
