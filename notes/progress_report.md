@@ -18,6 +18,53 @@
 - [Hypothesis-Graph.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 
+### StuffIE MultiProcessing Nightmare 
+
+#### Splitting the file into 10000 files
+
+- Fix the size of temporary result to 12000 characters.
+- Split the corpus into 10k files.
+- Set Maximum Memory to 100gigs.
+- Spawn at most 30threads at a time.
+- Once a thread is complete. Spawn a new thread on one of the remaining files.
+- Running at the moment.
+    + Have parsed 5,58,518 Lines without running into memory error. (Maximum till now.)
+    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-best-run.png).
+
+
+#### Maven Memory
+
+- Was running the code as `mvn exec:java`.
+    + This Runs the Java program inside the JVM of Maven. So I increased the memory limit of maven to 60Gigs.
+        * Still ran into `out of heap memory` Error.
+
+- Downloaded a Maven Plugin that allows running the Java program as a seperate process. `mvn exec:exec`. Only way to explicitly call the Java Program with memory arguments.
+- Explicitly give a maxlimit of 60Gigs to the spawned Java Process. 
+    + Still couldn't parse more tha ~60k sentences.
+ 
+#### Minimizing Memory Leakage
+
+- There is no `delete` or `free` statement in Java to free up the variables. All this is handled automatically by the Garbage collector. So there is nothing much I can do.
+- One thing that I tried is to not keep storing the results till the end of the file. But rather flush the results to the file after the size of the results exceed a threshold.
+- Then reinitialize the temporary results hoping the un referenced memory will be freed by GC.
+
+The threads keep running into `Out of Heap` memory Error.
+
+#### Removing IO bottleneck
+
+- Each thread should read the entire corresponding file at once instead of reading it line by line.
+- Also instead of writing the stuffIE output immediately, keep storing the output in memory and flush only after the entire file is parsed.
+- After parsing around ~60K lines the the threads close with `out of memory exceptions`.
+
+#### Multiprocessing Code
+- The corpus consists of 14621856 lines. StuffIE is extremely slow and running the code line by line is not feasible.
+- Decided to write a multiprocessing Code.
+    + Split the files into ~30 files.
+    + Run 30 parallel threads of stuffIE.
+    + After parsing a total of 40k lines. Either of the following two happened
+        + All threads stuck in waiting stuck (Possible IO bottleneck)
+        + Causes OutofMemoryError
+
 ---
 ### Extracting the first 10 references per page:
 - [You can view the pages dynamically as they are being extracted.](http://aryabhata.cse.iitd.ac.in:9312)
