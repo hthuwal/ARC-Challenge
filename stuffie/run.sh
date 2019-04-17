@@ -15,7 +15,6 @@ echo "Running"
 
 if [ $cstatus -eq 0 ]; then
     mvn exec:exec
-     # -Dexec.mainClass=it.unibz.inf.stuffie.StuffieConsoleRunner
 else
     echo "Compilation Failed.."
 fi

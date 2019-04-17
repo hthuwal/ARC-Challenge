@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 class MyThread implements Runnable {
 	int id;
-	static int count = 0;
+	static AtomicInteger count = new AtomicInteger(0);
 	static AtomicInteger num_of_exceptions = new AtomicInteger(0);
 	static AtomicInteger num_of_lines = new AtomicInteger(0);
 	Stuffie stuffie;
@@ -31,7 +31,7 @@ class MyThread implements Runnable {
 	String exceptions_file;
 
 	MyThread(int id, String file, Stuffie stuffie) {
-		count++;
+		count.incrementAndGet();
 		this.id = id;
 		this.source_file = file;
 		this.out_file = file + ".openie";
@@ -54,8 +54,8 @@ class MyThread implements Runnable {
 			ew.write(eb.toString());
 			ew.flush();
 
-			sb.setLength(0);
-			eb.setLength(0);
+			sb = new StringBuilder(15000);
+			eb = new StringBuilder(15000);
 		} catch (IOException e) {
 			print("IOException Occurred");
 		}
@@ -66,8 +66,8 @@ class MyThread implements Runnable {
 
 			/* ------------------------- Reading File as Stream ------------------------- */
 			Stream<String> lines = Files.lines(Paths.get(this.source_file));
-			StringBuilder sb = new StringBuilder();
-			StringBuilder eb = new StringBuilder();
+			StringBuilder sb = new StringBuilder(15000);
+			StringBuilder eb = new StringBuilder(15000);
 			BufferedWriter bw = new BufferedWriter(new FileWriter(this.out_file));
 			BufferedWriter ew = new BufferedWriter(new FileWriter(this.exceptions_file));
 
@@ -107,7 +107,7 @@ class MyThread implements Runnable {
 			e.printStackTrace();
 		}
 		System.out.println("Completed thread " + Integer.toString(id));
-		MyThread.count--;
+		count.decrementAndGet();
 	}
 }
 
@@ -132,7 +132,6 @@ public class StuffieConsoleRunner {
 					shorthandCommands.put(command[1], command[2]);
 			}
 		}
-		Mode m = getValidMode("PrintDependenyTree=DISABLED");
 
 		for (Class<?> x : Mode.class.getClasses()) {
 			validModesAndVals.append("\t\t" + x.getSimpleName() + "=[");
@@ -198,19 +197,23 @@ public class StuffieConsoleRunner {
 			NoSuchMethodException, SecurityException, IOException, InterruptedException {
 		File f = new File(source_dir);
 		ArrayList<File> files = new ArrayList<File>(Arrays.asList(f.listFiles()));
-		ArrayList<MyThread> threads = new ArrayList<MyThread>();
 		Mode[] modes = getCustomModes(args);
 		Mode m = getValidMode("PrintDependenyTree=DISABLED");
 
 		for (int i = 0; i < files.size(); i++) {
+			while (MyThread.count.get() > 29) {
+				System.out.printf("\rThreads: %d, Files: %d", MyThread.count.get(), i);
+				TimeUnit.SECONDS.sleep(2);
+			}
+
 			Stuffie stuffie = new Stuffie(modes);
 			stuffie.setMode(m);
 			String file = files.get(i).getPath();
-			threads.add(new MyThread(i, file, stuffie));
+			new MyThread(i, file, stuffie);
 		}
-		while (MyThread.count > 0) {
+		while (MyThread.count.get() > 0) {
 			String line = Integer.toString(MyThread.num_of_lines.get()) + " / 14621856, "
-					+ Integer.toString(MyThread.num_of_exceptions.get()) + ", " + Integer.toString(MyThread.count)
+					+ Integer.toString(MyThread.num_of_exceptions.get()) + ", " + Integer.toString(MyThread.count.get())
 					+ " threads Running";
 			System.out.print("\r" + line);
 			TimeUnit.SECONDS.sleep(2);
