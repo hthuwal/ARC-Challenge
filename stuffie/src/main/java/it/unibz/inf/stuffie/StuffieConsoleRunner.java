@@ -121,8 +121,9 @@ class MyThread implements Runnable {
 			e.printStackTrace();
 		}
 		print("Moving Results to secure location...\n");
-		move(this.out_file, "results/" + this.out_file);
-		move(this.exceptions_file, "results/" + this.exceptions_file);
+		move(this.file, "completed/" + this.file)
+		move(this.out_file, "completed/" + this.out_file);
+		move(this.exceptions_file, "completed/" + this.exceptions_file);
 		System.out.println("Completed thread " + Integer.toString(id));
 		count.decrementAndGet();
 	}
