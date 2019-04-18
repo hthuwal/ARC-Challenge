@@ -3,17 +3,16 @@ package it.unibz.inf.stuffie;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -58,6 +57,21 @@ class MyThread implements Runnable {
 			eb = new StringBuilder(15000);
 		} catch (IOException e) {
 			print("IOException Occurred");
+		}
+	}
+
+	public void move(String source, String dest) {
+		Path temp;
+		try {
+			print(source + " " + dest);
+			temp = Files.move(Paths.get(source), Paths.get(dest));
+			if (temp != null) {
+				print(source + " Moved successfully\n");
+			} else {
+				print("Failed to move the file:" + source + "\n");
+			}
+		} catch (IOException e) {
+			print("Moving Failed\n");
 		}
 	}
 
@@ -106,6 +120,9 @@ class MyThread implements Runnable {
 		IOException e) {
 			e.printStackTrace();
 		}
+		print("Moving Results to secure location...\n");
+		move(this.out_file, "results/" + this.out_file);
+		move(this.exceptions_file, "results/" + this.exceptions_file);
 		System.out.println("Completed thread " + Integer.toString(id));
 		count.decrementAndGet();
 	}
