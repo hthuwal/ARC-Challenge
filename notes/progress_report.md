@@ -18,6 +18,56 @@
 - [Hypothesis-Graph.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 
+## April 24 2019: Update
+
+### StuffIE
+
+- Modified the java code to automatically move the completed files to a seperated directory.
+
+- This ensured that we can easily restart the process when the process fails (The seemingly inevitable outofMemoryError.)
+
+- **Status**: 30 concurrent threads are running:
+    + `1679 / 10000` file splits parsed successfully.
+    + `24,49,076 / 1,46,21,856` lines parsed successfully.
+
+- Code for my representation of the Stuffie Output: In Progress
+
+### Wikipedia Scraper
+
+Completely coded all three phases.
+
+#### Execution Status
+- Phase 1: 100 % Complete
+    + Extracted a total of **42698** links from **8047** wikipedia pages of **4779** search keywords.
+
+- Phase 2: 10% Complete
+    + Raw pages from `710 / 8047` pages have been downloaded.
+    + **While Going through the logs found out that 'http://www.ncbi.nlm.nih.gov' has blocked access to their website (because they detected a script usage.)**
+
+- Phase 3: Will commence after completion of Phase 2
+#### BoilerPlate Removal
+
+- **2010** [L3S Paper](http://www.l3s.de/~kohlschuetter/boilerplate/).
+    + Tried Running both the binaries from [Google Code archive](https://code.google.com/archive/p/boilerpipe/) and the [github page](https://github.com/kohlschutter/boilerpipe).
+    + Ran into errors so dropped it.
+
+- Found a python library [jusText](https://pypi.org/project/jusText/) that performs Heuristic based boilerplate removal.
+    + They provide an [online portal](https://nlp.fi.muni.cz/projects/justext/) which I tested with a bunch of pages.
+    + The results seems promising. **So coded the Phase 3 using jusText.**
+
+- Using [pdftotext](https://pypi.org/project/pdftotext/) to convert pdfs into texts.
+
+#### Revamp the module
+
+- Details: [Readme of the Repo](https://github.com/hthuwal/wikipedia-references-downloader/blob/master/Readme.md)
+
+- **TLDR**: Break the process into three phases.
+    + Phase 1: Extract the references link for each keyword. 
+    + Phase 2: Download raw webpages parallely using aria2c.
+    + Phase 3: Extract Text from the raw pages (Boilerplate removal)
+
+## April 17 2019
+
 ### StuffIE MultiProcessing Nightmare 
 
 #### Splitting the file into 10000 files
