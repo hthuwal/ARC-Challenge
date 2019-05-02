@@ -18,6 +18,26 @@
 - [Hypothesis-Graph.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 
+## May 2nd 2019: Update
+
+- Code for my representation of the Stuffie Output: Complete
+- Stuffie Status: **99% complete**
+  + arya: `7000 / 7000` file splits completed
+  + vpl1: `1000 / 1000` file splits completed
+  + vpl2: `1000 / 1000` file splits completed
+  + vpl3: `900 / 1000` file splits completed
+
+- Wikipedia Scrapter
+  + 80% Pages are not found because LAN Internet Quota Exceeded midway.
+  + Downloading the remaining pages again using my home internet.
+
+- TODO Run stuffie on Questions and Hypothesis Graph
+  + Option 1: Pursuing This
+    * Since Hypothesis creation and associated code is in `python`.
+    * Create a StuffIE Rest API then can be used by a python code.
+  + Option 2:
+    * Write Hypothesis creation and associated code again in `java`
+
 ## April 24 2019: Update
 
 ### StuffIE
@@ -27,8 +47,8 @@
 - This ensured that we can easily restart the process when the process fails (The seemingly inevitable outofMemoryError.)
 
 - **Status**: 30 concurrent threads are running:
-    + `1679 / 10000` file splits parsed successfully.
-    + `24,49,076 / 1,46,21,856` lines parsed successfully.
+    + `2021 / 10000` file splits parsed successfully.
+    + `2,953,219 / 14,621,856` lines parsed successfully.
 
 - Code for my representation of the Stuffie Output: In Progress
 
@@ -41,7 +61,7 @@ Completely coded all three phases.
     + Extracted a total of **42698** links from **8047** wikipedia pages of **4779** search keywords.
 
 - Phase 2: 10% Complete
-    + Raw pages from `710 / 8047` pages have been downloaded.
+    + Raw pages from `1304 / 8047` pages have been downloaded.
     + **While Going through the logs found out that 'http://www.ncbi.nlm.nih.gov' has blocked access to their website (because they detected a script usage.)**
 
 - Phase 3: Will commence after completion of Phase 2
