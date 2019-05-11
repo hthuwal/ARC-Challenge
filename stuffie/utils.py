@@ -1,4 +1,7 @@
 import json
+import os
+
+from tqdm import tqdm
 
 
 def pprint(json_data):
@@ -42,8 +45,15 @@ def read_stuffie_output(file):
                     triplets[new_key] = [each.strip().strip(';') for each in line]
 
 
+def read_all(directory='results/triplets'):
+    for file in tqdm(os.listdir(directory), ascii=True):
+        yield from read_stuffie_output(os.path.join(directory, file))
+
+
 if __name__ == '__main__':
-    parsed_lines = read_stuffie_output("./results/triplets/part_0000.openie")
-    for each in parsed_lines:
-        pprint(each)
-        input()
+    count = 0
+    for each in read_all():
+        count += 1
+        # pprint(each)
+        # input()
+    print(count)
