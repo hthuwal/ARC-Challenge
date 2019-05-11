@@ -248,3 +248,15 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 
 # End of https://www.gitignore.io/api/maven
+
+/stuffie/parts1/
+
+/stuffie/parts2/
+
+/stuffie/src/main/java/it/unibz/inf/stuffie/RunOnFile.java
+
+/stuffie/parts3/
+
+/stuffie/temp
+
+/stuffie/results/
