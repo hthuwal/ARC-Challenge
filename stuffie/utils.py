@@ -46,14 +46,45 @@ def read_stuffie_output(file):
 
 
 def read_all(directory='results/triplets'):
-    for file in tqdm(os.listdir(directory), ascii=True):
+    for file in os.listdir(directory):
         yield from read_stuffie_output(os.path.join(directory, file))
+
+
+def replace_references(triplets):
+    keys = sorted(triplets.keys(), reverse=True)
+
+    # Replacing reference to another triplet with the subject of
+    # referred triplet
+    for key in keys:
+        triplet = triplets[key]
+        for i, word in enumerate(triplet):
+            if word.startswith("#"):
+                fkey = word[1:]
+                try:
+                    # TODO: Should I use entire triple instead of just the head?
+                    triplets[key][i] = triplets[fkey][0]
+                except Exception as e:
+                    print(fkey)
+                    print(triplets)
+                    input()
+    # Adding subject of parent as the subject of each facet
+    for key in keys:
+        i = key.find('.')
+        j = key.rfind('.')
+        if i != j:
+            parent = key[:j]
+            # TODO: Should I use entire triple instead of just the subject?
+            triplets[key].insert(0, triplets[parent][0])
+
+    return triplets
 
 
 if __name__ == '__main__':
     count = 0
-    for each in read_all():
+    # for each in tqdm(read_all(), ascii=True):
+    for each in tqdm(read_stuffie_output("results/combined_triplets.txt"), ascii=True):
         count += 1
         # pprint(each)
+        replace_references(each)
         # input()
     print(count)
