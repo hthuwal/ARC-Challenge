@@ -1,7 +1,8 @@
 import json
 import os
+import re
 
-from tqdm import tqdm
+from tqdm import trange, tqdm
 
 
 def pprint(json_data):
@@ -88,12 +89,21 @@ def replace_references(triplets):
     return triplets
 
 
+def convert_to_stanford(infile, ofile):
+    regex = re.compile(r"<ctx*.*>")
+    converted_triplets = []
+    for triplets in tqdm(read_stuffie_output(infile), ascii=True):
+        triplets = replace_references(triplets)
+        for key in triplets.keys():
+            string = f"1.00: ({'; '.join(triplets[key])})"
+            string = re.sub(regex, "", string)
+            converted_triplets.append(string)
+
+    print(f"Writing {len(converted_triplets)} triplets to {ofile}")
+    with open(ofile, "w") as f:
+        for i in trange(0, len(converted_triplets), 10000, ascii=True):
+            f.write("\n".join(converted_triplets[i:i + 10000]) + "\n")
+
+
 if __name__ == '__main__':
-    count = 0
-    # for each in tqdm(read_all(), ascii=True):
-    for each in tqdm(read_stuffie_output("results/combined_triplets.txt"), ascii=True):
-        count += 1
-        # pprint(each)
-        replace_references(each)
-        # input()
-    print(count)
+    convert_to_stanford("results/combined_triplets.txt", "results/triplets_in_stanford_format.txt")
