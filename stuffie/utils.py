@@ -5,11 +5,27 @@ import re
 from tqdm import trange, tqdm
 
 
+# ############################################################################ #
+#                                StuffIE Parsing                               #
+# ############################################################################ #
+
+
 def pprint(json_data):
+    """Pretty Print Json data
+
+    Arguments:
+        json_data {[json_formatted]} -- [Json data to be pretty printed]
+    """
     print(json.dumps(json_data, indent=4, sort_keys=True))
 
 
 def read_stuffie_output(file):
+    """Read the output of the stuffIE process.
+       Generate triplets for each sentence one by one.
+
+    Arguments:
+        file {[string]} -- [File containing the results of stuffIE]
+    """
     with open(file) as f:
         triplets, key, nfacet = {}, None, 0
         for line in f:
@@ -52,6 +68,15 @@ def read_all(directory='results/triplets'):
 
 
 def replace_references(triplets):
+    """Replace the references in triplets with subject 
+    of triplet.
+
+    Arguments:
+        triplets {[dict - (key: string, value: list)]} -- [Triplets of one line]
+
+    Returns:
+        [dict] -- [triplets with resolved references]
+    """
     keys = sorted(triplets.keys(), reverse=True)
 
     # Replacing reference to another triplet with the subject of
@@ -90,6 +115,9 @@ def replace_references(triplets):
 
 
 def clean_triplets(triplets):
+    """
+    Remove the triplet which contains <_>
+    """
     tobedeleted = []
     for key in triplets:
         for each in triplets[key]:
@@ -104,6 +132,12 @@ def clean_triplets(triplets):
 
 
 def convert_to_stanford(infile, ofile):
+    """Convert the stuffIE output to stanfordopenIE format
+
+    Arguments:
+        infile {string} -- [path to stuffIE file]
+        ofile {string} -- [path to output file]
+    """
     regex = re.compile(r"<ctx*.*>")
     converted_triplets = []
     for triplets in tqdm(read_stuffie_output(infile), ascii=True):
