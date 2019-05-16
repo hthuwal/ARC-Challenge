@@ -89,11 +89,26 @@ def replace_references(triplets):
     return triplets
 
 
+def clean_triplets(triplets):
+    tobedeleted = []
+    for key in triplets:
+        for each in triplets[key]:
+            if each == '<_>':
+                tobedeleted.append(key)
+                break
+
+    for key in tobedeleted:
+        del triplets[key]
+
+    return triplets
+
+
 def convert_to_stanford(infile, ofile):
     regex = re.compile(r"<ctx*.*>")
     converted_triplets = []
     for triplets in tqdm(read_stuffie_output(infile), ascii=True):
         triplets = replace_references(triplets)
+        triplets = clean_triplets(triplets)
         for key in triplets.keys():
             string = f"1.00: ({'; '.join(triplets[key])})"
             string = re.sub(regex, "", string)
