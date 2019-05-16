@@ -64,9 +64,10 @@ def replace_references(triplets):
                     # TODO: Should I use entire triple instead of just the head?
                     triplets[key][i] = triplets[fkey][0]
                 except Exception as e:
-                    print(fkey)
-                    print(triplets)
-                    input()
+                    # StuffIE references triplets which do not exist
+                    # Ignore StuffIE errors and skip these triplets
+                    continue
+
     # Adding subject of parent as the subject of each facet
     for key in keys:
         i = key.find('.')
@@ -75,6 +76,14 @@ def replace_references(triplets):
             parent = key[:j]
             # TODO: Should I use entire triple instead of just the subject?
             triplets[key].insert(0, triplets[parent][0])
+
+    # Delete Triplets which contain dangling references
+    for key in keys:
+        triplet = triplets[key]
+        for i, word in enumerate(triplet):
+            if word.startswith("#"):
+                del triplets[key]
+                break
 
     return triplets
 
