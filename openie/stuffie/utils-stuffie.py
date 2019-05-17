@@ -67,7 +67,7 @@ def read_all(directory='results/triplets'):
 
 
 def replace_references(triplets):
-    """Replace the references in triplets with subject 
+    """Replace the references in triplets with subject
     of triplet.
 
     Arguments:
