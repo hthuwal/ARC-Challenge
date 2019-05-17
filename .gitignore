@@ -259,4 +259,4 @@ buildNumber.properties
 
 /stuffie/temp
 
-/stuffie/results/
+*results/
