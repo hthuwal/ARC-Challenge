@@ -25,17 +25,22 @@ class MyThread implements Runnable {
 	static AtomicInteger num_of_lines = new AtomicInteger(0);
 	Stuffie stuffie;
 	Thread t;
-	String source_file;
-	String out_file;
-	String exceptions_file;
+	String source_file_name;
+	String source_file_path;
+	String out_file_path;
+	String exceptions_file_path;
+	String tdir;
 
-	MyThread(int id, String file, Stuffie stuffie) {
+	MyThread(int id, String file, String tdir, Stuffie stuffie) {
 		count.incrementAndGet();
 		this.id = id;
-		this.source_file = file;
-		this.out_file = file + ".openie";
-		this.exceptions_file = file + ".exceptions";
+		this.tdir = tdir;
+		this.source_file_path = file;
+		this.out_file_path = file + ".openie";
+		this.exceptions_file_path = file + ".exceptions";
 		this.stuffie = stuffie;
+		this.source_file_name = Paths.get(file).getFileName().toString();
+
 		t = new Thread(this, Integer.toString(id));
 		System.out.println("New thread: " + t);
 		t.start();
@@ -77,11 +82,11 @@ class MyThread implements Runnable {
 		try {
 
 			/* ------------------------- Reading File as Stream ------------------------- */
-			Stream<String> lines = Files.lines(Paths.get(this.source_file));
+			Stream<String> lines = Files.lines(Paths.get(this.source_file_path));
 			StringBuilder sb = new StringBuilder(15000);
 			StringBuilder eb = new StringBuilder(15000);
-			BufferedWriter bw = new BufferedWriter(new FileWriter(this.out_file));
-			BufferedWriter ew = new BufferedWriter(new FileWriter(this.exceptions_file));
+			BufferedWriter bw = new BufferedWriter(new FileWriter(this.out_file_path));
+			BufferedWriter ew = new BufferedWriter(new FileWriter(this.exceptions_file_path));
 
 			print("Running Stuffie on each line\n");
 
@@ -124,10 +129,10 @@ class MyThread implements Runnable {
 		IOException e) {
 			e.printStackTrace();
 		}
-		print("Moving Results to secure location...\n");
-		move(this.source_file, "completed/" + this.source_file);
-		move(this.out_file, "completed/" + this.out_file);
-		move(this.exceptions_file, "completed/" + this.exceptions_file);
+		print("Moving Results to " + tdir + "...\n");
+		move(this.source_file_path, tdir + "/" + this.source_file_name);
+		move(this.out_file_path, tdir + "/" + this.source_file_name + ".openie");
+		move(this.exceptions_file_path, tdir + "/" + this.source_file_name + ".exceptions");
 		System.out.println("Completed thread " + Integer.toString(id));
 		count.decrementAndGet();
 	}
@@ -214,7 +219,7 @@ public class StuffieConsoleRunner {
 		System.out.println(str);
 	}
 
-	private static void run_on_file(String source_dir, int num_threads, String[] args)
+	private static void run_on_file(String source_dir, String finished_dir, int num_threads, String[] args)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, IOException, InterruptedException {
 		File f = new File(source_dir);
@@ -231,7 +236,7 @@ public class StuffieConsoleRunner {
 			Stuffie stuffie = new Stuffie(modes);
 			stuffie.setMode(m);
 			String file = files.get(i).getPath();
-			new MyThread(i, file, stuffie);
+			new MyThread(i, file, finished_dir, stuffie);
 		}
 		while (MyThread.count.get() > 0) {
 			String line = Integer.toString(MyThread.num_of_lines.get()) + " / 14621856, "
@@ -261,7 +266,7 @@ public class StuffieConsoleRunner {
 			} else if (text.substring(0, 3).equals("<f>")) {
 				print("Reading text from file and Running stuffIE over lines..");
 				String[] arr = text.split(" ");
-				run_on_file(arr[1], Integer.parseInt(arr[2]), args);
+				run_on_file(arr[1], arr[2], Integer.parseInt(arr[3]), args);
 				print("");
 				text = "q";
 			} else if (text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') {
