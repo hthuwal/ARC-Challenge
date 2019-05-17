@@ -18,6 +18,19 @@
 - [Hypothesis-Graph.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 
+## May 16th 2019
+
+- While Parsing the stuffIE output found instances where the stuffIE refers to a triplet which does not exist.
+  ```
+  ## Rooted macrophytes are also a positive component of larval lamprey habitat Maitland, 2003, providing substrate stability, shade and slowing down flow Maitland, 2003.
+
+  1.1:    Maitland 2003; Rooted also providing; macrophytes;
+  1.3:    a positive component of larval lamprey habitat Maitland 2003; are and; #1.16;
+  1.22:   a positive component of larval lamprey habitat Maitland 2003; slowing down; flow;
+  ```
+    - In this instances the triplet `1.3` refers to a triplet `1.16` which doesnot exist.
+    - **Not Dealing with this stuffIE error. Will Ignore all these triplets.**
+    
 ## May 2nd 2019: Update
 
 - Code for my representation of the Stuffie Output: Complete
