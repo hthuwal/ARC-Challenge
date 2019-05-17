@@ -26,58 +26,36 @@ StuffIE extracts:
 
 StuffIE uses the [Stanford CoreNLP tools](https://github.com/stanfordnlp/CoreNLP) and licensed under the GNU General Public License (v3 or later).
 
-### How to run?
+## Running StuffIE on the corpus
 
-#### Compile
+1. Split the corpus into 10000 files. So that one can run stuffie parallely.
 
-```bash
-mvn compile
-```
+    ```bash
+    split -n 10000 --numeric-suffixes "path_to_corpus_file" "parts/part_"
+    ```
 
-#### Run
+    This will split the corpus file into 10000 smaller files as `parts/part_0000 to parts/part_9999`
 
-```bash
-mvn exec:java -Dexec.mainClass=it.unibz.inf.stuffie.StuffieConsoleRunner
-```
+2. Run stuffie on the corpus
 
-### Run on File
+    - Compile and run the `StuffieConsoleRunner.java`
 
-#### Split the source file into 32 parts
+        ```bash
+        ./run.sh
+        ```
 
-```bash
-time split -n 32 --numeric-suffixes "../data/ARC-V1-Feb2018-2/ARC_Corpus.txt" parts/part_
-```
-#### Run
+    - Once it prompts you to enter the command, enter the following
+        ```bash
+        <f> "dir_containing_parts" "dir_where_finished_file_will_be_moved" "Number of threads"
+        ```
+        For e.g
+        ```bash
+        <f> parts completed 20
+        ```
 
-```bash
-./run.sh
-```
-
-Give the following in the resulting interface
-
-`<f> parts`
-
-### Quick start
-You need to have Java 1.8 and a compatible Maven installed. Clone a copy of StuffIE's repo and run Maven to build the artifacts. You can do this in your IDE or from your terminal. See `StuffIEConsoleRunner.java` to see an example of how to run StuffIE.
-
-You may need to increase your java heap size when running StuffIE by setting the `-Xms` and `-Xmx` parameters. 
-
-### Contact
-For any question about StuffIE, please send an email to rprasojo@unibz.it.
-
-### Citing StuffIE
-If you use StuffIE in your academic work, please cite it with the following Bibtex citation:
-```
-@inproceedings{prasojo2018stuffie,
-  title={StuffIE: Semantic Tagging of Unlabeled Facets Using Fine-Grained Information Extraction},
-  author={Prasojo, Radityo Eko and Kacimi, Mouna and Nutt, Werner},
-  booktitle={Proceedings of the 27th ACM International Conference on Information and Knowledge Management},
-  pages={467--476},
-  year={2018},
-  organization={ACM}
-}
-```
-
-### Upcoming features
-- Integrated model for facet labeling
-- Inter-sentence nested relation and facet extraction
+3. Combine the results into a single file.
+    
+    ```bash
+    cd completed
+    cat *.openie > combined_results.txt
+    ```
