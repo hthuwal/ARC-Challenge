@@ -56,8 +56,9 @@ StuffIE uses the [Stanford CoreNLP tools](https://github.com/stanfordnlp/CoreNLP
 3. Combine the results into a single file.
     
     ```bash
+    mkdir results
     cd completed
-    cat *.openie > combined_results.txt
+    cat *.openie > ../results/combined_results.txt
     ```
 
 ## Running StuffIE on the QA hypothesis
@@ -77,3 +78,12 @@ StuffIE uses the [Stanford CoreNLP tools](https://github.com/stanfordnlp/CoreNLP
     <f> results/questions/hypothesis results/questions/sutffie_hypothesis 20
     ```
 
+## Apprach 1 
+
+- Convert stuffIE output into stanford format and use the previous algorithms.
+
+    ```bash
+    python convert_into_stanford_format.py
+    ```
+
+    This will create the file `results/triplets_in_stanford_format.txt` for the corpus and multiple files in directory `results/questions/stuffie_hypothesis_stanford_format` for each hypothesis.
