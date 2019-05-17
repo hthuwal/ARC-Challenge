@@ -59,3 +59,21 @@ StuffIE uses the [Stanford CoreNLP tools](https://github.com/stanfordnlp/CoreNLP
     cd completed
     cat *.openie > combined_results.txt
     ```
+
+## Running StuffIE on the QA hypothesis
+
+1. Generate hypothesis and create seperate files for each of them.
+    
+    ```bash
+    mkdir -P results/questions/hypothesis
+    python prepare-hypothesis-for-stuffie.py "path_to_qa_jsonl_file"
+    ```
+    - This will create files `qid_optionlabel` for each question-option pair in the directory `results/questions/hypothesis`
+
+2. Run StuffIE on the QA. Proceed similar to corpus
+
+    ```bash
+    ./run.sh 
+    <f> results/questions/hypothesis results/questions/sutffie_hypothesis 20
+    ```
+
