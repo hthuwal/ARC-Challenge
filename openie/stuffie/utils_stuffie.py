@@ -1,8 +1,5 @@
 import json
 import os
-import re
-
-from tqdm import trange, tqdm
 
 # ############################################################################ #
 #                                StuffIE Parsing                               #
@@ -59,6 +56,9 @@ def read_stuffie_output(file):
                     new_key = f"{key}.{nfacet}"
                     line = line[0].strip().split('; ')
                     triplets[new_key] = [each.strip().strip(';') for each in line]
+
+        if triplets:
+            yield triplets
 
 
 def read_all(directory='results/triplets'):
