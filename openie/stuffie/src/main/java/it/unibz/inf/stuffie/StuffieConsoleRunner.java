@@ -53,8 +53,6 @@ class MyThread implements Runnable {
 			ew.write(eb.toString());
 			ew.flush();
 
-			sb = new StringBuilder(15000);
-			eb = new StringBuilder(15000);
 		} catch (IOException e) {
 			print("IOException Occurred");
 		}
@@ -89,8 +87,12 @@ class MyThread implements Runnable {
 
 			lines.forEach(line -> {
 
+				line = line.replaceAll("[^A-Za-z0-9 .,]", "");
 				if (sb.length() > 10000 || eb.length() > 10000) {
 					flush(bw, ew, sb, eb);
+					sb.delete(0, sb.length());
+					eb.delete(0, eb.length());
+
 				}
 
 				line = line.trim();
@@ -112,6 +114,8 @@ class MyThread implements Runnable {
 			});
 			lines.close();
 			flush(bw, ew, sb, eb);
+			sb.delete(0, sb.length());
+			eb.delete(0, eb.length());
 			bw.close();
 			ew.close();
 
@@ -210,7 +214,7 @@ public class StuffieConsoleRunner {
 		System.out.println(str);
 	}
 
-	private static void run_on_file(String source_dir, String[] args)
+	private static void run_on_file(String source_dir, int num_threads, String[] args)
 			throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
 			NoSuchMethodException, SecurityException, IOException, InterruptedException {
 		File f = new File(source_dir);
@@ -219,7 +223,7 @@ public class StuffieConsoleRunner {
 		Mode m = getValidMode("PrintDependenyTree=DISABLED");
 
 		for (int i = 0; i < files.size(); i++) {
-			while (MyThread.count.get() > 29) {
+			while (MyThread.count.get() >= num_threads) {
 				System.out.printf("\rThreads: %d, Files: %d", MyThread.count.get(), i);
 				TimeUnit.SECONDS.sleep(2);
 			}
@@ -257,7 +261,7 @@ public class StuffieConsoleRunner {
 			} else if (text.substring(0, 3).equals("<f>")) {
 				print("Reading text from file and Running stuffIE over lines..");
 				String[] arr = text.split(" ");
-				run_on_file(arr[1], args);
+				run_on_file(arr[1], Integer.parseInt(arr[2]), args);
 				print("");
 				text = "q";
 			} else if (text.charAt(0) == '<' && text.charAt(text.length() - 1) == '>') {
