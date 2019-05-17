@@ -29,7 +29,8 @@ def add_hypothesis(qa, tdir):
 
 
 if __name__ == '__main__':
-    question_file = "../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl"
+    n = len(sys.argv)
+    question_file = sys.argv[1] if n == 2 else "../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl"
     question_with_hypothesis = "results/questions/questions_with_hypothesis.jsonl"
     jsonl = []
     with open(question_file, "r") as inp:
