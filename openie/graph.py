@@ -3,8 +3,13 @@ from collections import defaultdict, Counter
 from tqdm import tqdm
 import nltk
 import json
+import os
 
-with open("stopwords_en.txt", "r") as f:
+stopwords_file = "stopwords_en.txt"
+if not os.path.exists(stopwords_file):
+    stopwords_file = "../" + stopwords_file
+
+with open(stopwords_file, "r") as f:
     stopwords = [each.strip() for each in f.readlines()]
 
 
