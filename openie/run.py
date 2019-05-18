@@ -76,6 +76,39 @@ def get_question_details():
     return questions
 
 
+def score_questions(corpus_graph, qa_graphs, dumps=None):
+
+    scores = {}
+    questions = get_question_details()
+    print("Calculating scores for each question...")
+
+    for question_id in tqdm(qa_graphs, ascii=True):
+        scores[question_id] = {}
+        scores[question_id]['correct_answer'] = qa_graphs[question_id]['correct_answer']
+        scores[question_id]["options"] = {}
+
+        matches, hypo_scores = {}, {}
+        matches["question"] = questions[question_id][0]
+
+        for key in qa_graphs[question_id]['hypothesis_graphs']:
+            hypothesis_graph = qa_graphs[question_id]['hypothesis_graphs'][key]
+            hypo_scores[key], hypothesis_match = GSA.compare_graph(corpus_graph, hypothesis_graph)
+
+            matches[key] = {
+                'graph': hypothesis_match,
+                'hypothesis': questions[question_id][1][key],
+                'option': questions[question_id][2][key]
+            }
+
+            scores[question_id]["options"][key] = hypo_scores[key]
+
+        if dumps is not None:
+            json.dump(matches, open(os.path.join(dumps, question_id + ".json"), "w"), indent=4)
+
+    print(len(scores))
+    return scores
+
+
 @click.command()
 @click.argument('Corpus_Triplets_File')
 @click.argument("qa_graph_path", type=click.Path(exists=True))
@@ -84,9 +117,11 @@ def main(corpus_triplets_file, qa_graph_path, stem):
     """
     1. Create Corpus Graph given its openie triplets in the stanford openIE format in the file "CORPUS_TRIPLETS_FILE".\n
     2. Load the qa graph pickle dump located @PATH\n
+    3. Calculate Scores for each option for each graph.\n
     """
     corpus_graph = get_corpus_graph(corpus_triplets_file, stem)
     qa_graphs = get_qa_graph(qa_graph_path)
+    scores = score_questions(corpus_graph, qa_graphs)
 
 
 if __name__ == '__main__':
