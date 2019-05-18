@@ -52,6 +52,30 @@ def get_qa_graph(path):
     return pickle.load(open(path, "rb"))
 
 
+def get_question_details():
+    questions = {}
+    with open("../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file:
+        for line in (in_file):
+            line = json.loads(line)
+            question = line['question']['stem']
+            options = {}
+
+            for choice in line['question']['choices']:
+                label = choice['label']
+                if label not in options:
+                    options[label] = choice['text']
+
+            hypothesis = {}
+            question = utils.replace_wh_word_with_blank(question)
+
+            for option in options:
+                if options[option] != "":
+                    hypothesis[option] = utils.create_hypothesis(question, options[option])
+
+            questions[line['id']] = [question, hypothesis, options]
+    return questions
+
+
 @click.command()
 @click.argument('Corpus_Triplets_File')
 @click.argument("qa_graph_path", type=click.Path(exists=True))
