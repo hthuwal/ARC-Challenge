@@ -109,19 +109,62 @@ def score_questions(corpus_graph, qa_graphs, dumps=None):
     return scores
 
 
+def make_predictions(scores, prediction_file):
+    points = 0
+    p_at = {1: 0, 2: 0, 3: 0}
+
+    with open(prediction_file, "w") as f:
+        for question_id in tqdm(scores, ascii=True):
+            point = 0
+            correct_answer = scores[question_id]['correct_answer']
+            option_scores = list(scores[question_id]['options'].items())
+            if len(option_scores) == 0:
+                print("This shouldn't have happened")
+                input()
+            else:
+                maximum = max(option_scores, key=lambda x: x[1])
+                possible_answers = [each[0] for each in option_scores if each[1] == maximum[1]]
+
+                if correct_answer in possible_answers:
+                    point = (1 / len(possible_answers))
+
+                option_scores.sort(key=itemgetter(1, 0), reverse=True)
+                ranked_answers = [each[0] for each in option_scores]
+                for i in range(0, 3):
+                    if correct_answer in ranked_answers[0:i + 1]:
+                        p_at[i + 1] += 1
+
+            points += point
+            # f.write("%s\t%s\t%s\t%s\t%f\n" % (question_id, questions[question_id], correct_answer, str(possible_answers), point))
+            f.write("%s,%s\n" % (question_id, ";".join(possible_answers)))
+
+    for key in p_at:
+        p_at[key] = p_at[key] / len(scores)
+
+    print("Number of questions: ", len(scores))
+    print("Score: ", points / len(scores))
+    print("Precisoin at: ")
+    for key in p_at:
+        print("\t%d: " % key, p_at[key])
+    print("Exiting...")
+
+
 @click.command()
 @click.argument('Corpus_Triplets_File')
 @click.argument("qa_graph_path", type=click.Path(exists=True))
+@click.argument("prediction_file", type=click.Path())
 @click.option('--stem', is_flag=True, help='Use this if you want to perform stemming on each word.')
-def main(corpus_triplets_file, qa_graph_path, stem):
+def main(corpus_triplets_file, qa_graph_path, prediction_file, stem):
     """
     1. Create Corpus Graph given its openie triplets in the stanford openIE format in the file "CORPUS_TRIPLETS_FILE".\n
     2. Load the qa graph pickle dump located @PATH\n
     3. Calculate Scores for each option for each graph.\n
+    4. Predict possible answers for each question and save them in the PREDICTION_FILE.\n
     """
     corpus_graph = get_corpus_graph(corpus_triplets_file, stem)
     qa_graphs = get_qa_graph(qa_graph_path)
     scores = score_questions(corpus_graph, qa_graphs)
+    make_predictions(scores, prediction_file)
 
 
 if __name__ == '__main__':
