@@ -95,7 +95,7 @@ def convert_to_stanford(infile, ofile, disable_progress_bars=False):
 if __name__ == '__main__':
 
     print("Converting Corpus Stuffie Output into stanford format")
-    convert_to_stanford("results/combined_triplets.txt", "results/triplets_in_stanford_format.txt")
+    convert_to_stanford("results/combined_triplets.txt", "results/stuffie_triplets_in_stanford_format.txt")
 
     print("Converting QA hypothesis Stuffie Output into stanford format")
     hypo_dir_stuffie = "results/questions/stuffie_hypothesis"
