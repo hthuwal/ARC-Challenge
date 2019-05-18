@@ -1,4 +1,3 @@
-from collections import defaultdict
 from graph import Graph
 from gsa import GSA
 from operator import itemgetter
@@ -7,7 +6,6 @@ from tqdm import tqdm
 import click
 import json
 import os
-import sys
 import time
 import dill as pickle
 import utils
