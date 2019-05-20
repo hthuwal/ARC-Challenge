@@ -112,7 +112,7 @@ def make_predictions(scores, prediction_file):
     p_at = {1: 0, 2: 0, 3: 0}
 
     prediction_loc = os.path.dirname(prediction_file)
-    if not os.path.exists(prediction_loc):
+    if prediction_loc and not os.path.exists(prediction_loc):
         os.makedirs(prediction_loc)
 
     with open(prediction_file, "w") as f:
