@@ -18,7 +18,97 @@
 - [Hypothesis-Graph.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 
-## May 16th 2019
+## May 20th 2019
+### Apprach 1: Initial Results and Comparison
+
+The method that resulted in a score of 29 on stanfords openIE output gave a poor 26.464 on translated stuffIE output
+
+#### Analysis
+
+**Comparison between the QA graphs**
+
+- Number of hypothesis with empty Graph
+    + **424 / 4687** Hypothesis were empty graphs when using **stanfords openIE**.
+        * Out of these **102** correspond to correct option. 
+    + **589 / 4687** Hypothesis were empty graphs when using **stanfords openIE**.
+        * Out of these **149** correspond to correct option. 
+
+- **So basically we were getting straight 0 or 0.25 score for these questions 102 and 149 questions in the respective cases. :/**
+    + Because No Node in hypo graph => 0 score.
+
+- The increase in number of empty graphs of hypothesis explains the decline in the score to some extent.
+    + 149 - 102 => 47 Correct Answer would take the score from 26 to 30
+
+- Need to see the distribution of size of hypo graphs.
+
+**Comparison between the corpus graphs**  
+
+| Attribute                 | Stanford OpenIE | StuffIE translated into Stanford |
+|:--------------------------|:---------------:|:--------------------------------:|
+| # of Triplets             |   56 Million    |            32 Million            |
+| # of Nodes                |   21 Million    |            17 Million            |
+| # of Edges                |   40 MIllion    |            23 Million            |
+| Size of largest Component |   20 Million    |            13 Million            |
+
+- Initial impression of corpus graphs is same as what was expected. Since stuffIE results in cleaner triplets and less redundancy as compared to the stanford openIE.
+
+### Apprach 1: Methodology
+
+1. Combine the 10k files into a single stuffie output.
+    - Less IO requests as compared to reading each file individually.
+
+2. Convert the stuffIE output into stanford output.
+    - This will allow us to apply our GSA algorithm and see how stuffIE changes the results.
+
+#### Format Conversion StuffIE to Stanford
+
+- This will allow me to use the existing algorithms on the stuffIE output.
+
+- Assuming that stuffIE results in cleaner triplets this should lead to cleaner graphs even in openIE format.
+
+Steps:
+
+1. Dealing with Recursive nature of stuffIE output.
+    - Replace every reference to another triplet with the subject of the triplet being referred.
+
+2. Dealing with Facets.
+    - Treat each facet as an independent triplet.
+    - How to remove dependency on the parent triplet?
+        + Add the subject of the parent triplet as the subject of the facet.
+
+3. Dealing with Dangling references.
+    - StuffIE posesses and error where it references a triplet which does not exist.
+    - In such cases just ignore the entire triplet.
+
+4. Cleaning Triplets
+    - Whenever stuffie can't figureout the verb or connector it believes must be present. It uses `<_>` instead.
+    - This however doesn't seem to be useful.
+    - So Ignore all triplets containing `<_>`.
+
+### Running Stuffie on questions and hypothesis.
+
+The hypothesis creation code is in python.
+
++ It assumes that a java openIE Rest API service is running to which the generated hypothesis can be sent to get triplets.
++ StuffIE doesn't have this functionality.
+
+So have two options: 
+
+1. Code in Java
+    - Write a java based rest API that can process multiple simultaneous request and run stuffIE on each request.
+    - Use this alongside the existing python code.
+
+2. Code in Python
+    - Write a python script that generates hypothesis for each question option pair and saves it into a seperate file.
+        + FileName: QuestionID_OptionLabel
+    - Run stuffIE parallely the same way we ran it on the 10k parts of the corpus.
+    - So we'll have a file of stuffIE output for each question answer pair.
+
+Went with approach 2.
+
+- **Observation:** Out of 4687 **no output was obtained for 477 hypotheses.**
+
+### Stuffie Parsing
 
 - While Parsing the stuffIE output found instances where the stuffIE refers to a triplet which does not exist.
   ```
@@ -1039,25 +1129,25 @@ Next immediate step is to download and study the ConceptNet knowledge base and u
 
 	Model's are Running will update result by tomorrow.
 
-	| Method | Score | Precision @ 1 |  Precision @ 2 |  Precision @ 3 |
-	|--------|:-----:|:-------------:|:--------------:|:--------------:|
-	|ARC + Naive| 27.41|0.2628|0.50256|0.7645|
-	|ARC + J2| 27.6834|0.2662|0.5060|0.7636|
-	|ARC + J1 + J2| 27.868|0.2705|0.5102|0.7705|
-	|ARC + E| 28.124|0.2730|0.5179|0.7670|
-	|ARC + E + J1| 28.252|0.2756|0.5085|0.7730|
-	|ARC + J1| 28.380|0.2747|0.5119|0.7696|
+| Method        |  Score  | Precision @ 1 | Precision @ 2 | Precision @ 3 |
+|:--------------|:-------:|:-------------:|:-------------:|:-------------:|
+| ARC + Naive   |  27.41  |    0.2628     |    0.50256    |    0.7645     |
+| ARC + J2      | 27.6834 |    0.2662     |    0.5060     |    0.7636     |
+| ARC + J1 + J2 | 27.868  |    0.2705     |    0.5102     |    0.7705     |
+| ARC + E       | 28.124  |    0.2730     |    0.5179     |    0.7670     |
+| ARC + E + J1  | 28.252  |    0.2756     |    0.5085     |    0.7730     |
+| ARC + J1      | 28.380  |    0.2747     |    0.5119     |    0.7696     |
 
 - **With Co-reference Resolution**
 
-	| Method | Score | Precision @ 1 |  Precision @ 2 |  Precision @ 3 |
-	|--------|:-----:|:-------------:|:--------------:|:--------------:|
-	|ARC + coref + E + J1| 27.569 | 0.2677 | 0.5085 | 0.7662 |
-	|ARC + coref + J1 + J2| 27.7617 | 0.2687 | 0.5059 | 0.7687 |
-	|ARC + coref + Naive| 27.8256 |0.2671|0.5043|0.7654|
-	|ARC + coref + J2| 27.9109 | 0.2688 | 0.5051 | 0.7635 |
-	|ARC + coref + J1| 27.9892 | 0.2705 | 0.5051 | 0.7679 |
-	|ARC + coref + E| 28.2949 | 0.2739 | 0.5111 | 0.7679 |
+| Method                |  Score  | Precision @ 1 | Precision @ 2 | Precision @ 3 |
+|:----------------------|:-------:|:-------------:|:-------------:|:-------------:|
+| ARC + coref + E + J1  | 27.569  |    0.2677     |    0.5085     |    0.7662     |
+| ARC + coref + J1 + J2 | 27.7617 |    0.2687     |    0.5059     |    0.7687     |
+| ARC + coref + Naive   | 27.8256 |    0.2671     |    0.5043     |    0.7654     |
+| ARC + coref + J2      | 27.9109 |    0.2688     |    0.5051     |    0.7635     |
+| ARC + coref + J1      | 27.9892 |    0.2705     |    0.5051     |    0.7679     |
+| ARC + coref + E       | 28.2949 |    0.2739     |    0.5111     |    0.7679     |
 
 	-  As expected the increase in accuracy is due to the increase in Precision @ 1.
 
@@ -1190,11 +1280,11 @@ Exception in thread "main" java.util.regex.PatternSyntaxException: Dangling meta
 
 Trying to combine NCERT and ARC corpus graphs:
 
-|Approach| Score | 
-|---------|-------|
-|Score per question = ARC score + NCERT score|25.7565|
-|Score per question = **Sum** of **normalized** score|25.40|
-|Score per question = **max**(ARC score + NCERT score)|27.199|
+| Approach                                              | Score   |
+|:------------------------------------------------------|:--------|
+| Score per question = ARC score + NCERT score          | 25.7565 |
+| Score per question = **Sum** of **normalized** score  | 25.40   |
+| Score per question = **max**(ARC score + NCERT score) | 27.199  |
 
 ---
 
@@ -1210,12 +1300,12 @@ To-do/In Progress:
 
 #### Updated Results
 
-|Corpus/Method|Points Scored|
-|-------------|:-----------:|
-|ARC + DGEM with openIE (open-source) | 26.41|
-|ARC + DGEM with openIE (proprietary) | 27.11|
-|ARC + Graph Comparison Algo| 27.41|
-|ARC + Coref + Graph Comparison Algo | 27.82|
+| Corpus/Method                        | Points Scored |
+|:-------------------------------------|:-------------:|
+| ARC + DGEM with openIE (open-source) |     26.41     |
+| ARC + DGEM with openIE (proprietary) |     27.11     |
+| ARC + Graph Comparison Algo          |     27.41     |
+| ARC + Coref + Graph Comparison Algo  |     27.82     |
 
 The scores per question have been added to the spreadsheet.
 
@@ -1232,13 +1322,13 @@ Graph Details:
 	- Number of Nodes: 22123223             
 	- Number of Edges: 41976390             
 
-|Nodes|Number_of_components|
-|:---:|:------------------:|
-|21236195|1|
-|100-1004| 87|
-|21-100|1006|
-|10-20|3508|
-|1-9|312931|
+|  Nodes   | Number_of_components |
+|:--------:|:--------------------:|
+| 21236195 |          1           |
+| 100-1004 |          87          |
+|  21-100  |         1006         |
+|  10-20   |         3508         |
+|   1-9    |        312931        |
 
 ---
 
@@ -1248,9 +1338,9 @@ Graph Details:
 
 - The overall results seem to improve.
 
-|Score|NCERT(DGEM)|NCERT(OpenIE)|NCERT(OpenIE + Coref)|ARC(DGEM)|ARC (OpenIE)|
-|:---:|:---------:|:-----------:|:-------------------:|:-------:|:----------:|
-|Total_Score|    22.98| 23.929| 24.017| 26.41| 27.413|
+|    Score    | NCERT(DGEM) | NCERT(OpenIE) | NCERT(OpenIE + Coref) | ARC(DGEM) | ARC (OpenIE) |
+|:-----------:|:-----------:|:-------------:|:---------------------:|:---------:|:------------:|
+| Total_Score |    22.98    |    23.929     |        24.017         |   26.41   |    27.413    |
 
 - The model is avoiding 0 scores by not predicting at all or predicting k-way ties (thereby getting 1/k score).
 - The next aim should be to increase the percentage of correctly answered questions ( single prediction)
@@ -1261,13 +1351,13 @@ Graph Details:
 ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_analysis.png)
 
 
-|Score|NCERT(DGEM)|NCERT(OpenIE)|NCERT(OpenIE + Coref)|ARC(DGEM)|ARC (OpenIE)|
-|:---:|:---------:|:-----------:|:-------------------:|:-------:|:----------:|
-|0.00 |    72.18|   45.56|   40.27|   69.28|   45.82|
-|0.25 |    4.69|    30.63|   38.31|   4.52|    26.71|
-|0.33 |    0.68|    5.63|    5.20|    0.34|    4.44|
-|0.50 |    1.71|    7.42|    6.74|    1.37|    7.42|
-|1.00 |    20.73|   10.67|   9.30|    24.49|   15.53|
+| Score | NCERT(DGEM) | NCERT(OpenIE) | NCERT(OpenIE + Coref) | ARC(DGEM) | ARC (OpenIE) |
+|:-----:|:-----------:|:-------------:|:---------------------:|:---------:|:------------:|
+| 0.00  |    72.18    |     45.56     |         40.27         |   69.28   |    45.82     |
+| 0.25  |    4.69     |     30.63     |         38.31         |   4.52    |    26.71     |
+| 0.33  |    0.68     |     5.63      |         5.20          |   0.34    |     4.44     |
+| 0.50  |    1.71     |     7.42      |         6.74          |   1.37    |     7.42     |
+| 1.00  |    20.73    |     10.67     |         9.30          |   24.49   |    15.53     |
 
 ---
 
@@ -1287,11 +1377,11 @@ Graph Details:
 
 #### Results
 
-|Corpus/Method|Points Scored|
-|-------------|:-----------:|
-|ARC + DGEM with openIE (opensource) | 26.41|
-|ARC + DGEM with openIE (proprietary) | 27.11|
-|ARC + Graph Comparison Algo| 27.41|
+| Corpus/Method                        | Points Scored |
+|:-------------------------------------|:-------------:|
+| ARC + DGEM with openIE (opensource)  |     26.41     |
+| ARC + DGEM with openIE (proprietary) |     27.11     |
+| ARC + Graph Comparison Algo          |     27.41     |
 
 The scores per question have been added to the spreadsheet.
 
@@ -1312,18 +1402,18 @@ Graph Details:
 	- Number of Nodes: 21317833             
 	- Number of Edges: 40606342             
 
-|Nodes   |Number of components|
-|:------:|:------------------:|
-|20605758    |1|
-|1004    |1|
-|1002    |4|
-|1001    |2|
-|1000    |1|
-|100-999 |74|
-|20-99   |840|
-|19  |108|
-|10-19   |2639|
-|1-9 |254438|
+|  Nodes   | Number of components |
+|:--------:|:--------------------:|
+| 20605758 |          1           |
+|   1004   |          1           |
+|   1002   |          4           |
+|   1001   |          2           |
+|   1000   |          1           |
+| 100-999  |          74          |
+|  20-99   |         840          |
+|    19    |         108          |
+|  10-19   |         2639         |
+|   1-9    |        254438        |
 
 ---
 
@@ -1406,11 +1496,11 @@ Both the StanfordNLP and the openIE perform similar on this sentence. **Both are
 		* Going to be published in 2018 EMNLP.
 
 #### Results: Question wise predictions are present in the spread sheet
-|Corpus/Method|Points Scored|
-|-------------|:-----------:|
-|NCERT + DGEM |22.99|
-|NCERT openIE + Graph Comparison Algo| 23.929|
-|NCERT openIE (with coreference resolution) + Graph Comparison Algo| 24.017|
+| Corpus/Method                                                      | Points Scored |
+|:-------------------------------------------------------------------|:-------------:|
+| NCERT + DGEM                                                       |     22.99     |
+| NCERT openIE + Graph Comparison Algo                               |    23.929     |
+| NCERT openIE (with coreference resolution) + Graph Comparison Algo |    24.017     |
 
 Results though improved are still below the random baseline.
 - Can try different graph comparison algo, with partial word matching?
@@ -1455,24 +1545,24 @@ Results though improved are still below the random baseline.
 	+ Number of Edges: 73291
 	+ Number of Weakly Connected Components (using DFS): 771
 
-|Number of Nodes|Number of Components|
-|:-------------:|:------------------:|
-|41296			| 1					|
-|27				| 1					|
-|19				| 1					|
-|15				| 1					|
-|14				| 1					|
-|13				| 2					|
-|10				| 1					|
-|9				| 7					|
-|8				| 7					|
-|7				| 20				|
-|6				| 12				|
-|5				| 25				|
-|4				| 52				|
-|3				| 149				|
-|2				| 484				|
-|1				| 7					|
+| Number of Nodes | Number of Components |
+|:---------------:|:--------------------:|
+|      41296      |          1           |
+|       27        |          1           |
+|       19        |          1           |
+|       15        |          1           |
+|       14        |          1           |
+|       13        |          2           |
+|       10        |          1           |
+|        9        |          7           |
+|        8        |          7           |
+|        7        |          20          |
+|        6        |          12          |
+|        5        |          25          |
+|        4        |          52          |
+|        3        |         149          |
+|        2        |         484          |
+|        1        |          7           |
 
 #### Creation of Graph (NCERT): Without coreference Resolution
 
@@ -1488,23 +1578,23 @@ Results though improved are still below the random baseline.
 	+ Number of Weakly Connected Components (using DFS): 730   
 
 
-|Number of Nodes|Number of Components|
-|:-------------:|:------------------:|
-|43114			| 1					 |
-|19				| 2					 |
-|15				| 1					 |
-|14				| 1					 |
-|13				| 2					 |
-|11				| 1					 |
-|10				| 3					 |
-|9				| 5					 |
-|8				| 9					 |
-|7				| 19			     |
-|6				| 12			     |
-|5				| 29			     |
-|4				| 48			     |
-|3				| 131			     |
-|2				| 466			     |
+| Number of Nodes | Number of Components |
+|:---------------:|:--------------------:|
+|      43114      |          1           |
+|       19        |          2           |
+|       15        |          1           |
+|       14        |          1           |
+|       13        |          2           |
+|       11        |          1           |
+|       10        |          3           |
+|        9        |          5           |
+|        8        |          9           |
+|        7        |          19          |
+|        6        |          12          |
+|        5        |          29          |
+|        4        |          48          |
+|        3        |         131          |
+|        2        |         466          |
 
 
 
@@ -1789,11 +1879,11 @@ Some Questions with zero score and for which maximum number of support sentences
 - Even using the entire cumulative webchild dataset as corpus seems to only degrade the performance.
 - Why? Use the database differently?
 
-|Corpuses_Used|Accuracy on Challenge Test set|
-|:-----------:|:----------------------------:|
-|ARC|26.41%|
-|WebChildAll|20.44%|
-|ARC+ WebChildAll|26.05%|
+|  Corpuses_Used   | Accuracy on Challenge Test set |
+|:----------------:|:------------------------------:|
+|       ARC        |             26.41%             |
+|   WebChildAll    |             20.44%             |
+| ARC+ WebChildAll |             26.05%             |
 
 #### WebChild Contains several [corpus files](https://www.mpi-inf.mpg.de/departments/databases-and-information-systems/research/yago-naga/webchild/)
 
@@ -1829,25 +1919,25 @@ Some Questions with zero score and for which maximum number of support sentences
 - Probably because WebChild corpus size is too small?
 - NCERT dataset on the otherhand seem to have no effect.
 
-|Corpuses_Used|Accuracy on Challenge Test set|
-|:-----------:|:----------------------------:|
-|ARC|26.41%|
-|NCERT|22.99%|
-|NounGloss(WebChild)|22.69%|
-|ARC + NCERT|26.41%|
-|ARC + NounGloss(WebChild)|26.20%|
-|ARC + NCERT + NounGloss(WebChild)|26.20%|
+|           Corpuses_Used           | Accuracy on Challenge Test set |
+|:---------------------------------:|:------------------------------:|
+|                ARC                |             26.41%             |
+|               NCERT               |             22.99%             |
+|        NounGloss(WebChild)        |             22.69%             |
+|            ARC + NCERT            |             26.41%             |
+|     ARC + NounGloss(WebChild)     |             26.20%             |
+| ARC + NCERT + NounGloss(WebChild) |             26.20%             |
 
 ## 17th Aug 2018
 Frequency of Named Entities in the respective datasets is now in the [spreadsheet.](https://docs.google.com/spreadsheets/d/151zuO4OEE7Z1zyyDnMPC5DXp-aeJ31ROvm_7-edUVa8/edit?usp=sharing). 
 
 - Comparison of the three corpuses
 
-	|Name|Number_of_lines|freq = 0|freq < thresh|
-	|----|---------------|-------|-------|
-	|ARC|14621856|0.14%|21.8% < 100, 15% < 1000|
-	|webchild|177801|6.2%|26.13% < 10|
-	|ncert-6-7-8-9-10|90110|22.15%|29.29% < 1|
+| Name             | Number_of_lines | freq = 0 | freq < thresh           |
+|:-----------------|:----------------|:---------|:------------------------|
+| ARC              | 14621856        | 0.14%    | 21.8% < 100, 15% < 1000 |
+| webchild         | 177801          | 6.2%     | 26.13% < 10             |
+| ncert-6-7-8-9-10 | 90110           | 22.15%   | 29.29% < 1              |
 
 
 ## 14th Aug 2018
