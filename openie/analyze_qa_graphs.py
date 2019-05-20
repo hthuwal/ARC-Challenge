@@ -13,6 +13,7 @@ def get_qa_graph(path):
 
 
 def analyze(qa_graphs):
+    count = 0
     size = defaultdict(int)
     for qid in qa_graphs:
         hypo_graphs = qa_graphs[qid]['hypothesis_graphs']
@@ -20,6 +21,10 @@ def analyze(qa_graphs):
             hypo_graph = hypo_graphs[option]
             size[hypo_graph.num_nodes()] += 1
 
+            if hypo_graph.num_nodes() == 0 and qa_graphs[qid]['correct_answer'].lower() == option.lower():
+                count += 1
+
+    print(f"Number of Questions where there is empty graph corresponding to correct hypothesis is: {count}")
     size = list(size.items())
     size.sort(key=lambda x: x[0])
     print(size)
