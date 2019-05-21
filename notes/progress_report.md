@@ -18,7 +18,132 @@
 - [Hypothesis-Graph.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions.txt)
 - [Hypothesis-Graph-Coref.txt](http://www.cse.iitd.ac.in/~mcs172074/mtp/openie_questions_coref.txt)
 
-## May 20th 2019
+## May 22nd 2019
+
+### Approach 2: Scoring Algorithm (DISCUSS)
+
+- Sort the nodes in the hypothesis graph in the desceding order of depth of the respective subtree/subgraph.
+
+- For each unvisited node **N<sub>q</sub>** in the sorted qa nodes:
+    + Check if the node is present in the corpus graph **N<sub>c</sub>**. (May be a partial match)
+        * Do a BFS from **N<sub>c</sub>** in the corpus graph and see how many unvisited neighbors of **N<sub>q</sub>** present (partial match).
+            - If a partial match. Decide the threshold.
+            - Should the degree of match part of score.
+        * Need to decide the depth of BFS (hyperparameter?)
+        * Number of matches decide the score.
+            - Should score be inversely proportional to number of hops?
+
+### Approach 2: New Representation Example
+
+- An issue arises as many verb_phrases or face connector that cannot be inferred are replaced with `<_>`. 
+- This could lead to unncecessary edges. How to deal with this?
+    + One option is to completely remove every relation that contatins `<_>`
+        * But this could lead to loss of information.
+    + Another apprach could be collapse these nodes and directly connect its parent to its child.
+        * Seems Right. (DISCUSS)
+
+```
+## Of course, for many in the media, hydrogen sulphide delivery helps prevent
+disease damage in cells in certain disease models will always be trumped by
+farts cure cancer when it comes to headlines.
+
+1.13:   hydrogen sulphide delivery; helps; #1.29;
+     <_>; for many in the media;
+     <_>; Of course;
+1.14:   <_>; prevent; #1.26;
+1.26:   disease damage in cells in certain disease models; will be trumped by; farts;
+     <_>; always;
+1.29:   #1.14; cure; cancer;
+     when; #1.33;
+1.33:   it; comes to; headlines;
+1.21:   models; <be>; disease damage in cells in certain disease;
+```
+
+![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-new-repr-example.png)
+
+### Apprach 2: Simpler Representation of the Graph. (DISCUSS)
+
+- Directed Graph (Should I keep it undirected?)
+
+- Graph consists of a dictionary of nodes.
+    + key: "node_name", value: node
+
+- Node:
+    + node_name: noun_phrase or verb_phrase or clause_connector
+    + edges: List of names of nodes connected to this node. (Note we store just the node_names not the node. Node is saved in the dictionary)
+
+- This apporach solves the stack overflow problem as all the nodes are accessible directly from nodes dict.
+
+- No need to maintain a list of references to nodes (inefficient) in the edge list. Just need to save the node_names.
+
+- An example showing the differences from the previous representation. Consider following output of stuffie:
+    ```
+    1.12: "A"; "B"; #1.15  
+            "C": "F"  (Facet Associated with 1.12)
+
+    1.15: "D"; "E"; "G"
+    ```
+
+    |                      Previous Representation                       |                         New Representation                         |
+    |:------------------------------------------------------------------:|:------------------------------------------------------------------:|
+    | ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-old-repr.png) | ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-new-repr.png) |
+
+
+### Approach 2: Issues with Recursive Representaion of the graph.
+
+While Coding representation that I proposed [here](#stuffie_repr) I found following problems with it:
+
+- Didn't handle the case when the subject of the relation is also a reference to another relation.
+
+- The idea of the relation `A; B; C` as a relation `B` between `A` and `C` is restrictive in understanding and usage. A better approach would be to look at the reation as having two edges `A --> B --> C`.
+    - For e.g `Planet --> rotates --> faster`. 
+    - This representation has better flow of information.
+
+- Also storing edges as List of tuples: `[(p1,o1), (p2,o2), (p3,o3) ..... ]` where `pi` and `oi` are nodes themselves is highly recursive and soon causes stack overflow.
+    + Most of the operations require you to go recursively as each tuple in edge itself consist of two nodes on which the same operation needs to be applied.
+    + Also being recursive in nature serialization/dumps becomes impossible as it again leads to stack overflow because the serializatoin process needs to traverse the entire recursive structure.
+ 
+### Another Problem in stuffie. (DISCUSS)
+
+While going through the stuffIE output of the corpus found another issue with stuffIE.
+
+**Sentence**: 
+
+```
+More specifically, in the excretion portion facing section A, the other 
+endportion end portion opposite to the end portion 54 located on the 
+elasticexpansible contractible portion 52 side of the basal wall portion 
+formingsheet portion 53 of the elastic expansible contractible member 50 is, 
+as hownin FIG. 2a, wound towards the lower surface side of the absorbent core 
+4,where it is fixed between the side portion 21 of the topsheet 2 and 
+thebacksheet 3 which is likewise wound towards the lower surface side of 
+teabsorbent core 4, by known joint means such as an adhesive agent 12 or the 
+like.
+```
+<br>
+**Triplets**
+
+```
+1.8:    <_>; ; <_>; 
+1.37:   <_>; ; <_>; 
+1.47:   <_>; ; <_>; 
+1.50:   <_>; ; <_>; 
+1.69:   <_>; ; <_>; 
+1.70:   <_>; ; <_>; 
+1.85:   <_>; ; <_>; 
+1.87:   <_>; ; <_>; 
+1.100:  <_>; ; <_>; 
+```
+
+If stuffIE was unable to find any triplets the output should have been empty. The above output results large number of self loops in the graph.
+
+- To handle this currently ignoring all relations with more than one `<_>`
+
+### Approach 1: Combinations
+
+- Tried Combinations of stuffIE corpus and stanford qa graphs since stuffIE gave about 50% more empty question graphs.
+- Results didn't seem to change.
+
 ### Apprach 1: Initial Results and Comparison
 
 The method that resulted in a score of 29 on stanfords openIE output gave a poor 26.464 on translated stuffIE output
@@ -33,7 +158,7 @@ The method that resulted in a score of 29 on stanfords openIE output gave a poor
     + **589 / 4687** Hypothesis were empty graphs when using **stanfords openIE**.
         * Out of these **149** correspond to correct option. 
 
-- **So basically we were getting straight 0 or 0.25 score for these questions 102 and 149 questions in the respective cases. :/**
+- **So basically we were getting straight 0 or 0.25 score for these questions 102 and 149 questions in the respective cases. (DISCUSS)**
     + Because No Node in hypo graph => 0 score.
 
 - The increase in number of empty graphs of hypothesis explains the decline in the score to some extent.
@@ -470,24 +595,26 @@ The primary focus is on the pywikibot as it is used by most, however option 2 if
   - Debugging server side errors.
   - Resolving Permission Issues.
 
+<a name="stuffie_repr"></a>
 ### 22th Feb 2019
 
 #### Recursive Graphical Representation 2 (Seems Bettter)
+
 - subject, predicate, object, facet_connector, and facet are all represented as a node.
 - Facet are edges from the predicate of the main fact.
 - **Node**: Consist of two things
-  1. Node Name (Noun phrase or verbphrase or clause connector)
-	 -  Say **a**
-  2. List of edges: [(p<sub>1</sub>,o<sub>1</sub>), (p<sub>2</sub>,o<sub>2</sub>), (p<sub>3</sub>,o<sub>3</sub>) ..... ]
-	 -  p<sub>i</sub> and o<sub>i</sub> are nodes themselves. 
+    1. Node Name (Noun phrase or verbphrase or clause connector)
+        - Say **a**
+    2. List of edges: [(p<sub>1</sub>,o<sub>1</sub>), (p<sub>2</sub>,o<sub>2</sub>), (p<sub>3</sub>,o<sub>3</sub>) ..... ]
+        - p<sub>i</sub> and o<sub>i</sub> are nodes themselves. 
 - E.g. Consider a relation
-  ``` 
-  1.12: "A"; "B"; #1.15  
-		  "C": "F"  (Facet Associated with 1.12)
+      ``` 
+      1.12: "A"; "B"; #1.15  
+    		  "C": "F"  (Facet Associated with 1.12)
 
-  1.15: "D"; "E"; "G"
-  ```
-![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-graph-representation-2.png)
+      1.15: "D"; "E"; "G"
+      ```
+    ![](http://www.cse.iitd.ac.in/~mcs172074/mtp/stuffie-graph-representation-2.png)
 
 #### Recursive Graphical Representation 1
 - **Graph**
