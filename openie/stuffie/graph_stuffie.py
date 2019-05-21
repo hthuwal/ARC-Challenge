@@ -63,7 +63,7 @@ class Graph(object):
             phrase = Graph.recurse_and_find_phrase(phrase, triplets, is_facet)
             if phrase is None:
                 return None
-
+        phrase = phrase.lower()
         if phrase in self.nodes:
             return self.nodes[phrase]
         else:
