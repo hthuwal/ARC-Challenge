@@ -156,15 +156,15 @@ class Graph(object):
 
     def save(self, path):
         with open(path, "wb") as f:
-            pickle.dump({'nodes': self.nodes}, f)
+            pickle.dump(self.nodes, f)
 
     def load(self, path):
         with open(path, "rb") as f:
-            return pickle.load(f)
+            self.nodes = pickle.load(f)
 
 
 if __name__ == '__main__':
     g = Graph(file=sys.argv[1], dpb=False)
     print(len(g.nodes), len(set(g.nodes)))
-    g.save("/tmp/test")
+    g.save(sys.argv[2])
     # print(repr(g))
