@@ -1,5 +1,9 @@
+import pickle
+import re
+import sys
+
 from tqdm import tqdm
-from utils_stuffie import read_stuffie_output
+from utils_stuffie import read_stuffie_output, pprint
 
 
 class Node(object):
@@ -12,8 +16,11 @@ class Node(object):
 
     def __init__(self, phrase: str =None):
         self.phrase = phrase
-        self.edges = []
-        self.parents = []
+        self.edges: list[str] = []
+        self.parents: list[str] = []
+
+    def __hash__(self):
+        return hash(self.phrase)
 
     def __eq__(self, other):
         """
@@ -22,50 +29,22 @@ class Node(object):
         return self.phrase == other.phrase
 
     def __repr__(self):
-        """
-        Recursively represent the node.
-        """
-        repres = "--- " + self.phrase + " ---\n"
-        for each in self.edges:
-
-            edge_label = repr(each).strip().split("\n")
-            edge_label = "\n".join(["\t" + line for line in edge_label])
-            edge_label = "⤿" + edge_label
-
-            repres += f"\n{edge_label}"
-
-        repres += "\n"
-        return repres
-
-    def merge(self, other):
-        """
-        Merge other node with self.
-        Only possible if self and other are equal.
-        Just merge the edge list. Assuming there is no repetition.
-        """
-        assert self.phrase == other.phrase
-        self.edges.extend(other.edges)
+        return "--- " + self.phrase + " ---\n"
 
     def add_edge(self, node):
         """
         Add node to my edge list
         """
 
-        # New Edge: Therefore Update parent list
-        if node not in self.edges:
-            self.edges.append(node)
-            node.parents.append(self)
-
-        # Else I was present already
-        else:
-            i = self.edges.index(node)
-            self.edges[i].merge(node)
+        # New Edge
+        if node.phrase not in self.edges:
+            self.edges.append(node.phrase)
+            node.parents.append(self.phrase)
 
 
 class Graph(object):
     def __init__(self, file=None, dpb=False):
-        self.nodes = []
-        self.node_indices = {}
+        self.nodes = {}
         if file is not None:
             self.build(file, dpb=dpb)
 
@@ -84,28 +63,42 @@ class Graph(object):
             phrase = Graph.recurse_and_find_phrase(phrase, triplets, is_facet)
             if phrase is None:
                 return None
-            else:
-                node = Node(phrase=phrase)
-        else:
-            node = Node(phrase=phrase)
 
-        if node.phrase in self.node_indices:
-            return self.nodes[self.node_indices[node.phrase]]
+        if phrase in self.nodes:
+            return self.nodes[phrase]
         else:
-            return node
+            return Node(phrase=phrase)
 
-    def update_node_list(self, new_nodes):
+    def update_node_dict(self, new_nodes):
         for node in new_nodes:
-            if node.phrase in self.node_indices:
-                i = self.node_indices[node.phrase]
-                self.nodes[i] = node
+            if node.phrase in self.nodes:
+                self.nodes[node.phrase] = node
             else:
-                self.nodes.append(node)
-                self.node_indices[node.phrase] = len(self.nodes) - 1
+                self.nodes[node.phrase] = node
+
+    def clean_triplet(strings):
+
+        regex = re.compile(r"<ctx*.*>")
+
+        strings = [re.sub(regex, " ", each.strip().lower()) for each in strings]
+        count_ = 0
+
+        for string in strings:
+            if not string:
+                return False, None
+            elif string == "<_>":
+                count_ += 1
+
+        if count_ > 1:
+            return False, None
+
+        return True, strings
 
     def build(self, infile, dpb=False):
         print("Reading Triplets...")
+
         all_triplets = list(tqdm(read_stuffie_output(infile), ascii=True, disable=dpb))
+
         print("Reading Complete...")
 
         for triplets in tqdm(all_triplets, ascii=True, disable=dpb):
@@ -114,35 +107,44 @@ class Graph(object):
 
             # Dealing with referential triples
             for key in keys:
+
                 triplet = triplets[key]
 
-                # Not a Facet
                 if len(triplet) == 3:
-                    triplet = [each.strip().lower() for each in triplet]
+                    is_tangible, triplet = Graph.clean_triplet(triplet)
+                    if not is_tangible:
+                        continue
+
                     subj, pred, obj = triplet
                     subj_node = self.create_node(subj, triplets, is_facet=False)
-                    pred_node = Node(phrase=pred)
+                    pred_node = self.create_node(pred, triplets, is_facet=False)
                     obj_node = self.create_node(obj, triplets, is_facet=False)
 
-                    if subj_node is None or obj_node is None:
+                    if subj_node is None or obj_node is None or pred_node is None:
                         continue
 
                     pred_node.add_edge(obj_node)
                     subj_node.add_edge(pred_node)
-                    self.update_node_list([subj_node, pred_node, obj_node])
+                    self.update_node_dict([subj_node, pred_node, obj_node])
 
             # Dealing with Facets
             keys.sort()
             for key in keys:
-                if(len(triplets[key]) == 2):
-                    j = key.rfind('.')
 
-                    triplet = [each.strip().lower() for each in triplets[key]]
+                triplet = triplets[key]
+
+                if(len(triplet) == 2):
+
+                    is_tangible, triplet = Graph.clean_triplet(triplet)
+                    if not is_tangible:
+                        continue
+
+                    j = key.rfind('.')
                     parent = key[:j]
                     connector, facet_phrase = triplet
 
                     subj_node = self.create_node(f"#{parent}", triplets, is_facet=True)
-                    pred_node = Node(phrase=connector)
+                    pred_node = self.create_node(connector, triplet, is_facet=True)
                     obj_node = self.create_node(facet_phrase, triplets, is_facet=False)
 
                     if subj_node is None or obj_node is None:
@@ -150,19 +152,19 @@ class Graph(object):
 
                     pred_node.add_edge(obj_node)
                     subj_node.add_edge(pred_node)
-                    self.update_node_list([subj_node, pred_node, obj_node])
-
-    def __repr__(self):
-        for node in self.nodes:
-            if node.parents:
-                print(repr(node))
+                    self.update_node_dict([subj_node, pred_node, obj_node])
 
     def save(self, path):
         with open(path, "wb") as f:
             pickle.dump({'nodes': self.nodes}, f)
+
+    def load(self, path):
+        with open(path, "rb") as f:
+            return pickle.load(f)
 
 
 if __name__ == '__main__':
     g = Graph(file=sys.argv[1], dpb=False)
     print(len(g.nodes), len(set(g.nodes)))
     g.save("/tmp/test")
+    # print(repr(g))
