@@ -45,10 +45,10 @@ class Node(object):
 
 
 class Graph(object):
-    def __init__(self, file=None, dpb=False):
+    def __init__(self, file=None, all_triplets=None, dpb=False):
         self.nodes = {}
-        if file is not None:
-            self.build(file, dpb=dpb)
+        if file is not None or all_triplets is not None:
+            self.build(file, all_triplets=all_triplets, dpb=dpb)
 
     def recurse_and_find_phrase(phrase, triplets, is_facet=False):
         while phrase.startswith("#"):
@@ -96,13 +96,13 @@ class Graph(object):
 
         return True, strings
 
-    def build(self, infile, dpb=False):
-        print("Reading Triplets...")
+    def build(self, infile, all_triplets=None, dpb=False):
+        # print("Reading Triplets...")
 
-        all_triplets = list(tqdm(read_stuffie_output(infile), ascii=True, disable=dpb))
+        if not all_triplets:
+            all_triplets = list(tqdm(read_stuffie_output(infile), ascii=True, disable=dpb))
 
-        print("Reading Complete...")
-
+        # print("Reading Complete...")
         for triplets in tqdm(all_triplets, ascii=True, disable=dpb):
             keys = list(triplets.keys())
             keys.sort(reverse=True)
@@ -155,6 +155,8 @@ class Graph(object):
                     pred_node.add_edge(obj_node)
                     subj_node.add_edge(pred_node)
                     self.update_node_dict([subj_node, pred_node, obj_node])
+        self.remove_redundancy()
+
 
     def remove_redundancy(self):
         for phrase in self.nodes:
