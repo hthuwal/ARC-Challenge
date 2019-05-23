@@ -14,8 +14,8 @@ def timeit(function):
         out = function(*args, **kwargs)
         et = time.time()
         time_taken = et - st
-        time_taken = time_taken if time_taken <= 60 else time_taken / 60
         unit = "seconds" if time_taken <= 60 else "minutes"
+        time_taken = time_taken if time_taken <= 60 else time_taken / 60
         print(f"\nTime take by {function.__name__} is {time_taken} {unit}.\n")
         return out
     return inner
