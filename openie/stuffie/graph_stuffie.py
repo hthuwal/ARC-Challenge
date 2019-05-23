@@ -31,12 +31,14 @@ class Node(object):
     def __repr__(self):
         return "--- " + self.phrase + " ---\n"
 
+    def remove_redundant_edges(self):
+        self.edges = list(set(self.edges))
+        self.parents = list(set(self.parents))
+
     def add_edge(self, node):
         """
         Add node to my edge list
         """
-
-        # New Edge
         if node.phrase not in self.edges:
             self.edges.append(node.phrase)
             node.parents.append(self.phrase)
@@ -153,6 +155,10 @@ class Graph(object):
                     pred_node.add_edge(obj_node)
                     subj_node.add_edge(pred_node)
                     self.update_node_dict([subj_node, pred_node, obj_node])
+
+    def remove_redundancy(self):
+        for phrase in self.nodes:
+            self.nodes[phrase].remove_redundant_edges()
 
     def save(self, path):
         with open(path, "wb") as f:
