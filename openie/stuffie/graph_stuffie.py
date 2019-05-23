@@ -1,9 +1,24 @@
 import pickle
 import re
 import sys
+import time
 
 from tqdm import tqdm
 from utils_stuffie import read_stuffie_output, pprint
+from multiprocessing import Pool, cpu_count
+
+
+def timeit(function):
+    def inner(*args, **kwargs):
+        st = time.time()
+        out = function(*args, **kwargs)
+        et = time.time()
+        time_taken = et - st
+        time_taken = time_taken if time_taken <= 60 else time_taken / 60
+        unit = "seconds" if time_taken <= 60 else "minutes"
+        print(f"\nTime take by {function.__name__} is {time_taken} {unit}.\n")
+        return out
+    return inner
 
 
 class Node(object):
