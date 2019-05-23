@@ -157,7 +157,6 @@ class Graph(object):
                     self.update_node_dict([subj_node, pred_node, obj_node])
         self.remove_redundancy()
 
-
     def remove_redundancy(self):
         for phrase in self.nodes:
             self.nodes[phrase].remove_redundant_edges()
@@ -180,9 +179,20 @@ class Graph(object):
 
         self.remove_redundancy()
 
+    def __eq__(self, other):
+        my_keys = sorted(list(self.nodes.keys()))
+        other_keys = sorted(list(other.nodes.keys()))
 
+        if my_keys != other_keys:
+            return False
 
+        for key in my_keys:
+            if sorted(self.nodes[key].edges) != sorted(other.nodes[key].edges):
+                return False
+            if sorted(self.nodes[key].parents) != sorted(other.nodes[key].parents):
+                return False
 
+        return True
 
 
 
