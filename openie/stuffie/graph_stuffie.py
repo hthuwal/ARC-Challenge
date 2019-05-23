@@ -35,6 +35,11 @@ class Node(object):
         self.edges = list(set(self.edges))
         self.parents = list(set(self.parents))
 
+    def update(self, other):
+        self.edges += other.edges
+        self.parents += other.parents
+        self.remove_redundant_edges()
+
     def add_edge(self, node):
         """
         Add node to my edge list
@@ -74,7 +79,7 @@ class Graph(object):
     def update_node_dict(self, new_nodes):
         for node in new_nodes:
             if node.phrase in self.nodes:
-                self.nodes[node.phrase] = node
+                self.nodes[node.phrase].update(node)
             else:
                 self.nodes[node.phrase] = node
 
