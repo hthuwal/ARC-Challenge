@@ -87,7 +87,7 @@ class Graph(object):
 
         regex = re.compile(r"<ctx*.*>")
 
-        strings = [re.sub(regex, " ", each.strip().lower()) for each in strings]
+        strings = [re.sub(regex, "", each.strip().lower()) for each in strings]
         count_ = 0
 
         for string in strings:
@@ -154,12 +154,13 @@ class Graph(object):
                     pred_node = self.create_node(connector, triplet, is_facet=True)
                     obj_node = self.create_node(facet_phrase, triplets, is_facet=False)
 
-                    if subj_node is None or obj_node is None:
+                    if subj_node is None or obj_node is None or pred_node is None:
                         continue
 
                     pred_node.add_edge(obj_node)
                     subj_node.add_edge(pred_node)
                     self.update_node_dict([subj_node, pred_node, obj_node])
+
         self.remove_redundancy()
 
     def remove_redundancy(self):
