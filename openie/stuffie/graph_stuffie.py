@@ -170,6 +170,24 @@ class Graph(object):
         with open(path, "rb") as f:
             self.nodes = pickle.load(f)
 
+    def merge(self, other):
+        for phrase in other.nodes:
+            if phrase in self.nodes:
+                self.nodes[phrase].edges += other.nodes[phrase].edges
+                self.nodes[phrase].parents += other.nodes[phrase].parents
+            else:
+                self.nodes[phrase] = other.nodes[phrase]
+
+        self.remove_redundancy()
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     g = Graph(file=sys.argv[1], dpb=False)
