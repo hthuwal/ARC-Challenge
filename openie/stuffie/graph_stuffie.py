@@ -1,4 +1,5 @@
 import click
+import os
 import pickle
 import re
 import sys
@@ -45,7 +46,7 @@ class Node(object):
         return self.phrase == other.phrase
 
     def __repr__(self):
-        return "--- " + self.phrase + " ---\n"
+        return f"--- self.phrase ---, {len(self.edges)} Edges\n"
 
     def remove_redundant_edges(self):
         self.edges = list(set(self.edges))
@@ -218,7 +219,7 @@ class Graph(object):
 
 
 def create_graph(all_triplets):
-    g = Graph(all_triplets=all_triplets, dpb=False)
+    g = Graph(all_triplets=all_triplets, dpb=True)
     return g
 
 
@@ -233,22 +234,26 @@ def create_graphs_multicore(all_triplets):
     num_cores = cpu_count()
 
     # splitting it into chunks
-    data = [chunk for chunk in chunks(all_triplets, num_cores)]
-    if len(data) == num_cores + 1:
-        data[0].extend(data[-1])
-        data.pop()
+    data = [chunk for chunk in chunks(all_triplets, num_cores * 10)]
 
-    # run threads
-    with Pool(processes=num_cores) as pool:
-        max_ = len(data)
-        graphs = list(pool.imap(create_graph, data))
+    # Perform operations in batches of num_cores
+    for i, chunk in enumerate(chunks(data, 10)):
 
-        g = graphs[0]
-        print("Merging graphs")
-        for graph in tqdm(graphs[1:], ascii=True):
-            g.merge(graph)
+        print(f"Batch {i+1} {len(chunk)}")
+        file_name = f"graphs/corpus_graphs/graph_part_{i+1}.graph"
+        if os.path.exists(file_name):
+            continue
+        with Pool(processes=num_cores) as pool:
+            max_ = len(chunk)
+            graphs = list(pool.imap(create_graph, chunk))
 
-    return g
+            g = graphs[0]
+            print("Merging graphs")
+            for graph in tqdm(graphs[1:], ascii=True):
+                g.merge(graph)
+            g.save(file_name)
+
+            del g, graphs
 
 
 @click.command()
@@ -262,12 +267,12 @@ def main(source_file, target_file):
     all_triplets = list(tqdm(read_stuffie_output(source_file), ascii=True, disable=False))
     print("Reading Complete...")
 
-    g_multi_core = create_graphs_multicore(all_triplets)
+    create_graphs_multicore(all_triplets)
 
     # g_core = timeit(create_graph)(all_triplets)
     # print(f"Both graphs are equivalent: {g_multi_core == g_core}")
-    print("Saving graph for future use...")
-    g_multi_core.save(target_file)
+    # print("Saving graph for future use...")
+    # g_multi_core.save(target_file)
 
 
 if __name__ == '__main__':
