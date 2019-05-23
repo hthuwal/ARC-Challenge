@@ -202,6 +202,21 @@ class Graph(object):
 
         self.remove_redundancy()
 
+    def get_node_height(self, node):
+        stack = [(node, 1)]
+        depth = 0
+        visited = {}
+        while len(stack) != 0:
+            top, top_depth = stack[-1]
+            stack.pop()
+            visited[top] = True
+            if top_depth > depth:
+                depth = top_depth
+            for each in self.nodes[top].edges:
+                if each not in visited:
+                    stack.append((each, top_depth + 1))
+        return depth
+
     def __eq__(self, other):
         my_keys = sorted(list(self.nodes.keys()))
         other_keys = sorted(list(other.nodes.keys()))
