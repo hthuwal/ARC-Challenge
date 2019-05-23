@@ -216,12 +216,51 @@ class Graph(object):
         return True
 
 
+def create_graph(all_triplets):
+    g = Graph(all_triplets=all_triplets, dpb=False)
+    return g
 
 
+def chunks(org_list, n):
+    lp = len(org_list) // n
+    for i in range(0, len(org_list), lp):
+        yield org_list[i:i + lp]
+
+
+@timeit
+def create_graphs_multicore(all_triplets):
+    num_cores = cpu_count()
+
+    # splitting it into chunks
+    data = [chunk for chunk in chunks(all_triplets, num_cores)]
+    if len(data) == num_cores + 1:
+        data[0].extend(data[-1])
+        data.pop()
+
+    # run threads
+    with Pool(processes=num_cores) as pool:
+        max_ = len(data)
+        graphs = list(pool.imap(create_graph, data))
+
+        g = graphs[0]
+        print("Merging graphs")
+        for graph in tqdm(graphs[1:], ascii=True):
+            g.merge(graph)
+
+    return g
 
 
 if __name__ == '__main__':
-    g = Graph(file=sys.argv[1], dpb=False)
-    print(len(g.nodes), len(set(g.nodes)))
-    g.save(sys.argv[2])
+    infile = sys.argv[1]
+    print("Reading Entire Data...")
+    all_triplets = list(tqdm(read_stuffie_output(infile), ascii=True, disable=False))
+    print("Reading Complete...")
+
+    st = time.time()
+    g_multi_core = create_graphs_multicore(all_triplets)
+
+    g_core = timeit(create_graph)(all_triplets)
+    print(f"Both graphs are equivalent: {g_multi_core == g_core}")
+
+    # g.save(sys.argv[2])
     # print(repr(g))
