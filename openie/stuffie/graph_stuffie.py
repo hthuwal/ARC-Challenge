@@ -230,7 +230,7 @@ def chunks(org_list, n):
 
 
 @timeit
-def create_graphs_multicore(all_triplets):
+def create_graphs_multicore(all_triplets, dump_dir):
     num_cores = cpu_count()
 
     # splitting it into chunks
@@ -240,7 +240,7 @@ def create_graphs_multicore(all_triplets):
     for i, chunk in enumerate(chunks(data, 10)):
 
         print(f"Batch {i+1} {len(chunk)}")
-        file_name = f"graphs/corpus_graphs/graph_part_{i+1}.graph"
+        file_name = f"{dump_dir}/graph_part_{i+1}.graph"
         if os.path.exists(file_name):
             continue
         with Pool(processes=num_cores) as pool:
@@ -255,19 +255,31 @@ def create_graphs_multicore(all_triplets):
 
             del g, graphs
 
+    print("Merging all graphs into a single graph")
+    complete_graph = Graph()
+    for file in tqdm(os.listdir(dump_dir), ascii=True):
+        if not file.startswith("graph_part"):
+            continue
+        file = os.path.join(dump_dir, file)
+        g = Graph()
+        g.load(file)
+        complete_graph.merge(g)
+
+    complete_graph.save(os.path.join(dump_dir, "corpus_graph"))
+
 
 @click.command()
 @click.argument('source_file', type=click.Path(exists=True))
-@click.argument('target_file', type=click.Path())
-def main(source_file, target_file):
+@click.argument('dump_dir', type=click.Path())
+def main(source_file, dump_dir):
     """
-    Read triplets from source_file and dump graph in target_file
+    Read triplets from source_file and dump graph in dump_dir
     """
     print("Reading Entire Data...")
     all_triplets = list(tqdm(read_stuffie_output(source_file), ascii=True, disable=False))
     print("Reading Complete...")
 
-    create_graphs_multicore(all_triplets)
+    create_graphs_multicore(all_triplets, dump_dir)
 
     # g_core = timeit(create_graph)(all_triplets)
     # print(f"Both graphs are equivalent: {g_multi_core == g_core}")
