@@ -1,11 +1,12 @@
+import click
 import pickle
 import re
 import sys
 import time
 
+from multiprocessing import Pool, cpu_count
 from tqdm import tqdm
 from utils_stuffie import read_stuffie_output, pprint
-from multiprocessing import Pool, cpu_count
 
 
 def timeit(function):
@@ -250,17 +251,24 @@ def create_graphs_multicore(all_triplets):
     return g
 
 
-if __name__ == '__main__':
-    infile = sys.argv[1]
+@click.command()
+@click.argument('source_file', type=click.Path(exists=True))
+@click.argument('target_file', type=click.Path())
+def main(source_file, target_file):
+    """
+    Read triplets from source_file and dump graph in target_file
+    """
     print("Reading Entire Data...")
-    all_triplets = list(tqdm(read_stuffie_output(infile), ascii=True, disable=False))
+    all_triplets = list(tqdm(read_stuffie_output(source_file), ascii=True, disable=False))
     print("Reading Complete...")
 
-    st = time.time()
     g_multi_core = create_graphs_multicore(all_triplets)
 
-    g_core = timeit(create_graph)(all_triplets)
-    print(f"Both graphs are equivalent: {g_multi_core == g_core}")
+    # g_core = timeit(create_graph)(all_triplets)
+    # print(f"Both graphs are equivalent: {g_multi_core == g_core}")
+    print("Saving graph for future use...")
+    g_multi_core.save(target_file)
 
-    # g.save(sys.argv[2])
-    # print(repr(g))
+
+if __name__ == '__main__':
+    main()
