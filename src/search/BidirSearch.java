@@ -22,7 +22,7 @@ import utils.Config;
  */
 public class BidirSearch implements Iterator<MyTreeResult>{
 
-  public static MyGraph dg = new MyGraph(Config.graphFileName); // TODO Make this parameterized to support more datasets.
+  public static MyGraph dg = new MyGraph(Config.graphFileName);
   String query;
 
   PriorityQueue<NodeActVals> Qin; // PriorityQueue for the incoming iterator.
@@ -493,7 +493,6 @@ public class BidirSearch implements Iterator<MyTreeResult>{
    * @return {@code true} if duplicate, {@code false} otherwise.
    */
   private boolean redundant(MyTreeResult res) {
-    //TODO still shows redundant answers.
     Iterator<MyTreeResult> iter=this.seenAnswers.iterator();
     String resString = res.toString();
     while(iter.hasNext()) {

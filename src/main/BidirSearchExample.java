@@ -21,8 +21,8 @@ public class BidirSearchExample {
   public static void main(String[] args) {
     
     Scanner sc = new Scanner(System.in);
-    System.out.println("Enter your keyword query:");
-    String query = sc.nextLine();//Eg. Angelina_Jolie Brad_Pitt;
+    System.out.println("Enter your keyword query: (Eg. Angelina_Jolie Brad_Pitt)");
+    String query = sc.nextLine();
     sc.close();
     
     BidirSearch ks=new BidirSearch(query);
