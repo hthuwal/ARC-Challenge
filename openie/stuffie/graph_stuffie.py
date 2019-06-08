@@ -46,7 +46,7 @@ class Node(object):
         return self.phrase == other.phrase
 
     def __repr__(self):
-        return f"--- self.phrase ---, {len(self.edges)} Edges\n"
+        return f"--- {self.phrase} ---, {len(self.edges)} Edges\n"
 
     def remove_redundant_edges(self):
         self.edges = list(set(self.edges))
@@ -231,6 +231,24 @@ class Graph(object):
                 return False
 
         return True
+
+    def __repr__(self):
+        sorted_nodes = list(self.nodes.keys())
+        sorted_nodes.sort(key=lambda node_name: self.get_node_height(node_name), reverse=True)
+        visited = {}
+        string = ""
+        for each in sorted_nodes:
+            stack = []
+            stack.append((each, 0))
+            while stack:
+                top, d = stack.pop()
+                if top not in visited:
+                    visited[top] = True
+                    string += "\t" * d + "⤿" + repr(top) + "\n"
+                    for each in self.nodes[top].edges:
+                        if each not in visited:
+                            stack.append((each, d + 1))
+        return string
 
 
 def create_graph(all_triplets):
