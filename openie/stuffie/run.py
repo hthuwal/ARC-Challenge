@@ -45,70 +45,74 @@ def score_graphs(corpus_graph, hypothesis_graph, depth_threshold=2, match_thresh
     sorted_hypo_graph_node_names.sort(key=lambda node_name: hypothesis_graph.get_node_height(node_name), reverse=True)
 
     visited = {}
-    for phrase in sorted_hypo_graph_node_names:
+    # print("Hypo Graph:\n", repr(hypothesis_graph), "\n")
 
+    for phrase in sorted_hypo_graph_node_names:
         if phrase not in visited and phrase in corpus_graph_nodes:
 
             hypo_nodes = [(phrase, 1)]
             cand_nodes_from_corpus = {phrase: [(phrase, 0)]}
 
-            while len(cand_nodes_from_corpus) != 0:
+            while len(hypo_nodes) != 0:
                 # print(len(hypo_nodes), len(cand_nodes_from_corpus))
                 # import ipdb
                 # ipdb.set_trace()
                 # hnode -> next node from hypothesis graph that we
                 # are trying to match
                 # hnd -> its position in the path from the start node
-                new_hypo_nodes = []
-                for hnode, hnd in hypo_nodes:
+                hnode, hnd = hypo_nodes.pop()
 
-                    # candidates -> list of (node, depth) in corpus graph with which hnode can match
-                    candidates = cand_nodes_from_corpus[hnode]
+                # candidates -> list of (node, depth) in corpus graph with which hnode can match
+                # print(f"{hnode}, {hnd}\n{hypo_nodes}\n{cand_nodes_from_corpus}\n\n")
 
-                    match_scores = []
-                    whose_child_to_be_skipped = []
+                candidates = cand_nodes_from_corpus[hnode]
+
+                match_scores = []
+                for cand, depth in candidates:
+                    match_scores.append((cand, match(hnode, cand)))
+
+                winner_cand, max_score = max(match_scores, key=lambda x: x[1]) if len(match_scores) != 0 else (None, 0)
+
+                # found the most probable match
+                if winner_cand is not None and max_score > match_threshold:
+                    score += (max_score * hnd)  # the deeper match in hypothesis graph higher the score
+
+                    visited[hnode] = True
+                    del cand_nodes_from_corpus[hnode]
+
+                    nbrs = hypo_graph_nodes[hnode].edges
+                    for nbr in nbrs:
+                        if nbr not in visited:
+                            idx = None
+                            for i, (node, _) in enumerate(hypo_nodes):
+                                if nbr == node:
+                                    idx = i
+                                    break
+
+                            if idx is not None:
+                                hypo_nodes[i] = (nbr, max(hypo_nodes[i][1], hnd + 1))
+                            else:
+                                hypo_nodes.append((nbr, hnd + 1))
+
+                            cand_nodes_from_corpus[nbr] = [(edge, 0) for edge in corpus_graph_nodes[winner_cand].edges]
+                            cand_nodes_from_corpus[nbr] = cand_nodes_from_corpus[nbr][0:beam_threshold]
+
+                else:
+                    new_candidates = {}
                     for cand, depth in candidates:
-
                         # skip those search paths which have crossed the depth threshold
-                        if depth == depth_threshold:
-                            whose_child_to_be_skipped.append(cand)
-                            continue
-                        match_scores.append((cand, match(hnode, cand)))
+                        if depth < depth_threshold:
+                            for new_cand in corpus_graph_nodes[cand].edges:
+                                if new_cand not in new_candidates:
+                                    new_candidates[new_cand] = depth + 1
+                                else:
+                                    new_candidates[new_cand] = min(depth + 1, new_candidates[new_cand])
 
-                    winner_cand, max_score = max(match_scores, key=lambda x: x[1]) if len(match_scores) != 0 else (None, 0)
-
-                    # found the most probable match
-                    if max_score > match_threshold:
-                        score += (max_score * hnd)  # the deeper match in hypothesis graph higher the score
-
-                        visited[hnode] = True
-                        del cand_nodes_from_corpus[hnode]
-
-                        nbrs = hypo_graph_nodes[hnode].edges
-                        for nbr in nbrs:
-                            if nbr not in visited:
-                                new_hypo_nodes.append((nbr, hnd + 1))
-                                cand_nodes_from_corpus[nbr] = [(edge, 0) for edge in corpus_graph_nodes[winner_cand].edges]
-                                cand_nodes_from_corpus[nbr] = cand_nodes_from_corpus[nbr][0:beam_threshold]
-
-                    else:
-                        new_candidates = {}
-                        for cand, depth in candidates:
-                            if cand not in whose_child_to_be_skipped:
-                                for new_cand in corpus_graph_nodes[cand].edges:
-                                    if new_cand not in new_candidates:
-                                        new_candidates[new_cand] = depth + 1
-                                    else:
-                                        new_candidates[new_cand] = min(depth + 1, new_candidates[new_cand])
-
-                        new_candidates = list(new_candidates.items())
-                        del cand_nodes_from_corpus[hnode]
-                        if len(new_candidates) != 0:
-                            new_hypo_nodes.append((hnode, hnd))
-                            cand_nodes_from_corpus[hnode] = new_candidates[0:beam_threshold]
-
-                del hypo_nodes
-                hypo_nodes = list(new_hypo_nodes)
+                    new_candidates = list(new_candidates.items())
+                    del cand_nodes_from_corpus[hnode]
+                    if len(new_candidates) != 0:
+                        hypo_nodes.append((hnode, hnd))
+                        cand_nodes_from_corpus[hnode] = new_candidates[0:beam_threshold]
 
     return score
 
@@ -154,7 +158,10 @@ def test():
         'r': r
     }
 
-    print(score_graphs(cg, hg))
+    print(f"Corpus Graph\n\n {cg}")
+    print(f"Hypothesis Graph\n\n {hg}")
+
+    print(score_graphs(cg, hg, depth_threshold=1))
 
 
 def get_question_details():
@@ -197,7 +204,7 @@ def score_questions(corpus_graph, qa_graphs, depth_threshold=2, match_threshold=
 
         for key in qa_graphs[question_id]['hypothesis_graphs']:
             hypothesis_graph = qa_graphs[question_id]['hypothesis_graphs'][key]
-            hypo_scores[key]= score_graphs(
+            hypo_scores[key] = score_graphs(
                 corpus_graph,
                 hypothesis_graph,
                 depth_threshold=depth_threshold,

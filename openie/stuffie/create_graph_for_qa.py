@@ -1,15 +1,15 @@
 import click
-import dill as pickle
+import pickle
 import json
 import os
 import sys
 
 from tqdm import tqdm
-from multiprocessing_on_dill import Pool
+from multiprocessing import Pool
 from itertools import product
 
 sys.path.append("..")
-from graph import Graph
+from graph_stuffie import Graph, Node
 
 
 def create_graph(line, qa_triplets_path):
@@ -19,8 +19,8 @@ def create_graph(line, qa_triplets_path):
     hypothesis_graphs = {}
     for choice in line['question']['choices']:
         label = choice['label']
-        triplets_file = os.path.join(qa_triplets_path, f"{line['id']}_{label}")
-        hypothesis_graphs[label] = Graph(file=triplets_file, disable=True)
+        triplets_file = os.path.join(qa_triplets_path, f"{line['id']}_{label}.openie")
+        hypothesis_graphs[label] = Graph(file=triplets_file, dpb=True)
 
     q_dict = {
         'correct_answer': correct_answer,
