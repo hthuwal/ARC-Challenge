@@ -79,6 +79,8 @@ class Graph(object):
                 return None
             else:
                 phrase = triplets[fkey][1] if is_facet else triplets[fkey][0]
+                regex = re.compile(r"<ctx*.*>")
+                phrase = re.sub(regex, "", phrase.strip().lower())
 
         return phrase
 
@@ -168,7 +170,7 @@ class Graph(object):
                     connector, facet_phrase = triplet
 
                     subj_node = self.create_node(f"#{parent}", triplets, is_facet=True)
-                    pred_node = self.create_node(connector, triplet, is_facet=True)
+                    pred_node = self.create_node(connector, triplets, is_facet=True)
                     obj_node = self.create_node(facet_phrase, triplets, is_facet=False)
 
                     if subj_node is None or obj_node is None or pred_node is None:
