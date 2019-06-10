@@ -330,9 +330,8 @@ def create_graphs_multicore(all_triplets, dump_dir):
 
     print("Merging all graphs into a single graph")
     complete_graph = Graph()
-    for file in tqdm(os.listdir(dump_dir), ascii=True):
-        if not file.startswith("graph_part"):
-            continue
+    files = [file for file in os.listdir(dump_dir) if file.startswith("graph_part")]
+    for file in tqdm(files, ascii=True):
         file = os.path.join(dump_dir, file)
         g = Graph()
         g.load(file)
