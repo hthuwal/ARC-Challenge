@@ -47,6 +47,7 @@ class Node(object):
 
     def __repr__(self):
         return f"--- {self.phrase} ---, {len(self.edges)} Edges\n"
+        # return f"--- {self.phrase} ---, Edges: {self.edges}, Parents: {self.parents}\n"
 
     def remove_redundant_edges(self):
         self.edges = list(set(self.edges))
@@ -64,6 +65,11 @@ class Node(object):
         if node.phrase not in self.edges:
             self.edges.append(node.phrase)
             node.parents.append(self.phrase)
+
+    def remove_edge(self, node):
+        self.remove_redundant_edges()
+        self.edges.remove(node.phrase)
+        node.parents.remove(self.phrase)
 
 
 class Graph(object):
@@ -324,3 +330,4 @@ def main(source_file, dump_dir):
 
 if __name__ == '__main__':
     main()
+    
