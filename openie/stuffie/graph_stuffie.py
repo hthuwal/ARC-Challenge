@@ -132,67 +132,7 @@ class Graph(object):
 
         return True, strings
 
-    def build(self, infile, all_triplets=None, dpb=False):
-        # print("Reading Triplets...")
-
-        if not all_triplets:
-            all_triplets = list(tqdm(read_stuffie_output(infile), ascii=True, disable=dpb))
-
-        # print("Reading Complete...")
-        for triplets in tqdm(all_triplets, ascii=True, disable=dpb):
-            keys = list(triplets.keys())
-            keys.sort(reverse=True)
-
-            # Dealing with referential triples
-            for key in keys:
-
-                triplet = triplets[key]
-
-                if len(triplet) == 3:
-                    is_tangible, triplet = Graph.clean_triplet(triplet)
-                    if not is_tangible:
-                        continue
-
-                    subj, pred, obj = triplet
-                    subj_node = self.create_node(subj, triplets, is_facet=False)
-                    pred_node = self.create_node(pred, triplets, is_facet=False)
-                    obj_node = self.create_node(obj, triplets, is_facet=False)
-
-                    if subj_node is None or obj_node is None or pred_node is None:
-                        continue
-
-                    pred_node.add_edge(obj_node)
-                    subj_node.add_edge(pred_node)
-                    self.update_node_dict([subj_node, pred_node, obj_node])
-
-            # Dealing with Facets
-            keys.sort()
-            for key in keys:
-
-                triplet = triplets[key]
-
-                if(len(triplet) == 2):
-
-                    is_tangible, triplet = Graph.clean_triplet(triplet)
-                    if not is_tangible:
-                        continue
-
-                    j = key.rfind('.')
-                    parent = key[:j]
-                    connector, facet_phrase = triplet
-
-                    subj_node = self.create_node(f"#{parent}", triplets, is_facet=True)
-                    pred_node = self.create_node(connector, triplets, is_facet=True)
-                    obj_node = self.create_node(facet_phrase, triplets, is_facet=False)
-
-                    if subj_node is None or obj_node is None or pred_node is None:
-                        continue
-
-                    pred_node.add_edge(obj_node)
-                    subj_node.add_edge(pred_node)
-                    self.update_node_dict([subj_node, pred_node, obj_node])
-
-        # Collapsing <_>
+    def collapse_(self):
         keys = list(self.nodes.keys())
         for key in keys:
             me = self.nodes[key]
@@ -213,6 +153,71 @@ class Graph(object):
 
                 del self.nodes[key]
 
+    def add_facet_edges(self, triplets):
+        keys = list(triplets.keys())
+        keys.sort()
+
+        for key in keys:
+
+            triplet = triplets[key]
+
+            if(len(triplet) == 2):
+
+                is_tangible, triplet = Graph.clean_triplet(triplet)
+                if not is_tangible:
+                    continue
+
+                j = key.rfind('.')
+                parent = key[:j]
+                connector, facet_phrase = triplet
+
+                subj_node = self.create_node(f"#{parent}", triplets, is_facet=True)
+                pred_node = self.create_node(connector, triplets, is_facet=True)
+                obj_node = self.create_node(facet_phrase, triplets, is_facet=False)
+
+                if subj_node is None or obj_node is None or pred_node is None:
+                    continue
+
+                pred_node.add_edge(obj_node)
+                subj_node.add_edge(pred_node)
+                self.update_node_dict([subj_node, pred_node, obj_node])
+
+    def add_simple_edges(self, triplets):
+        keys = list(triplets.keys())
+        keys.sort(reverse=True)
+
+        # Dealing with referential triples
+        for key in keys:
+
+            triplet = triplets[key]
+
+            if len(triplet) == 3:
+                is_tangible, triplet = Graph.clean_triplet(triplet)
+                if not is_tangible:
+                    continue
+
+                subj, pred, obj = triplet
+                subj_node = self.create_node(subj, triplets, is_facet=False)
+                pred_node = self.create_node(pred, triplets, is_facet=False)
+                obj_node = self.create_node(obj, triplets, is_facet=False)
+
+                if subj_node is None or obj_node is None or pred_node is None:
+                    continue
+
+                pred_node.add_edge(obj_node)
+                subj_node.add_edge(pred_node)
+                self.update_node_dict([subj_node, pred_node, obj_node])
+
+    def build(self, infile, all_triplets=None, dpb=False):
+
+        if not all_triplets:
+            all_triplets = list(tqdm(read_stuffie_output(infile), ascii=True, disable=dpb))
+
+        for triplets in tqdm(all_triplets, ascii=True, disable=dpb):
+            self.add_simple_edges(triplets)
+            self.add_facet_edges(triplets)
+
+        self.collapse_()
         self.remove_redundancy()
 
     def remove_redundancy(self):
@@ -357,4 +362,3 @@ def main(source_file, dump_dir):
 
 if __name__ == '__main__':
     main()
-    
