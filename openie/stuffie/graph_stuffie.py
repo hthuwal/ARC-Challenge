@@ -75,6 +75,7 @@ class Node(object):
 class Graph(object):
     def __init__(self, file=None, all_triplets=None, dpb=False):
         self.nodes = {}
+        self._count = 0
         if file is not None or all_triplets is not None:
             self.build(file, all_triplets=all_triplets, dpb=dpb)
 
@@ -95,6 +96,11 @@ class Graph(object):
             phrase = Graph.recurse_and_find_phrase(phrase, triplets, is_facet)
             if phrase is None:
                 return None
+
+        if phrase == "<_>":
+            self._count += 1
+            phrase = f"<_{self._count}>"
+
         phrase = phrase.lower()
         if phrase in self.nodes:
             return self.nodes[phrase]
@@ -186,6 +192,27 @@ class Graph(object):
                     subj_node.add_edge(pred_node)
                     self.update_node_dict([subj_node, pred_node, obj_node])
 
+        # Collapsing <_>
+        keys = list(self.nodes.keys())
+        for key in keys:
+            me = self.nodes[key]
+            if key.startswith("<_"):
+                assert len(me.parents) <= 1
+
+                if len(me.parents) == 1:
+                    parent = self.nodes[me.parents[0]]
+                    parent.remove_edge(me)
+                else:
+                    parent = None
+
+                for edge in me.edges:
+                    nbr = self.nodes[edge]
+                    me.remove_edge(nbr)
+                    if parent:
+                        parent.add_edge(nbr)
+
+                del self.nodes[key]
+
         self.remove_redundancy()
 
     def remove_redundancy(self):
@@ -252,7 +279,7 @@ class Graph(object):
                 top, d = stack.pop()
                 if top not in visited:
                     visited[top] = True
-                    string += "\t" * d + "⤿" + repr(top) + "\n"
+                    string += "\t" * d + "⤿" + repr(self.nodes[top]) + "\n"
                     for each in self.nodes[top].edges:
                         if each not in visited:
                             stack.append((each, d + 1))
@@ -280,7 +307,7 @@ def create_graphs_multicore(all_triplets, dump_dir):
     # Perform operations in batches of num_cores
     for i, chunk in enumerate(chunks(data, 10)):
 
-        print(f"Batch {i+1} {len(chunk)}")
+        print(f"Batch {i+1}/10")
         file_name = f"{dump_dir}/graph_part_{i+1}.graph"
         if os.path.exists(file_name):
             continue
