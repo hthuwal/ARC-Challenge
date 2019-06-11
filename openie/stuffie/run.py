@@ -5,7 +5,9 @@ import pickle
 import sys
 import time
 
+from functools import partial
 from graph_stuffie import Graph, Node
+from multiprocessing import Pool
 from operator import itemgetter
 from tqdm import tqdm
 from utils_stuffie import timeit
@@ -13,6 +15,10 @@ from utils_stuffie import timeit
 sys.path.append("..")
 from utils import replace_wh_word_with_blank, create_hypothesis
 
+
+corpus_graph = None
+qa_graphs = None
+questions = None
 
 @timeit
 def load_corpus_graphs(corpus_graph_file):
@@ -35,7 +41,10 @@ def match(string1, string2):
     return 1 if string1 == string2 else 0
 
 
-def score_graphs(corpus_graph, hypothesis_graph, depth_threshold=2, match_threshold=0.5, beam_threshold=4):
+    return 0
+
+def score_graphs(hypothesis_graph, depth_threshold=2, match_threshold=0.5, beam_threshold=4):
+    global corpus_graph
     score = 0
     corpus_graph_nodes = corpus_graph.nodes
     hypo_graph_nodes = hypothesis_graph.nodes
@@ -54,9 +63,6 @@ def score_graphs(corpus_graph, hypothesis_graph, depth_threshold=2, match_thresh
             cand_nodes_from_corpus = {phrase: [(phrase, 0)]}
 
             while len(hypo_nodes) != 0:
-                # print(len(hypo_nodes), len(cand_nodes_from_corpus))
-                # import ipdb
-                # ipdb.set_trace()
                 # hnode -> next node from hypothesis graph that we
                 # are trying to match
                 # hnd -> its position in the path from the start node
@@ -72,6 +78,7 @@ def score_graphs(corpus_graph, hypothesis_graph, depth_threshold=2, match_thresh
                     match_scores.append((cand, match(hnode, cand)))
 
                 winner_cand, max_score = max(match_scores, key=lambda x: x[1]) if len(match_scores) != 0 else (None, 0)
+                del match_scores
 
                 # found the most probable match
                 if winner_cand is not None and max_score > match_threshold:
@@ -114,8 +121,12 @@ def score_graphs(corpus_graph, hypothesis_graph, depth_threshold=2, match_thresh
                         hypo_nodes.append((hnode, hnd))
                         cand_nodes_from_corpus[hnode] = new_candidates[0:beam_threshold]
 
-    return score
+    del corpus_graph_nodes
+    del hypo_graph_nodes
+    del sorted_hypo_graph_node_names
+    del visited
 
+    return score
 
 def test():
     # Test corpus Graph
@@ -163,7 +174,6 @@ def test():
 
     print(score_graphs(cg, hg, depth_threshold=1))
 
-
 def get_question_details():
     questions = {}
     with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file:
@@ -187,45 +197,53 @@ def get_question_details():
             questions[line['id']] = [question, hypothesis, options]
     return questions
 
+def score_question(question_id, depth_threshold=2, match_threshold=0.5, beam_threshold=4, dumps=None):
+    global questions, qa_graphs     
+    score = {}
+    # print("Calculating scores for each question...")
 
-def score_questions(corpus_graph, qa_graphs, depth_threshold=2, match_threshold=0.5, beam_threshold=4, dumps=None):
+    score[question_id] = {}
+    score[question_id]['correct_answer'] = qa_graphs[question_id]['correct_answer']
+    score[question_id]["options"] = {}
 
-    scores = {}
-    questions = get_question_details()
-    print("Calculating scores for each question...")
+    matches, hypo_scores = {}, {}
+    matches["question"] = questions[question_id][0]
 
-    for question_id in tqdm(qa_graphs, ascii=True):
-        scores[question_id] = {}
-        scores[question_id]['correct_answer'] = qa_graphs[question_id]['correct_answer']
-        scores[question_id]["options"] = {}
+    for key in qa_graphs[question_id]['hypothesis_graphs']:
+        hypothesis_graph = qa_graphs[question_id]['hypothesis_graphs'][key]
+        hypo_scores[key] = score_graphs(
+            hypothesis_graph,
+            depth_threshold=depth_threshold,
+            match_threshold=match_threshold,
+            beam_threshold=beam_threshold
+        )
 
-        matches, hypo_scores = {}, {}
-        matches["question"] = questions[question_id][0]
+        matches[key] = {
+            # 'graph': hypothesis_match,
+            'hypothesis': questions[question_id][1][key],
+            'option': questions[question_id][2][key]
+        }
 
-        for key in qa_graphs[question_id]['hypothesis_graphs']:
-            hypothesis_graph = qa_graphs[question_id]['hypothesis_graphs'][key]
-            hypo_scores[key] = score_graphs(
-                corpus_graph,
-                hypothesis_graph,
-                depth_threshold=depth_threshold,
-                match_threshold=match_threshold,
-                beam_threshold=beam_threshold
-            )
+        score[question_id]["options"][key] = hypo_scores[key]
 
-            matches[key] = {
-                # 'graph': hypothesis_match,
-                'hypothesis': questions[question_id][1][key],
-                'option': questions[question_id][2][key]
-            }
+    # if dumps is not None:
+    #     json.dump(matches, open(os.path.join(dumps, question_id + ".json"), "w"), indent=4)
 
-            scores[question_id]["options"][key] = hypo_scores[key]
+    return score
 
-        if dumps is not None:
-            json.dump(matches, open(os.path.join(dumps, question_id + ".json"), "w"), indent=4)
+def score_questions(depth_threshold=2, match_threshold=0.5, beam_threshold=4, dumps=None):
+    global qa_graphs     
 
-    print(len(scores))
-    return scores
+    question_ids = list(qa_graphs.keys())
+    func = partial(score_question, depth_threshold=depth_threshold, match_threshold=match_threshold, beam_threshold=beam_threshold, dumps=dumps)
+    with Pool() as pool:
+        scores = list(tqdm(pool.imap(func, question_ids), ascii=True, total=len(question_ids)))
+    
+    scores_dict = {}
+    for score in scores:
+        scores_dict.update(score)
 
+    return scores_dict
 
 def make_predictions(scores, prediction_file):
     points = 0
@@ -283,14 +301,18 @@ def main(corpus_triplets_graph, qa_graph_path, prediction_file, stem):
     3. Calculate Scores for each option for each graph.\n
     4. Predict possible answers for each question and save them in the PREDICTION_FILE.\n
     """
+    global questions, corpus_graph, qa_graphs 
+    
     corpus_graph = Graph()
     print("Loading Corpus Graph...")
     timeit(corpus_graph.load)(corpus_triplets_graph)
 
     qa_graphs = get_qa_graph(qa_graph_path)
-    scores = score_questions(corpus_graph, qa_graphs, depth_threshold=1)
-    make_predictions(scores, prediction_file)
+    questions = get_question_details()
 
+    scores = score_questions(depth_threshold=1)
+    make_predictions(scores, prediction_file)
+    
 
 if __name__ == '__main__':
     main()
