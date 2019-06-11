@@ -8,21 +8,21 @@ import time
 from graph_stuffie import Graph, Node
 from operator import itemgetter
 from tqdm import tqdm
+from utils_stuffie import timeit
 
 sys.path.append("..")
 from utils import replace_wh_word_with_blank, create_hypothesis
 
 
+@timeit
 def load_corpus_graphs(corpus_graph_file):
     g = Graph()
     print(f"Loading Corpus Graph from {corpus_graph_file}....")
-    st = time.time()
     g.load(corpus_graph_file)
-    et = time.time()
-    print("Graph Loading Complete. Took %f minutes" % ((et - st) / 60))
+    print("Graph Loading Complete...")
     return g
 
-
+@timeit
 def get_qa_graph(path):
     """
     Load the qa graph pickle dump located @PATH
@@ -285,8 +285,8 @@ def main(corpus_triplets_graph, qa_graph_path, prediction_file, stem):
     """
     corpus_graph = Graph()
     print("Loading Corpus Graph...")
-    corpus_graph.load(corpus_triplets_graph)
-    print("Loading Graph Complete...")
+    timeit(corpus_graph.load)(corpus_triplets_graph)
+
     qa_graphs = get_qa_graph(qa_graph_path)
     scores = score_questions(corpus_graph, qa_graphs, depth_threshold=1)
     make_predictions(scores, prediction_file)
