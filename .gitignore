@@ -1,4 +1,26 @@
-# Ignore Results 
+# ---------------------------------- Custom ---------------------------------- #
+
+openie/stuffie/results/
+openie/stuffie/graphs/
+/openie/stanford/results/
+/openie/dair-iitd/WordNet-3.0/
+/openie/dair-iitd/LICENSE
+/openie/dair-iitd/README.md
+/openie/dair-iitd/build.sbt
+/openie/dair-iitd/data/
+/openie/dair-iitd/lib/
+/openie/dair-iitd/openie-assembly.jar
+/openie/dair-iitd/project/
+/openie/dair-iitd/release/
+/openie/dair-iitd/results/
+/openie/dair-iitd/README_.md
+/openie/dair-iitd/src/
+/openie/dair-iitd/version.sbt
+/stuffie/src/main/java/it/unibz/inf/stuffie/RunOnFile.java
+/stuffie/temp
+/data/
+/results/
+
 *.csv
 *.json
 *.txt
@@ -6,77 +28,13 @@
 *.html
 *.txt
 *.tsv
-# Python specific
-*.pyc
-*__pycache__
+*.graph
 
-# Ignore data files
-/data/
+/ARC.sublime-project
+/ARC.sublime-workspace
 
-# Intellij specific
-/.idea/
+# ---------------------------------- Python ---------------------------------- #
 
-/do_analysis/ARC-Challenge-Test.jsonl
-
-/bin/
-
-/do_analysis/ARC-Challenge-Test_as_entailment_default.jsonl
-
-/do_analysis/ARC-Challenge-Test_as_entailment_with_struct_default.jsonl
-
-/do_analysis/ARC-Challenge-Test_predictions_dgem_default.jsonl
-
-/do_analysis/ARC-Challenge-Test_with_hits_default.jsonl
-
-/etc/
-
-/include/
-
-/lib/
-
-/man/
-
-/pip-selfcheck.json
-
-/share/
-
-/openie/stanford/stanford-corenlp/
-
-/results/
-
-/openie/stanford/results/
-
-/openie/dair-iitd/WordNet-3.0/
-/openie/dair-iitd/LICENSE
-
-/openie/dair-iitd/README.md
-
-/openie/dair-iitd/build.sbt
-
-/openie/dair-iitd/data/
-
-/openie/dair-iitd/lib/
-
-/openie/dair-iitd/openie-assembly.jar
-
-/openie/dair-iitd/project/
-
-/openie/dair-iitd/release/
-
-/openie/dair-iitd/results/
-
-/openie/dair-iitd/README_.md
-
-/openie/dair-iitd/src/
-
-/openie/dair-iitd/version.sbt
-
-/*.iml
-
-# Created by https://www.gitignore.io/api/python
-# Edit at https://www.gitignore.io/?templates=python
-
-### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -106,8 +64,6 @@ share/python-wheels/
 MANIFEST
 
 # PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
@@ -196,16 +152,8 @@ dmypy.json
 ### Python Patch ###
 .venv/
 
-# End of https://www.gitignore.io/api/python
+# ----------------------------------- Java ----------------------------------- #
 
-/ARC.sublime-project
-
-/ARC.sublime-workspace
-
-# Created by https://www.gitignore.io/api/java
-# Edit at https://www.gitignore.io/?templates=java
-
-### Java ###
 # Compiled class file
 *.class
 
@@ -247,16 +195,3 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
-# End of https://www.gitignore.io/api/maven
-
-/stuffie/parts1/
-
-/stuffie/parts2/
-
-/stuffie/src/main/java/it/unibz/inf/stuffie/RunOnFile.java
-
-/stuffie/parts3/
-
-/stuffie/temp
-
-*results/
