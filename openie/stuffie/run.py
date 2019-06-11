@@ -10,7 +10,7 @@ from operator import itemgetter
 from tqdm import tqdm
 
 sys.path.append("..")
-import utils
+from utils import replace_wh_word_with_blank, create_hypothesis
 
 
 def load_corpus_graphs(corpus_graph_file):
@@ -178,11 +178,11 @@ def get_question_details():
                     options[label] = choice['text']
 
             hypothesis = {}
-            question = utils.replace_wh_word_with_blank(question)
+            question = replace_wh_word_with_blank(question)
 
             for option in options:
                 if options[option] != "":
-                    hypothesis[option] = utils.create_hypothesis(question, options[option])
+                    hypothesis[option] = create_hypothesis(question, options[option])
 
             questions[line['id']] = [question, hypothesis, options]
     return questions
