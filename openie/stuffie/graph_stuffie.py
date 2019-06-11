@@ -7,20 +7,7 @@ import time
 
 from multiprocessing import Pool, cpu_count
 from tqdm import tqdm
-from utils_stuffie import read_stuffie_output, pprint
-
-
-def timeit(function):
-    def inner(*args, **kwargs):
-        st = time.time()
-        out = function(*args, **kwargs)
-        et = time.time()
-        time_taken = et - st
-        unit = "seconds" if time_taken <= 60 else "minutes"
-        time_taken = time_taken if time_taken <= 60 else time_taken / 60
-        print(f"\nTime take by {function.__name__} is {time_taken} {unit}.\n")
-        return out
-    return inner
+from utils_stuffie import read_stuffie_output, pprint, timeit
 
 
 class Node(object):
