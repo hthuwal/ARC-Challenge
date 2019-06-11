@@ -1,7 +1,9 @@
 import click
 import json
 import os
+import objgraph
 import pickle
+import resource
 import sys
 import time
 
@@ -35,7 +37,6 @@ def get_qa_graph(path):
     """
     print(f"Loading QA Dump @ {path}")
     return pickle.load(open(path, "rb"))
-
 
 def match(string1, string2):
     return 1 if string1 == string2 else 0
@@ -288,7 +289,6 @@ def make_predictions(scores, prediction_file):
         print("\t%d: " % key, p_at[key])
     print("Exiting...")
 
-
 @click.command()
 @click.argument('Corpus_Triplets_graph')
 @click.argument("qa_graph_path", type=click.Path(exists=True))
@@ -313,6 +313,9 @@ def main(corpus_triplets_graph, qa_graph_path, prediction_file, stem):
     scores = score_questions(depth_threshold=1)
     make_predictions(scores, prediction_file)
     
+    # objgraph.show_most_common_types()
+    # mem = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    # print(f"Memory usage is: {mem} KB")
 
 if __name__ == '__main__':
     main()
