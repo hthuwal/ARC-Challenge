@@ -1,14 +1,26 @@
 import click
 import os
+import random
 
 from graph_stuffie import Graph, Node
+from multiprocessing import Pool
+from functools import partial
 from tqdm import tqdm
+
+
+def convert_util(node_mapping, node):
+    node_phrase, edges = node[0], node[1].edges
+    string = ""
+    for nbr in edges:
+        string += f"{node_mapping[node_phrase]}\t0\t{node_mapping[nbr]}\n"
+    return string
 
 
 @click.command()
 @click.argument('graph_path', type=click.Path(exists=True))
 @click.argument('dest_dir')
-def convert(graph_path: str, dest_dir: str):
+@click.option('--parallel', is_flag=True)
+def convert(graph_path: str, dest_dir: str, parallel=False):
     """
     Load the graph dump from GRAPH_PATH and create appropriate files
     in DEST_DIR/graph_dump_name to be used by bidir java code.
@@ -38,10 +50,19 @@ def convert(graph_path: str, dest_dir: str):
             f.write(f"{i+1}\t<{node_name}>\n")
 
     print(f"Converting graph into Triplets and writing them to {graph_file} ")
-    with open(graph_file, "w") as f:
-        for node in tqdm(g.nodes, ascii=True):
-            for nbr in tqdm(g.nodes[node].edges, ascii=True):
-                f.write(f"{node_mapping[node]}\t0\t{node_mapping[nbr]}\n")
+    if not parallel:
+        with open(graph_file, "w") as f:
+            for node in tqdm(g.nodes, ascii=True):
+                for nbr in tqdm(g.nodes[node].edges, ascii=True):
+                    f.write(f"{node_mapping[node]}\t0\t{node_mapping[nbr]}\n")
+    else:
+        nodes = list(g.nodes.items())
+        with Pool(1) as pool:
+            func = partial(convert_util, node_mapping)
+            graphs = list(tqdm(pool.map(func, nodes), total=len(nodes)))
+
+        with open(graph_file, "w") as f:
+            f.write("".join(graphs))
 
 
 if __name__ == "__main__":
