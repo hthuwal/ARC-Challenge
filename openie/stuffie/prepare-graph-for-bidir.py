@@ -65,5 +65,25 @@ def convert(graph_path: str, dest_dir: str, parallel=False):
             f.write("".join(graphs))
 
 
+@click.command()
+@click.argument("qa_graphs_path", type=click.Path(exists=True))
+@click.argument("dest_dir")
+def convert_qa_graphs(qa_graphs_path: str, dest_dir: str):
+    qa_graphs = pickle.load(open(qa_graphs_path, "rb"))
+    keywords_file = os.path.join(dest_dir, "qa_keywords.tsv")
+
+    if not os.path.exists(dest_dir):
+        os.makedirs(dest_dir)
+    
+    with open(keywords_file, "w") as fp:
+        for qid in qa_graphs:
+            hypo_graphs = qa_graphs[qid]['hypothesis_graphs']
+            for option in hypo_graphs:
+                hypo_graph = hypo_graphs[option]
+                keywords = "\t".join([f"<{key}>" for key in hypo_graph.nodes.keys()])
+                string = f"{qid}\t{option}\t{keywords}\n"
+                fp.write(f"{string}")
+
 if __name__ == "__main__":
-    convert()
+    # convert()
+    convert_qa_graphs()
