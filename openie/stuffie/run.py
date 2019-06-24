@@ -81,14 +81,14 @@ def score_graphs(hypothesis_graph, depth_threshold=2, match_threshold=0.5, beam_
 
                 match_scores = []
                 for cand, depth in candidates:
-                    match_scores.append((cand, match(hnode, cand)))
+                    match_scores.append((cand, depth, match(hnode, cand)))
 
-                winner_cand, max_score = max(match_scores, key=lambda x: x[1]) if len(match_scores) != 0 else (None, 0)
+                winner_cand, winner_depth, max_score = max(match_scores, key=lambda x: x[2]) if len(match_scores) != 0 else (None, 0, 0)
                 del match_scores
 
                 # found the most probable match
                 if winner_cand is not None and max_score > match_threshold:
-                    score += (max_score * hnd)  # the deeper match in hypothesis graph higher the score
+                    score += ((max_score * hnd) / winner_depth)  # the deeper match in hypothesis graph higher the score
 
                     visited[hnode] = True
                     del cand_nodes_from_corpus[hnode]
