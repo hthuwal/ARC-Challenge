@@ -1,5 +1,6 @@
 import click
 import json
+import nltk
 import os
 import objgraph
 import pickle
@@ -22,6 +23,7 @@ corpus_graph = None
 qa_graphs = None
 questions = None
 
+
 @timeit
 def load_corpus_graphs(corpus_graph_file):
     g = Graph()
@@ -29,6 +31,7 @@ def load_corpus_graphs(corpus_graph_file):
     g.load(corpus_graph_file)
     print("Graph Loading Complete...")
     return g
+
 
 @timeit
 def get_qa_graph(path):
@@ -38,11 +41,13 @@ def get_qa_graph(path):
     print(f"Loading QA Dump @ {path}")
     return pickle.load(open(path, "rb"))
 
+
 def match(string1, string2):
-    return 1 if string1 == string2 else 0
+    # return 1 if string1 == string2 else 0
+    return max(0, (1 - nltk.jaccard_distance(set(string1), set(string2))))
 
+    # return 0
 
-    return 0
 
 def score_graphs(hypothesis_graph, depth_threshold=2, match_threshold=0.5, beam_threshold=4):
     global corpus_graph
@@ -129,6 +134,7 @@ def score_graphs(hypothesis_graph, depth_threshold=2, match_threshold=0.5, beam_
 
     return score
 
+
 def test():
     # Test corpus Graph
     cg = Graph()
@@ -175,6 +181,7 @@ def test():
 
     print(score_graphs(cg, hg, depth_threshold=1))
 
+
 def get_question_details():
     questions = {}
     with open("../../data/ARC-V1-Feb2018-2/ARC-Challenge/ARC-Challenge-Test.jsonl", "r") as in_file:
@@ -197,6 +204,7 @@ def get_question_details():
 
             questions[line['id']] = [question, hypothesis, options]
     return questions
+
 
 def score_question(question_id, depth_threshold=2, match_threshold=0.5, beam_threshold=4, dumps=None):
     global questions, qa_graphs     
@@ -232,6 +240,7 @@ def score_question(question_id, depth_threshold=2, match_threshold=0.5, beam_thr
 
     return score
 
+
 def score_questions(depth_threshold=2, match_threshold=0.5, beam_threshold=4, dumps=None):
     global qa_graphs     
 
@@ -239,12 +248,13 @@ def score_questions(depth_threshold=2, match_threshold=0.5, beam_threshold=4, du
     func = partial(score_question, depth_threshold=depth_threshold, match_threshold=match_threshold, beam_threshold=beam_threshold, dumps=dumps)
     with Pool() as pool:
         scores = list(tqdm(pool.imap(func, question_ids), ascii=True, total=len(question_ids)))
-    
+
     scores_dict = {}
     for score in scores:
         scores_dict.update(score)
 
     return scores_dict
+
 
 def make_predictions(scores, prediction_file):
     points = 0
@@ -301,8 +311,8 @@ def main(corpus_triplets_graph, qa_graph_path, prediction_file, stem):
     3. Calculate Scores for each option for each graph.\n
     4. Predict possible answers for each question and save them in the PREDICTION_FILE.\n
     """
-    global questions, corpus_graph, qa_graphs 
-    
+    global questions, corpus_graph, qa_graphs
+
     corpus_graph = Graph()
     print("Loading Corpus Graph...")
     timeit(corpus_graph.load)(corpus_triplets_graph)
@@ -316,6 +326,7 @@ def main(corpus_triplets_graph, qa_graph_path, prediction_file, stem):
     # objgraph.show_most_common_types()
     # mem = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     # print(f"Memory usage is: {mem} KB")
+
 
 if __name__ == '__main__':
     main()
