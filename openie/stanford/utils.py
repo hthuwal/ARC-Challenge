@@ -1,12 +1,12 @@
-import nltk
 import re
 from subprocess import Popen
-from graph import Graph
 import os
 import sys
 from stanfordcorenlp import StanfordCoreNLP
 import json
 
+sys.path.append("..")
+from graph import Graph
 JAVA_BIN_PATH = 'java'
 STANFORD_IE_FOLDER = 'stanford-corenlp'
 BLANK_STR = "___"
