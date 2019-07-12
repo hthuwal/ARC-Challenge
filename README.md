@@ -43,21 +43,18 @@ conda install pytorch torchvision -c pytorch
 
 ## Setup data/models
 
-0. Run Elastic Search
+1. Run Elastic Search
 ```
 bin/elasticsearch -E http.port=9400 -E transport.tcp.port=9500 
 ```
 
-1. Download the data and models into `data/` folder. This will also build the ElasticSearch
+2. Download the data and models into `data/` folder. This will also build the ElasticSearch
 index (assumes ElasticSearch 6+ is running on `ES_HOST` machine defined in the script)
 ```
 bash scripts/download_data.sh
 ```
 
-## Running baseline models
-Run the entailment-based baseline solvers against a question set using `scripts/evaluate_solver.sh`
-
-2. Download and prepare embeddings. This will download glove.840B.300d.zip from https://nlp.stanford.edu/projects/glove/ and 
+3. Download and prepare embeddings. This will download glove.840B.300d.zip from https://nlp.stanford.edu/projects/glove/ and 
 convert it to glove.840B.300d.txt.gz which is readable from AllenNLP
 ```bash
 sh download_and_prepare_glove.sh
