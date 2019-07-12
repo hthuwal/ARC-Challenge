@@ -78,9 +78,9 @@ StuffIE uses the [Stanford CoreNLP tools](https://github.com/stanfordnlp/CoreNLP
     <f> results/questions/hypothesis results/questions/sutffie_hypothesis 20
     ```
 
-## Apprach 1 
+## Approach I 
 
-- Convert stuffIE output into stanford format and use the previous algorithms.
+- Convert stuffIE output into stanford format and use the Approach I.
 
     ```bash
     python convert_into_stanford_format.py
