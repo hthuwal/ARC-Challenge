@@ -1,6 +1,6 @@
 **Assumption: The data is already downloaded using the steps mentioned in the [Readme](../Readme.md) of the root directory.**
 
-## Approach I
+## Approach I: Stanford OpenIE
 
 Run the stanford openie on the corpus and QA Hypothesis. Follow the steps mentioned [here](stanford/Readme.md). You should have two dumps after this
 
@@ -24,3 +24,9 @@ python ../evaluator.py \
     -p path_to_pred_file \
     -o output_file
 ```
+
+## Approach I: StuffIE
+
+Follow the steps in stuffie's [Readme](stuffie/Readme.md) to Run stuffIE on corpus and convert the obtained Triplets into stanford's format.
+
+Now you can use the above mentioned converted corpus instead of openIE.
