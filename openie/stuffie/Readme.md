@@ -1,4 +1,4 @@
-# StuffIE
+# Approach II using StuffIE
 
 StuffIE is an open information extraction tool that extracts nested relations enriched with facets.
 For example, from the following text:
@@ -104,7 +104,7 @@ For e.g.
 python create_graph_for_qa.py results/questions/sutffie_hypothesis graphs/qa_graphs
 ```
 
-## Extra: Approach I
+## Approach I
 
 - Convert stuffIE output into stanford format and use the Approach I.
 
@@ -113,3 +113,13 @@ python create_graph_for_qa.py results/questions/sutffie_hypothesis graphs/qa_gra
     ```
 
     This will create the file `results/triplets_in_stanford_format.txt` for the corpus and multiple files in directory `results/questions/stuffie_hypothesis_stanford_format` for each hypothesis.
+
+## Approach II
+
+To score the qa_graphs and hypothesis graphs run the command.
+
+```bash
+python run.py "CORPUS_TRIPLETS_GRAPH" "QA_GRAPH_PATH" "PREDICTION_FILE"
+```
+
+You'll be prompted to enter the values of the hyperparameters (refere [thesis]()).
