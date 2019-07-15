@@ -46,5 +46,5 @@ Using the server to run openIE on each question and corresponding hypothesis and
 
 - **With Coreference Resolution**
     ```bash
-    python create_graph_for_qa.py test/qa.txt True
+    python create_graph_for_qa.py dump_file True
     ```

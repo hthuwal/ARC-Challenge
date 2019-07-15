@@ -1,4 +1,4 @@
-**Assumption: The data is already downloaded using the steps mentioned in the [Readme](../Readme.md) of the root directory.**
+**Assumption: The data is already downloaded using the steps mentioned in the [Readme](../README.md) of the root directory.**
 
 ## Approach I: Stanford OpenIE
 
