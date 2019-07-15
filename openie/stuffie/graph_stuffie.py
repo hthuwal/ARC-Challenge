@@ -1,4 +1,5 @@
 import click
+import nltk
 import os
 import pickle
 import re
@@ -8,7 +9,7 @@ import time
 from multiprocessing import Pool, cpu_count
 from tqdm import tqdm
 from utils_stuffie import read_stuffie_output, pprint, timeit
-
+ 
 
 class Node(object):
     """Node of the Graph
