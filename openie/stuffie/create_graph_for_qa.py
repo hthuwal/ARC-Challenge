@@ -34,7 +34,7 @@ def create_graph(line, qa_triplets_path):
 @click.argument("dump_path", type=str)
 def main(qa_triplets_path, dump_path):
     """
-    Read stuffIE triplets (in stanford openIE format) for all hypothesis from QA_TRIPLETS_PATH directory.
+    Read stuffIE triplets for all hypothesis from QA_TRIPLETS_PATH directory.
     Create Graph for each hypothesis and dump all the graphs @ DUMP_PATH
     """
     q_graphs = {}

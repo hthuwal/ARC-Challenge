@@ -209,7 +209,7 @@ def get_question_details():
 
 
 def score_question(question_id, depth_threshold=2, match_threshold=0.5, beam_threshold=4, dumps=None):
-    global questions, qa_graphs     
+    global questions, qa_graphs
     score = {}
     # print("Calculating scores for each question...")
 
@@ -244,7 +244,7 @@ def score_question(question_id, depth_threshold=2, match_threshold=0.5, beam_thr
 
 
 def score_questions(depth_threshold=2, match_threshold=0.5, beam_threshold=4, dumps=None):
-    global qa_graphs     
+    global qa_graphs
 
     question_ids = list(qa_graphs.keys())
     func = partial(score_question, depth_threshold=depth_threshold, match_threshold=match_threshold, beam_threshold=beam_threshold, dumps=dumps)
@@ -299,7 +299,7 @@ def make_predictions(scores, prediction_file):
     print("Precisoin at: ")
     for key in p_at:
         print("\t%d: " % key, p_at[key])
-    print("Exiting...")
+
 
 @click.command()
 @click.argument('Corpus_Triplets_graph')
@@ -308,7 +308,7 @@ def make_predictions(scores, prediction_file):
 @click.option('--stem', is_flag=True, help='Use this if you want to perform stemming on each word.')
 def main(corpus_triplets_graph, qa_graph_path, prediction_file, stem):
     """
-    1. Create Corpus Graph given its openie triplets in the stanford openIE format in the file "corpus_triplets_graph".\n
+    1. Load the corpus graph.\n
     2. Load the qa graph pickle dump located @PATH\n
     3. Calculate Scores for each option for each graph.\n
     4. Predict possible answers for each question and save them in the PREDICTION_FILE.\n
@@ -322,15 +322,22 @@ def main(corpus_triplets_graph, qa_graph_path, prediction_file, stem):
     qa_graphs = get_qa_graph(qa_graph_path)
     questions = get_question_details()
 
-    scores = score_questions(depth_threshold=1)
-    make_predictions(scores, prediction_file)
-    
+    while True:
+        x = input("Enter d, m and b (Enter q to exit)\n").strip()
+        if x == "q" or x == "Q":
+            break
+        try:
+            x = list(x.split())
+            x = [int(x[0]), float(x[1]), int(x[2])]
+            scores = score_questions(*x)
+            make_predictions(scores, prediction_file='faltu')
+        except Exception as e:
+            continue
+
     # objgraph.show_most_common_types()
-    # mem = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-    # print(f"Memory usage is: {mem} KB")
+    mem = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    print(f"Memory usage is: {mem} KB")
 
 
 if __name__ == '__main__':
     main()
-    # main("graphs/corpus_graphs/corpus_graph", "graphs/qa_graphs", "temp", False)
-    # test()
