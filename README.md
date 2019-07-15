@@ -1,9 +1,20 @@
-- Elasticsearch
+# ARC-Challenge.
+
+This project contains all the code/results obtained during my M.Tech Thesis @IITD from 2018-2019.
+
+- [Thesis](thesis.pdf)
+- [OpenIE](openie) folder contains the code for approach I and II mentioned in the thesis.
+    + [Approach I](openie/stanford): Using Stanford openIE
+    + [Approach II](openie/stuffie): Using StuffIE
+- [Wikipedia References Downloader](https://github.com/hthuwal/wikipedia-references-downloader) a submodule to download reference webpages from wikipedia page of entities extracted from the corpus using [pos](entity-recognition) tagging.
+
+## Commands to Run Elastic search
+
 + `./bin/elasticsearch -E http.port=9400 -E transport.tcp.port=9500`
 + for any curl command to run fir remove http_proxy
 + curl -X GET "localhost:9400/_cat/indices?v"
 
-# ARC-Solvers (By the people @ ARC)
+## ARC-Solvers (By the people @ ARC)
 
 Library of baseline solvers for AI2 Reasoning Challenge (ARC) Set (http://data.allenai.org/arc/).
 These solvers retrieve relevant sentences from a large text corpus (ARC_Corpus.txt in the
