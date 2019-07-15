@@ -1,3 +1,5 @@
+# Attempting to use bidirsearch somehow with the graphs produced using [stuffie](../openie/stuffie).
+
 # BidirSearch
 
 Bidirectional Search algorithm for keyword search on graphs based on the paper by Kacholia et al.
