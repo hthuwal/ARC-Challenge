@@ -122,4 +122,4 @@ To score the qa_graphs and hypothesis graphs run the command.
 python run.py "CORPUS_TRIPLETS_GRAPH" "QA_GRAPH_PATH" "PREDICTION_FILE"
 ```
 
-You'll be prompted to enter the values of the hyperparameters (refere [thesis]()).
+You'll be prompted to enter the values of the hyperparameters (refere [thesis](../../thesis.pdf)).
